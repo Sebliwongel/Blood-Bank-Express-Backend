@@ -1,13 +1,13 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
 import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
-import { DonorSchema, NewDonorSchema } from "./donorSchema";
+import { DonorSchema, NewDonorSchema, UpdateDonorSchema } from "./donorSchema";
 
 export const donorRegistry = new AccessibleOpenAPIRegistry();
 
 donorRegistry.register("Donor", DonorSchema);
 donorRegistry.register("NewDonor", NewDonorSchema);
-
+// Register the POST path for creating a donor
 donorRegistry.registerPath({
   method: "post",
   path: "/api/donor",
@@ -30,6 +30,115 @@ donorRegistry.registerPath({
           schema: DonorSchema,
         },
       },
+    },
+  },
+});
+
+// Register the GET path for retrieving all donors
+donorRegistry.registerPath({
+  method: "get",
+  path: "/api/donor",
+  summary: "Get all donors",
+  tags: ["Donor"],
+  responses: {
+    200: {
+      description: "A list of donors",
+      content: {
+        "application/json": {
+          schema: z.array(DonorSchema),
+        },
+      },
+    },
+  },
+});
+
+// Register the GET path for retrieving a donor by ID
+donorRegistry.registerPath({
+  method: "get",
+  path: "/api/donor/{id}",
+  summary: "Get a donor by ID",
+  tags: ["Donor"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string
+    },
+  ],
+  responses: {
+    200: {
+      description: "The donor with the specified ID",
+      content: {
+        "application/json": {
+          schema: DonorSchema,
+        },
+      },
+    },
+    404: {
+      description: "Donor not found",
+    },
+  },
+});
+
+// Register the PATCH path for updating a donor
+donorRegistry.registerPath({
+  method: "patch",
+  path: "/api/donor/{id}",
+  summary: "Update a donor",
+  tags: ["Donor"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string
+    },
+  ],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: UpdateDonorSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "The updated donor",
+      content: {
+        "application/json": {
+          schema: DonorSchema,
+        },
+      },
+    },
+    404: {
+      description: "Donor not found",
+    },
+  },
+});
+
+// Register the DELETE path for deleting a donor
+donorRegistry.registerPath({
+  method: "delete",
+  path: "/api/donor/{id}",
+  summary: "Delete a donor",
+  tags: ["Donor"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string
+    },
+  ],
+  responses: {
+    204: {
+      description: "Donor deleted successfully",
+    },
+    404: {
+      description: "Donor not found",
     },
   },
 });

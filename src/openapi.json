@@ -170,6 +170,19 @@
           "userId",
           "bloodType"
         ]
+      },
+      "Update Donor": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          }
+        }
       }
     },
     "parameters": {},
@@ -393,6 +406,124 @@
                 }
               }
             }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all donors",
+        "tags": [
+          "Donor"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of donors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Donor"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/donor/{id}": {
+      "get": {
+        "summary": "Get a donor by ID",
+        "tags": [
+          "Donor"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The donor with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donor"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Donor not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a donor",
+        "tags": [
+          "Donor"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Donor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated donor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donor"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Donor not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a donor",
+        "tags": [
+          "Donor"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Donor deleted successfully"
+          },
+          "404": {
+            "description": "Donor not found"
           }
         }
       }

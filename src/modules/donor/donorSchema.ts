@@ -16,3 +16,10 @@ export const DonorSchema = z
     updatedAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
   })
   .openapi("Donor");
+
+export const UpdateDonorSchema = z
+  .object({
+    userId: z.number().optional().openapi({ example: 1 }), // Optional field
+    bloodType: z.string().optional().openapi({ example: "A+" }), // Optional field
+  })
+  .openapi("Update Donor");
