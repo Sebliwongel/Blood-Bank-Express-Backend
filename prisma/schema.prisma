@@ -13,6 +13,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Account {
+  id            Int    @id @default(autoincrement())
+  accountType   String
+  accountStatus String
+  userId        Int    @unique
+  adminId       Int?
+  user          User   @relation(fields: [userId], references: [id])
+}
+
+model SystemAdmin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -22,6 +36,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   donor     Donor?   @relation // Optional relationship to Donor
+  account   Account? @relation
 }
 
 // Enum Definitions
