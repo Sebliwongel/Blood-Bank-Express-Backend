@@ -6,6 +6,7 @@ import { openApiDoc } from "./utils/swagger";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./modules/auth/routes/authRoutes";
 import protectedRoutes from "./modules/protected/routes/protectedRoutes";
+import donorRoutes from "./modules/donor/donorRoutes";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(errorHandler);
 // Routes
 app.use("/auth", authRoutes);
 app.use("/api", protectedRoutes);
+app.use("/api", donorRoutes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDoc));
 

@@ -4,8 +4,13 @@ import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 import { authRegistry } from "../modules/auth/registry/authRegistry";
 import { combineRegistries } from "./combineRegistries";
 import { protectedRegistry } from "../modules/protected/registry/protectedRegistry";
+import { donorRegistry } from "../modules/donor/donorRegistry";
 
-const combinedRegistry = combineRegistries(authRegistry, protectedRegistry);
+const combinedRegistry = combineRegistries(
+  authRegistry,
+  protectedRegistry,
+  donorRegistry
+);
 
 const generator = new OpenApiGeneratorV3(combinedRegistry.definitions);
 

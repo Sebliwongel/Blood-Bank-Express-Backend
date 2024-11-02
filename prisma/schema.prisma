@@ -21,8 +21,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  // Donor Donor[] @relation("UserDonors")
-  //  reports  Report[] @relation("UserReports")
+  donor     Donor?   @relation // Optional relationship to Donor
 }
 
 // Enum Definitions
@@ -34,4 +33,13 @@ enum UserRole {
   STORE_MANAGER
   LABORATORY
   HOSPITAL
+}
+
+model Donor {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique // Ensures one User can only have one Donor profile
+  user      User     @relation(fields: [userId], references: [id]) // Relationship definition here
+  bloodType String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
