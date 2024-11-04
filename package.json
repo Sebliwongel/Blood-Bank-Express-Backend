@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon --watch src --exec ts-node src/index.ts",
     "test": "vitest",
-    "schema-update": "npx prisma migrate dev npx prisma generate npx prisma migrate deploy"
+    "schema-update": "npx prisma migrate dev",
+    "schema-push": "npx prisma db push"
   },
   "keywords": [],
   "author": "",

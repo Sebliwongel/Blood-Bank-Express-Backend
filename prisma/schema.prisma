@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -13,18 +7,50 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Account {
-  id            Int    @id @default(autoincrement())
-  accountType   String
-  accountStatus String
-  userId        Int    @unique
-  adminId       Int?
-  user          User   @relation(fields: [userId], references: [id])
+
+model Inventory {
+  id              Int         @id @default(autoincrement())
+  name            String
+  bloodType       String
+  expirationDate  DateTime
+  totalQuantity   Int         // Total quantity of this blood type
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  integrations    Integration[] // One-to-many relation with Integration
+  bloodId         Int         // Foreign key to Blood
+  blood           Blood       @relation(fields: [bloodId], references: [id]) // Relation to Blood
 }
 
-model SystemAdmin {
-  id       Int    @id @default(autoincrement())
-  username String @unique
+
+
+model Donor {
+  id              Int          @id @default(autoincrement())
+  userId          Int          @unique // Ensures one User can only have one Donor profile
+  user            User         @relation(fields: [userId], references: [id]) // Relationship definition here
+  bloodType       String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  donations       Donation[]   // One-to-many relation to Donation
+  notifications   Notification[]
+  appointments    Appointment? // One-to-one relation to Appointment
+}
+
+model Appointment {
+  id              Int       @id @default(autoincrement())
+  appointmentDate DateTime  // Date of the appointment
+  status          String
+  donorId         Int       @unique
+  donor           Donor     @relation(fields: [donorId], references: [id]) // One-to-one relation with Donor
+}
+
+model Account {
+  id            Int      @id @default(autoincrement())
+  accountType   String
+  accountStatus String
+  userId        Int      @unique
+  adminId       Int?
+  user          User     @relation(fields: [userId], references: [id])
+  admin         SystemAdmin? @relation(fields: [adminId], references: [id]) // Optional relation to SystemAdmin
 }
 
 model User {
@@ -37,9 +63,9 @@ model User {
   updatedAt DateTime @updatedAt
   donor     Donor?   @relation // Optional relationship to Donor
   account   Account? @relation
+  reports   Report[] @relation("UserReports") // Fixed relation name for clarity
 }
 
-// Enum Definitions
 enum UserRole {
   SYSTEM_ADMIN
   DONOR
@@ -50,11 +76,106 @@ enum UserRole {
   HOSPITAL
 }
 
-model Donor {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique // Ensures one User can only have one Donor profile
-  user      User     @relation(fields: [userId], references: [id]) // Relationship definition here
-  bloodType String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Notification {
+  id          Int        @id @default(autoincrement())
+  content     String
+  sendDate    DateTime   @default(now())
+  hospitalId  Int?
+  donorId     Int?
+  adminId     Int?
+  hospital    Hospital?  @relation(fields: [hospitalId], references: [id])
+  donor       Donor?     @relation(fields: [donorId], references: [id])
+  systemAdmin SystemAdmin? @relation(fields: [adminId], references: [id])
 }
+
+model Order {
+  id          Int     @id @default(autoincrement())
+  orderDate   DateTime
+  bloodType   String
+  quantity    Int
+  status      String
+  hospitalId  Int
+  hospital    Hospital @relation(fields: [hospitalId], references: [id])
+}
+
+model Hospital {
+  id          Int          @id @default(autoincrement())
+  name        String
+  address     String
+  contactInfo String
+  email       String       // Changed to lower camelCase
+  username    String
+  password    String
+  integrations Integration[] // Relation to integrations
+  notifications Notification[]
+  orders      Order[] 
+}
+
+model Integration {
+  id            Int         @id @default(autoincrement())
+  hospital      Hospital    @relation(fields: [hospitalId], references: [id])
+  hospitalId    Int
+  inventories   Inventory[] // Relation to Inventory
+}
+
+model Report {
+  id         Int    @id @default(autoincrement())
+  title      String
+  content    String
+  generatedBy Int
+  user       User   @relation("UserReports", fields: [generatedBy], references: [id]) // Opposite relation field
+}
+
+enum DonationStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model SystemAdmin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  accounts Account[] // Relation to accounts
+  notifications Notification[]
+}
+
+
+model Blood {
+  id          Int       @id @default(autoincrement())
+  bloodType   String    // e.g., A+, B-, O+, etc.
+  quantity    Int       // Amount available
+  donationDate DateTime // Date when the blood was donated
+  inventory   Inventory[] // One-to-many relationship with Inventory
+  collections  Collection[] // One-to-many relationship with Collection
+  donations    Donation[]   // One-to-many relationship with Donation
+}
+
+model Donation {
+  id              Int       @id @default(autoincrement())
+  donorId         Int       // Foreign key to Donor
+  bloodId         Int       // Foreign key to Blood (not unique)
+  donationDate    DateTime  // Date of donation
+  donor           Donor     @relation(fields: [donorId], references: [id])
+  blood           Blood     @relation(fields: [bloodId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Collection {
+  id              Int       @id @default(autoincrement())
+  collectedDate   DateTime  // Date of blood collection
+  bloodId         Int       // Foreign key to Blood (not unique)
+  blood           Blood     @relation(fields: [bloodId], references: [id])
+}
+
+
+
+
+
+
+
+
+
+
+
+
