@@ -154,6 +154,402 @@
           "bloodType"
         ]
       },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "accountType": {
+            "type": "string",
+            "example": "basic"
+          },
+          "accountStatus": {
+            "type": "string",
+            "example": "active"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "accountType",
+          "accountStatus",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewAccount": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "accountType": {
+            "type": "string",
+            "example": "basic"
+          },
+          "accountStatus": {
+            "type": "string",
+            "example": "active"
+          }
+        },
+        "required": [
+          "userId",
+          "accountType",
+          "accountStatus"
+        ]
+      },
+      "Blood": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 500
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2024-10-10T00:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "bloodType",
+          "quantity",
+          "donationDate"
+        ]
+      },
+      "Inventory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Blood Pack A+"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2025-12-31T23:59:59Z"
+          },
+          "totalQuantity": {
+            "type": "number",
+            "example": 1000
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-11-05T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2024-11-05T10:00:00.000Z"
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "blood": {
+            "$ref": "#/components/schemas/Blood"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "bloodType",
+          "expirationDate",
+          "totalQuantity",
+          "createdAt",
+          "updatedAt",
+          "bloodId",
+          "blood"
+        ]
+      },
+      "NewInventory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Blood Pack A+"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2025-12-31T23:59:59Z"
+          },
+          "totalQuantity": {
+            "type": "number",
+            "example": 1000
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "name",
+          "bloodType",
+          "expirationDate",
+          "totalQuantity",
+          "bloodId"
+        ]
+      },
+      "SystemAdmin Accounts": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "userId": {
+              "type": "number",
+              "example": 1
+            },
+            "accountType": {
+              "type": "string",
+              "example": "basic"
+            },
+            "accountStatus": {
+              "type": "string",
+              "example": "active"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2023-07-15T10:00:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2023-07-15T10:00:00.000Z"
+            }
+          },
+          "required": [
+            "id",
+            "userId",
+            "accountType",
+            "accountStatus",
+            "createdAt",
+            "updatedAt"
+          ]
+        }
+      },
+      "SystemAdmin Notifications": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "message": {
+              "type": "string",
+              "example": "New account created."
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2023-07-15T10:00:00.000Z"
+            }
+          },
+          "required": [
+            "id",
+            "message",
+            "createdAt"
+          ]
+        }
+      },
+      "SystemAdmin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "username": {
+            "type": "string",
+            "example": "admin_user"
+          },
+          "accounts": {
+            "$ref": "#/components/schemas/SystemAdmin Accounts"
+          },
+          "notifications": {
+            "$ref": "#/components/schemas/SystemAdmin Notifications"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "accounts",
+          "notifications",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewSystemAdmin": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "example": "admin_user"
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "Hospital": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "example": "123 Main St, Cityville"
+          },
+          "contactInfo": {
+            "type": "string",
+            "example": "+1234567890"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "contact@cityhospital.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "city_hospital_admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "address",
+          "contactInfo",
+          "email",
+          "username",
+          "password",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewHospital": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "example": "123 Main St, Cityville"
+          },
+          "contactInfo": {
+            "type": "string",
+            "example": "+1234567890"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "contact@cityhospital.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "city_hospital_admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          }
+        },
+        "required": [
+          "name",
+          "address",
+          "contactInfo",
+          "email",
+          "username",
+          "password"
+        ]
+      },
+      "NewBlood": {
+        "type": "object",
+        "properties": {
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0,
+            "example": 500
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "bloodType",
+          "quantity",
+          "donationDate"
+        ]
+      },
       "New Donor": {
         "type": "object",
         "properties": {
@@ -181,6 +577,264 @@
           "bloodType": {
             "type": "string",
             "example": "A+"
+          }
+        }
+      },
+      "New Account": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "accountType": {
+            "type": "string",
+            "example": "basic"
+          },
+          "accountStatus": {
+            "type": "string",
+            "example": "active"
+          }
+        },
+        "required": [
+          "userId",
+          "accountType",
+          "accountStatus"
+        ]
+      },
+      "Update Account": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number",
+            "example": 1
+          },
+          "accountType": {
+            "type": "string",
+            "example": "premium"
+          },
+          "accountStatus": {
+            "type": "string",
+            "example": "inactive"
+          }
+        }
+      },
+      "New Inventory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Blood Pack A+"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2025-12-31T23:59:59Z"
+          },
+          "totalQuantity": {
+            "type": "number",
+            "example": 1000
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "name",
+          "bloodType",
+          "expirationDate",
+          "totalQuantity",
+          "bloodId"
+        ]
+      },
+      "Update Inventory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Blood Pack A+"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2025-12-31T23:59:59Z"
+          },
+          "totalQuantity": {
+            "type": "number",
+            "example": 1000
+          }
+        }
+      },
+      "System Admin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "username": {
+            "type": "string",
+            "example": "admin_user"
+          },
+          "accounts": {
+            "$ref": "#/components/schemas/SystemAdmin Accounts"
+          },
+          "notifications": {
+            "$ref": "#/components/schemas/SystemAdmin Notifications"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "accounts",
+          "notifications",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "New System Admin": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "example": "admin_user"
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "Update System Admin": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "new_admin_user"
+          }
+        }
+      },
+      "New Hospital": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "example": "123 Main St, Cityville"
+          },
+          "contactInfo": {
+            "type": "string",
+            "example": "+1234567890"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "contact@cityhospital.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "city_hospital_admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          }
+        },
+        "required": [
+          "name",
+          "address",
+          "contactInfo",
+          "email",
+          "username",
+          "password"
+        ]
+      },
+      "Update Hospital": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Central City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "example": "456 Another St, Cityville"
+          },
+          "contactInfo": {
+            "type": "string",
+            "example": "+0987654321"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "support@cityhospital.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "new_city_hospital_admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "newSecurePassword123"
+          }
+        }
+      },
+      "New Blood": {
+        "type": "object",
+        "properties": {
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0,
+            "example": 500
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "bloodType",
+          "quantity",
+          "donationDate"
+        ]
+      },
+      "Update Blood": {
+        "type": "object",
+        "properties": {
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0,
+            "example": 500
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
           }
         }
       }
@@ -524,6 +1178,905 @@
           },
           "404": {
             "description": "Donor not found"
+          }
+        }
+      }
+    },
+    "/api/account": {
+      "post": {
+        "summary": "Create a new account record",
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Account"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created account record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all account records",
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of account records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Account"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/account/{id}": {
+      "get": {
+        "summary": "Get an account record by ID",
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The account record with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account record not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an account record",
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Account"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated account record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account record not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an account record",
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Account record deleted successfully"
+          },
+          "404": {
+            "description": "Account record not found"
+          }
+        }
+      }
+    },
+    "/api/inventory": {
+      "post": {
+        "summary": "Create a new inventory record",
+        "tags": [
+          "Inventory"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Inventory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created inventory record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all inventory records",
+        "tags": [
+          "Inventory"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of all inventory records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inventory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inventory/{id}": {
+      "get": {
+        "summary": "Get an inventory record by ID",
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The inventory record with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Inventory not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an inventory record",
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Inventory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated inventory record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inventory"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Inventory not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an inventory record",
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Inventory record deleted successfully"
+          },
+          "404": {
+            "description": "Inventory not found"
+          }
+        }
+      }
+    },
+    "/api/system-admin": {
+      "post": {
+        "summary": "Register a new system admin",
+        "tags": [
+          "SystemAdmin"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New System Admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created system admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System Admin"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all system admins",
+        "tags": [
+          "SystemAdmin"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of system admins",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/System Admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system-admin/{id}": {
+      "get": {
+        "summary": "Get a system admin by ID",
+        "tags": [
+          "SystemAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The system admin with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System Admin"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "System admin not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a system admin",
+        "tags": [
+          "SystemAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update System Admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated system admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System Admin"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "System admin not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a system admin",
+        "tags": [
+          "SystemAdmin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "System admin deleted successfully"
+          },
+          "404": {
+            "description": "System admin not found"
+          }
+        }
+      }
+    },
+    "/api/hospitals": {
+      "post": {
+        "summary": "Register a new hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Hospital"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created hospital",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all hospitals",
+        "tags": [
+          "Hospital"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of hospitals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hospital"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hospitals/{id}": {
+      "get": {
+        "summary": "Get a hospital by ID",
+        "tags": [
+          "Hospital"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The hospital with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hospital not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Hospital"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated hospital",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hospital not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Hospital deleted successfully"
+          },
+          "404": {
+            "description": "Hospital not found"
+          }
+        }
+      }
+    },
+    "/api/blood": {
+      "post": {
+        "summary": "Create a new blood record",
+        "tags": [
+          "Blood"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Blood"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created blood record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Blood"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "bloodType": {
+                          "type": "string",
+                          "example": "A+"
+                        },
+                        "quantity": {
+                          "type": "number",
+                          "minimum": 0,
+                          "example": 500
+                        },
+                        "donationDate": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bloodType",
+                        "quantity",
+                        "donationDate",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all blood records",
+        "tags": [
+          "Blood"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of blood records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Blood"
+                      },
+                      {
+                        "properties": {
+                          "id": {
+                            "type": "number",
+                            "example": 1
+                          },
+                          "bloodType": {
+                            "type": "string",
+                            "example": "A+"
+                          },
+                          "quantity": {
+                            "type": "number",
+                            "minimum": 0,
+                            "example": 500
+                          },
+                          "donationDate": {
+                            "type": "string",
+                            "example": "2023-07-15T10:00:00.000Z"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-07-15T10:00:00.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-07-15T10:00:00.000Z"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "bloodType",
+                          "quantity",
+                          "donationDate",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/blood/{id}": {
+      "get": {
+        "summary": "Get a blood record by ID",
+        "tags": [
+          "Blood"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The blood record with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Blood"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "bloodType": {
+                          "type": "string",
+                          "example": "A+"
+                        },
+                        "quantity": {
+                          "type": "number",
+                          "minimum": 0,
+                          "example": 500
+                        },
+                        "donationDate": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bloodType",
+                        "quantity",
+                        "donationDate",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Blood record not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a blood record",
+        "tags": [
+          "Blood"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Blood"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated blood record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Blood"
+                    },
+                    {
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "bloodType": {
+                          "type": "string",
+                          "example": "A+"
+                        },
+                        "quantity": {
+                          "type": "number",
+                          "minimum": 0,
+                          "example": 500
+                        },
+                        "donationDate": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2023-07-15T10:00:00.000Z"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bloodType",
+                        "quantity",
+                        "donationDate",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Blood record not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a blood record",
+        "tags": [
+          "Blood"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Blood record deleted successfully"
+          },
+          "404": {
+            "description": "Blood record not found"
           }
         }
       }

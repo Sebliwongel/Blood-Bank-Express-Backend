@@ -5,11 +5,22 @@ import { authRegistry } from "../modules/auth/registry/authRegistry";
 import { combineRegistries } from "./combineRegistries";
 import { protectedRegistry } from "../modules/protected/registry/protectedRegistry";
 import { donorRegistry } from "../modules/donor/donorRegistry";
+import { inventoryRegistry } from "../modules/Inventory/InventoryRegistry";
+import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry";
+import { hospitalRegistry } from "../modules/Hospital/HospitalRegistry";
+import { accountRegistry } from "../modules/Account/AccountRegistry";
+import { bloodRegistry } from "../modules/Blood/BloodRegistry";
 
 const combinedRegistry = combineRegistries(
   authRegistry,
   protectedRegistry,
-  donorRegistry
+  donorRegistry,
+  accountRegistry,
+  inventoryRegistry,
+  systemAdminRegistry,
+  hospitalRegistry,
+  bloodRegistry,
+
 );
 
 const generator = new OpenApiGeneratorV3(combinedRegistry.definitions);
