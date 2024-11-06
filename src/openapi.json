@@ -550,6 +550,172 @@
           "donationDate"
         ]
       },
+      "Appointment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "appointmentDate": {
+            "type": "string",
+            "example": "2024-11-07T10:00:00.000Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "Scheduled"
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "donor": {
+            "$ref": "#/components/schemas/Donor"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-11-01T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2024-11-01T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "appointmentDate",
+          "status",
+          "donorId",
+          "donor",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewAppointment": {
+        "type": "object",
+        "properties": {
+          "appointmentDate": {
+            "type": "string",
+            "example": "2024-11-07T10:00:00.000Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "Scheduled"
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "appointmentDate",
+          "status",
+          "donorId"
+        ]
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "content": {
+            "type": "string",
+            "example": "Blood donation request"
+          },
+          "sendDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "adminId": {
+            "type": "number",
+            "example": 1
+          },
+          "hospital": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ]
+          },
+          "donor": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "bloodType": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "bloodType"
+            ]
+          },
+          "systemAdmin": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "username": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "username"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "content",
+          "sendDate"
+        ]
+      },
+      "NewNotification": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "Blood donation request"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "adminId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
       "New Donor": {
         "type": "object",
         "properties": {
@@ -835,6 +1001,90 @@
           "donationDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          }
+        }
+      },
+      "New Appointment": {
+        "type": "object",
+        "properties": {
+          "appointmentDate": {
+            "type": "string",
+            "example": "2024-11-07T10:00:00.000Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "Scheduled"
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "appointmentDate",
+          "status",
+          "donorId"
+        ]
+      },
+      "Update Appointment": {
+        "type": "object",
+        "properties": {
+          "appointmentDate": {
+            "type": "string",
+            "example": "2024-11-07T10:00:00.000Z"
+          },
+          "status": {
+            "type": "string",
+            "example": "Completed"
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "New Notification": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "Blood donation request"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "adminId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "Update Notification": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "Updated blood donation request"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "adminId": {
+            "type": "number",
+            "example": 1
           }
         }
       }
@@ -2077,6 +2327,300 @@
           },
           "404": {
             "description": "Blood record not found"
+          }
+        }
+      }
+    },
+    "/api/appointments": {
+      "post": {
+        "summary": "Create a new appointment",
+        "tags": [
+          "Appointment"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Appointment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created appointment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all appointments",
+        "tags": [
+          "Appointment"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of appointments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/{id}": {
+      "get": {
+        "summary": "Get an appointment by ID",
+        "tags": [
+          "Appointment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The appointment with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Appointment not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an appointment",
+        "tags": [
+          "Appointment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Appointment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated appointment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Appointment not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an appointment",
+        "tags": [
+          "Appointment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Appointment deleted successfully"
+          },
+          "404": {
+            "description": "Appointment not found"
+          }
+        }
+      }
+    },
+    "/api/notification": {
+      "post": {
+        "summary": "Create a new notification",
+        "tags": [
+          "Notification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Notification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created notification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all notifications",
+        "tags": [
+          "Notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of notifications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notification/{id}": {
+      "get": {
+        "summary": "Get a notification by ID",
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The notification with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notification not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a notification",
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Notification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated notification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notification not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a notification",
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification deleted successfully"
+          },
+          "404": {
+            "description": "Notification not found"
           }
         }
       }

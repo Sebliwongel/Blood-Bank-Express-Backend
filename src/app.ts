@@ -11,6 +11,8 @@ import AccountRoutes from "./modules/Account/AccountRoutes";
 import systemAdminRoutes  from "./modules/systemAdmin/SystemAdminRoutes";
 import HospitalRoutes  from "./modules/Hospital/HospitalRoutes";
 import BloodRoutes  from "./modules/Blood/BloodRoutes";
+import AppointmentRoutes  from "./modules/Appointment/AppointmentRoutes";
+import NotificationRoutes  from "./modules/Notification/NotificationRoutes";
 import inventoryRoutes from "./modules/Inventory/InventoryRoutes";
 
 dotenv.config();
@@ -37,6 +39,8 @@ app.use("/api",systemAdminRoutes);
 app.use("/api",HospitalRoutes);
 app.use("/api",BloodRoutes);
 app.use("/api",inventoryRoutes);
+app.use("/api",AppointmentRoutes);
+app.use("/api",NotificationRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDoc));
 
 export default app;

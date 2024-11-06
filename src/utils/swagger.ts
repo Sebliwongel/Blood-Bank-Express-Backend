@@ -10,6 +10,8 @@ import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry"
 import { hospitalRegistry } from "../modules/Hospital/HospitalRegistry";
 import { accountRegistry } from "../modules/Account/AccountRegistry";
 import { bloodRegistry } from "../modules/Blood/BloodRegistry";
+import { appointmentRegistry } from "../modules/Appointment/AppointmentRegistry";
+import { notificationRegistry } from "../modules/Notification/NotificationRegistry";
 
 const combinedRegistry = combineRegistries(
   authRegistry,
@@ -20,6 +22,8 @@ const combinedRegistry = combineRegistries(
   systemAdminRegistry,
   hospitalRegistry,
   bloodRegistry,
+  appointmentRegistry,
+  notificationRegistry,
 
 );
 
