@@ -11,6 +11,13 @@ import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry"
 import { hospitalRegistry } from "../modules/Hospital/HospitalRegistry";
 import { accountRegistry } from "../modules/Account/AccountRegistry";
 import { bloodRegistry } from "../modules/Blood/BloodRegistry";
+import { appointmentRegistry } from "../modules/Appointment/AppointmentRegistry";
+import { notificationRegistry } from "../modules/Notification/NotificationRegistry";
+import { orderRegistry } from "../modules/Order/OrderRegistry";
+import { integrationRegistry } from "../modules/Integration/IntegrationRegistry";
+import { reportRegistry } from "../modules/Report/ReportRegistry";
+import { donationRegistry } from "../modules/Donation/DonationRegistry";
+import { collectionRegistry } from "../modules/Collection/CollectionRegistry";
 
 const combinedRegistry = combineRegistries(
   userRegistry,
@@ -21,7 +28,14 @@ const combinedRegistry = combineRegistries(
   inventoryRegistry,
   systemAdminRegistry,
   hospitalRegistry,
-  bloodRegistry
+  bloodRegistry,
+  appointmentRegistry,
+  notificationRegistry,
+  orderRegistry,
+  integrationRegistry,
+   reportRegistry,
+   donationRegistry,
+   collectionRegistry,
 );
 
 const generator = new OpenApiGeneratorV3(combinedRegistry.definitions);

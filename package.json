@@ -1,4 +1,5 @@
 {
+
   "name": "postgres-ts-prisma-express-template",
   "version": "1.0.0",
   "description": "",
@@ -6,7 +7,7 @@
   "scripts": {
     "start": "nodemon --watch src --exec ts-node src/index.ts",
     "test": "vitest",
-    "schema-update": "npx prisma migrate dev",
+    "schema-update": "npx prisma migrate dev --create-only",
     "schema-push": "npx prisma db push"
   },
   "keywords": [],

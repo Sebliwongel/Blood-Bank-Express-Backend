@@ -15,7 +15,13 @@ import BloodRoutes from "./modules/Blood/BloodRoutes";
 import inventoryRoutes from "./modules/Inventory/InventoryRoutes";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi/dist/zod-extensions";
 import { z } from "zod";
-
+import OrderRoutes from "./modules/Order/OrderRoutes";
+import ReportRoutes from "./modules/Report/ReportRoutes";
+import DonationRoutes from "./modules/Donation/DonationRoutes";
+import CollectionRoutes from "./modules/Collection/CollectionRoutes";
+import IntegrationRoutes from "./modules/Integration/IntegrationRoutes";
+import AppointmentRoutes from "./modules/Appointment/AppointmentRoutes";
+import NotificationRoutes from "./modules/Notification/NotificationRoutes";
 dotenv.config();
 
 const app = express();
@@ -41,6 +47,17 @@ app.use("/api", systemAdminRoutes);
 app.use("/api", HospitalRoutes);
 app.use("/api", BloodRoutes);
 app.use("/api", inventoryRoutes);
+app.use("/api",systemAdminRoutes);
+app.use("/api",HospitalRoutes);
+app.use("/api",BloodRoutes);
+app.use("/api",inventoryRoutes);
+app.use("/api",AppointmentRoutes);
+app.use("/api",NotificationRoutes);
+app.use("/api",OrderRoutes);
+app.use("/api",IntegrationRoutes);
+app.use("/api",ReportRoutes);
+app.use("/api",DonationRoutes);
+app.use("/api",CollectionRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDoc));
 
 export default app;
