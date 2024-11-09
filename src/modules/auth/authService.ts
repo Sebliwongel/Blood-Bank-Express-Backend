@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { getUserByEmail } from "./userService";
+import { getUserByEmail } from "../User/userService";
 
 const JWT_SECRET = process.env.JWT_SECRET ?? "your_secret_key";
 const REFRESH_SECRET = process.env.REFRESH_SECRET ?? "your_refresh_secret";

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { verifyToken } from "../modules/auth/services/authService";
+import { verifyToken } from "../modules/auth/authService";
 
 export interface AuthenticatedRequest extends Request {
   user?: JwtPayload;

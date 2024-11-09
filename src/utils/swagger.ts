@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
-import { authRegistry } from "../modules/auth/registry/authRegistry";
+import { userRegistry } from "../modules/User/userRegistry";
+import { authRegistry } from "../modules/auth/authRegistry";
 import { combineRegistries } from "./combineRegistries";
 import { protectedRegistry } from "../modules/protected/registry/protectedRegistry";
 import { donorRegistry } from "../modules/donor/donorRegistry";
@@ -12,6 +13,7 @@ import { accountRegistry } from "../modules/Account/AccountRegistry";
 import { bloodRegistry } from "../modules/Blood/BloodRegistry";
 
 const combinedRegistry = combineRegistries(
+  userRegistry,
   authRegistry,
   protectedRegistry,
   donorRegistry,
@@ -19,8 +21,7 @@ const combinedRegistry = combineRegistries(
   inventoryRegistry,
   systemAdminRegistry,
   hospitalRegistry,
-  bloodRegistry,
-
+  bloodRegistry
 );
 
 const generator = new OpenApiGeneratorV3(combinedRegistry.definitions);

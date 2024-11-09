@@ -2,7 +2,7 @@ import { z } from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import { UserRole } from "@prisma/client";
 
-extendZodWithOpenApi(z);
+extendZodWithOpenApi(z)
 
 const userRoles = [
   "SYSTEM_ADMIN",

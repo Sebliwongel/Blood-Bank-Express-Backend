@@ -550,6 +550,23 @@
           "donationDate"
         ]
       },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "gogemekuse@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
       "New Donor": {
         "type": "object",
         "properties": {
@@ -888,7 +905,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUser"
+                "$ref": "#/components/schemas/Login"
               }
             }
           }

@@ -1,38 +1,10 @@
-import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
-import { UserSchema, NewUserSchema } from "../models/User/userSchema";
 import { z } from "zod";
-import { AccessibleOpenAPIRegistry } from "../../../utils/combineRegistries";
+import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 
 export const authRegistry = new AccessibleOpenAPIRegistry();
 
-authRegistry.register("User", UserSchema);
-authRegistry.register("NewUser", NewUserSchema);
-
-authRegistry.registerPath({
-  method: "post",
-  path: "/auth/register",
-  summary: "Register a new user",
-  tags: ["Auth"],
-  request: {
-    body: {
-      content: {
-        "application/json": {
-          schema: NewUserSchema,
-        },
-      },
-    },
-  },
-  responses: {
-    201: {
-      description: "The created user",
-      content: {
-        "application/json": {
-          schema: UserSchema,
-        },
-      },
-    },
-  },
-});
+// extendZodWithOpenApi(z)
 
 authRegistry.registerPath({
   method: "post",
@@ -43,7 +15,12 @@ authRegistry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: NewUserSchema,
+          schema: z
+            .object({
+              email: z.string().openapi({ example: "gogemekuse@gmail.com" }),
+              password: z.string().openapi({ example: "password123" }),
+            })
+            .openapi("Login"),
         },
       },
     },
