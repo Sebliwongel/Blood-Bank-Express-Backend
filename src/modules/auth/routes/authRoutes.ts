@@ -1,10 +1,10 @@
-import { Router } from "express";
-import { login, register, refreshToken } from "../controllers/authController";
+// import { Router } from "express";
+// import { login, register, refreshToken } from "../controllers/authController";
 
-const router = Router();
+// const router = Router();
 
-router.post("/login", login);
-router.post("/register", register);
-router.post("/refresh-token", refreshToken);
+// router.post("/login", login);
+// router.post("/register", register);
+// router.post("/refresh-token", refreshToken);
 
-export default router;
+// export default router;

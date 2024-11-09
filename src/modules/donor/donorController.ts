@@ -13,7 +13,32 @@ import {
 export const createDonorController = async (req: Request, res: Response) => {
   try {
     const parsed = await validateAndParse(NewDonorSchema, req);
-    const newDonor = await createDonor(parsed.userId, parsed.bloodType);
+    const newDonor = await createDonor(
+      parsed.firstName,
+      parsed.lastName,
+      new Date(parsed.birthDate),
+      parsed.age,
+      parsed.gender,
+      parsed.city,
+      parsed.subCity,
+      parsed.zone,
+      parsed.woreda,
+      parsed.kebele,
+      parsed.email,
+      parsed.password,
+      parsed.username,
+      parsed.bloodType,
+      parsed.collectorId,
+      parsed.systemAdminId,
+      parsed.middleName,
+      parsed.title,
+      parsed.occupation,
+      parsed.telephone,
+      parsed.cellPhone,
+      parsed.organization,
+      parsed.poBox,
+      parsed.medicalHistory
+    );
     res.status(201).json(newDonor);
   } catch (error) {
     console.error(error);
@@ -52,7 +77,8 @@ export const updateDonorController = async (req: Request, res: Response) => {
   const donorId = req.params.id;
   try {
     const parsed = await validateAndParse(UpdateDonorSchema, req);
-    const updatedDonor = await updateDonor(parseInt(donorId), parsed);
+    const birthDate = parsed.birthDate ? new Date(parsed.birthDate) : undefined;
+    const updatedDonor = await updateDonor(parseInt(donorId), { ...parsed, birthDate });
     if (!updatedDonor) {
       return res.status(404).json({ error: "Donor not found" });
     }

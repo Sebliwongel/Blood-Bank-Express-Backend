@@ -13,7 +13,7 @@ accountRegistry.register("NewAccount", NewAccountSchema);
 // Register the POST path for creating an account record
 accountRegistry.registerPath({
   method: "post",
-  path: "/api/account",
+  path: "/api/accounts",
   summary: "Create a new account record",
   tags: ["Account"],
   request: {

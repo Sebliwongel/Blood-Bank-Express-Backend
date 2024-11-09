@@ -112,13 +112,102 @@
             "type": "number",
             "example": 1
           },
-          "userId": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "middleName": {
+            "type": "string",
+            "example": "A."
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "title": {
+            "type": "string",
+            "example": "Mr."
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1990-01-01"
+          },
+          "age": {
             "type": "number",
-            "example": 1
+            "example": 33
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Engineer"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "subCity": {
+            "type": "string",
+            "example": "Manhattan"
+          },
+          "zone": {
+            "type": "string",
+            "example": "Central"
+          },
+          "woreda": {
+            "type": "string",
+            "example": "5"
+          },
+          "kebele": {
+            "type": "string",
+            "example": "12"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "123-456-7890"
+          },
+          "cellPhone": {
+            "type": "string",
+            "example": "987-654-3210"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Tech Corp"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "john_doe"
+          },
+          "poBox": {
+            "type": "string",
+            "example": "P.O. Box 456"
           },
           "bloodType": {
             "type": "string",
             "example": "A+"
+          },
+          "medicalHistory": {
+            "type": "string",
+            "example": "None"
+          },
+          "collectorId": {
+            "type": "number",
+            "example": 2
+          },
+          "systemAdminId": {
+            "type": "number",
+            "example": 1
           },
           "createdAt": {
             "type": "string",
@@ -131,7 +220,19 @@
         },
         "required": [
           "id",
-          "userId",
+          "firstName",
+          "lastName",
+          "birthDate",
+          "age",
+          "gender",
+          "city",
+          "subCity",
+          "zone",
+          "woreda",
+          "kebele",
+          "email",
+          "password",
+          "username",
           "bloodType",
           "createdAt",
           "updatedAt"
@@ -140,19 +241,222 @@
       "NewDonor": {
         "type": "object",
         "properties": {
-          "userId": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "middleName": {
+            "type": "string",
+            "example": "A."
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "title": {
+            "type": "string",
+            "example": "Mr."
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1990-01-01"
+          },
+          "age": {
             "type": "number",
-            "example": 1
+            "example": 33
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Engineer"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "subCity": {
+            "type": "string",
+            "example": "Manhattan"
+          },
+          "zone": {
+            "type": "string",
+            "example": "Central"
+          },
+          "woreda": {
+            "type": "string",
+            "example": "5"
+          },
+          "kebele": {
+            "type": "string",
+            "example": "12"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "123-456-7890"
+          },
+          "cellPhone": {
+            "type": "string",
+            "example": "987-654-3210"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Tech Corp"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "john_doe"
+          },
+          "poBox": {
+            "type": "string",
+            "example": "P.O. Box 456"
           },
           "bloodType": {
             "type": "string",
             "example": "A+"
+          },
+          "medicalHistory": {
+            "type": "string",
+            "example": "None"
+          },
+          "collectorId": {
+            "type": "number",
+            "example": 2
+          },
+          "systemAdminId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
-          "userId",
+          "firstName",
+          "lastName",
+          "birthDate",
+          "age",
+          "gender",
+          "city",
+          "subCity",
+          "zone",
+          "woreda",
+          "kebele",
+          "email",
+          "password",
+          "username",
           "bloodType"
         ]
+      },
+      "UpdateDonor": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "middleName": {
+            "type": "string",
+            "example": "A."
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "title": {
+            "type": "string",
+            "example": "Mr."
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1990-01-01"
+          },
+          "age": {
+            "type": "number",
+            "example": 33
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Engineer"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "subCity": {
+            "type": "string",
+            "example": "Manhattan"
+          },
+          "zone": {
+            "type": "string",
+            "example": "Central"
+          },
+          "woreda": {
+            "type": "string",
+            "example": "5"
+          },
+          "kebele": {
+            "type": "string",
+            "example": "12"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "123-456-7890"
+          },
+          "cellPhone": {
+            "type": "string",
+            "example": "987-654-3210"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Tech Corp"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "john_doe"
+          },
+          "poBox": {
+            "type": "string",
+            "example": "P.O. Box 456"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "medicalHistory": {
+            "type": "string",
+            "example": "None"
+          },
+          "collectorId": {
+            "type": "number",
+            "example": 2
+          },
+          "systemAdminId": {
+            "type": "number",
+            "example": 1
+          }
+        }
       },
       "Account": {
         "type": "object",
@@ -716,33 +1020,532 @@
           "content"
         ]
       },
-      "New Donor": {
+      "Order": {
         "type": "object",
         "properties": {
-          "userId": {
+          "id": {
             "type": "number",
             "example": 1
+          },
+          "orderDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
           },
           "bloodType": {
             "type": "string",
             "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 3
+          },
+          "status": {
+            "type": "string",
+            "example": "Pending"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
-          "userId",
+          "id",
+          "orderDate",
+          "bloodType",
+          "quantity",
+          "status",
+          "hospitalId"
+        ]
+      },
+      "NewOrder": {
+        "type": "object",
+        "properties": {
+          "orderDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 3
+          },
+          "status": {
+            "type": "string",
+            "example": "Pending"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "orderDate",
+          "bloodType",
+          "quantity",
+          "status",
+          "hospitalId"
+        ]
+      },
+      "Integration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "inventories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                }
+              },
+              "required": [
+                "id"
+              ]
+            },
+            "example": [
+              {
+                "id": 1
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "hospitalId"
+        ]
+      },
+      "NewIntegration": {
+        "type": "object",
+        "properties": {
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "hospitalId"
+        ]
+      },
+      "Report": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Monthly Report"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is the content of the report."
+          },
+          "generatedBy": {
+            "type": "number",
+            "example": 1
+          },
+          "user": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              },
+              {
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "content",
+          "generatedBy",
+          "user",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewReport": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Monthly Report"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is the content of the report."
+          },
+          "generatedBy": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "title",
+          "content",
+          "generatedBy"
+        ]
+      },
+      "Donation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "donorId",
+          "bloodId",
+          "donationDate",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewDonation": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "donorId",
+          "bloodId",
+          "donationDate"
+        ]
+      },
+      "Collection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "collectedDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "bloodId",
+          "collectedDate",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewCollection": {
+        "type": "object",
+        "properties": {
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "collectedDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "bloodId",
+          "collectedDate"
+        ]
+      },
+      "New Donor": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "middleName": {
+            "type": "string",
+            "example": "A."
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "title": {
+            "type": "string",
+            "example": "Mr."
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1990-01-01"
+          },
+          "age": {
+            "type": "number",
+            "example": 33
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Engineer"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "subCity": {
+            "type": "string",
+            "example": "Manhattan"
+          },
+          "zone": {
+            "type": "string",
+            "example": "Central"
+          },
+          "woreda": {
+            "type": "string",
+            "example": "5"
+          },
+          "kebele": {
+            "type": "string",
+            "example": "12"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "123-456-7890"
+          },
+          "cellPhone": {
+            "type": "string",
+            "example": "987-654-3210"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Tech Corp"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "john_doe"
+          },
+          "poBox": {
+            "type": "string",
+            "example": "P.O. Box 456"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "medicalHistory": {
+            "type": "string",
+            "example": "None"
+          },
+          "collectorId": {
+            "type": "number",
+            "example": 2
+          },
+          "systemAdminId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "birthDate",
+          "age",
+          "gender",
+          "city",
+          "subCity",
+          "zone",
+          "woreda",
+          "kebele",
+          "email",
+          "password",
+          "username",
           "bloodType"
         ]
       },
       "Update Donor": {
         "type": "object",
         "properties": {
-          "userId": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "middleName": {
+            "type": "string",
+            "example": "A."
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "title": {
+            "type": "string",
+            "example": "Mr."
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1990-01-01"
+          },
+          "age": {
             "type": "number",
-            "example": 1
+            "example": 33
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Engineer"
+          },
+          "city": {
+            "type": "string",
+            "example": "New York"
+          },
+          "subCity": {
+            "type": "string",
+            "example": "Manhattan"
+          },
+          "zone": {
+            "type": "string",
+            "example": "Central"
+          },
+          "woreda": {
+            "type": "string",
+            "example": "5"
+          },
+          "kebele": {
+            "type": "string",
+            "example": "12"
+          },
+          "telephone": {
+            "type": "string",
+            "example": "123-456-7890"
+          },
+          "cellPhone": {
+            "type": "string",
+            "example": "987-654-3210"
+          },
+          "organization": {
+            "type": "string",
+            "example": "Tech Corp"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "john_doe"
+          },
+          "poBox": {
+            "type": "string",
+            "example": "P.O. Box 456"
           },
           "bloodType": {
             "type": "string",
             "example": "A+"
+          },
+          "medicalHistory": {
+            "type": "string",
+            "example": "None"
+          },
+          "collectorId": {
+            "type": "number",
+            "example": 2
+          },
+          "systemAdminId": {
+            "type": "number",
+            "example": 1
           }
         }
       },
@@ -1087,6 +1890,192 @@
             "example": 1
           }
         }
+      },
+      "New Order": {
+        "type": "object",
+        "properties": {
+          "orderDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 3
+          },
+          "status": {
+            "type": "string",
+            "example": "Pending"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "orderDate",
+          "bloodType",
+          "quantity",
+          "status",
+          "hospitalId"
+        ]
+      },
+      "Update Order": {
+        "type": "object",
+        "properties": {
+          "orderDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 3
+          },
+          "status": {
+            "type": "string",
+            "example": "Pending"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "New Integration": {
+        "type": "object",
+        "properties": {
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "hospitalId"
+        ]
+      },
+      "Update Integration": {
+        "type": "object",
+        "properties": {
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "New Report": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Monthly Report"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is the content of the report."
+          },
+          "generatedBy": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "title",
+          "content",
+          "generatedBy"
+        ]
+      },
+      "Update Report": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Updated Report Title"
+          },
+          "content": {
+            "type": "string",
+            "example": "Updated content of the report."
+          },
+          "generatedBy": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "New Donation": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "donorId",
+          "bloodId",
+          "donationDate"
+        ]
+      },
+      "Update Donation": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        }
+      },
+      "New Collection": {
+        "type": "object",
+        "properties": {
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "collectedDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "bloodId",
+          "collectedDate"
+        ]
+      },
+      "Update Collection": {
+        "type": "object",
+        "properties": {
+          "bloodId": {
+            "type": "number",
+            "example": 1
+          },
+          "collectedDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        }
       }
     },
     "parameters": {},
@@ -1347,7 +2336,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -1378,7 +2367,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -1418,7 +2407,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -1432,7 +2421,7 @@
         }
       }
     },
-    "/api/account": {
+    "/api/accounts": {
       "post": {
         "summary": "Create a new account record",
         "tags": [
@@ -1459,7 +2448,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/account": {
       "get": {
         "summary": "Get all account records",
         "tags": [
@@ -2621,6 +3612,741 @@
           },
           "404": {
             "description": "Notification not found"
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "post": {
+        "summary": "Create a new order",
+        "tags": [
+          "Order"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all orders",
+        "tags": [
+          "Order"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/{id}": {
+      "get": {
+        "summary": "Get an order by ID",
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The order with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an order",
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an order",
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Order deleted successfully"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/api/integration": {
+      "post": {
+        "summary": "Register a new integration",
+        "tags": [
+          "Integration"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Integration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all integrations",
+        "tags": [
+          "Integration"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of integrations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Integration"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/{id}": {
+      "get": {
+        "summary": "Get an integration by ID",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The integration with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an integration",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Integration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an integration",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Integration deleted successfully"
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      }
+    },
+    "/api/report": {
+      "post": {
+        "summary": "Create a new report",
+        "tags": [
+          "Report"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Report"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all reports",
+        "tags": [
+          "Report"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of reports",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Report"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report/{id}": {
+      "get": {
+        "summary": "Get a report by ID",
+        "tags": [
+          "Report"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The report with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a report",
+        "tags": [
+          "Report"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Report"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a report",
+        "tags": [
+          "Report"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Report deleted successfully"
+          },
+          "404": {
+            "description": "Report not found"
+          }
+        }
+      }
+    },
+    "/api/donation": {
+      "post": {
+        "summary": "Create a new donation",
+        "tags": [
+          "Donation"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Donation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created donation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all donations",
+        "tags": [
+          "Donation"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of donations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Donation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/donation/{id}": {
+      "get": {
+        "summary": "Get a donation by ID",
+        "tags": [
+          "Donation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The donation with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Donation not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a donation",
+        "tags": [
+          "Donation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Donation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated donation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Donation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Donation not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a donation",
+        "tags": [
+          "Donation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Donation deleted successfully"
+          },
+          "404": {
+            "description": "Donation not found"
+          }
+        }
+      }
+    },
+    "/api/collection": {
+      "post": {
+        "summary": "Register a new collection",
+        "tags": [
+          "Collection"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Collection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all collections",
+        "tags": [
+          "Collection"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of collections",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Collection"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collection/{id}": {
+      "get": {
+        "summary": "Get a collection by ID",
+        "tags": [
+          "Collection"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The collection with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Collection not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a collection",
+        "tags": [
+          "Collection"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Collection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated collection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Collection not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a collection",
+        "tags": [
+          "Collection"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Collection deleted successfully"
+          },
+          "404": {
+            "description": "Collection not found"
           }
         }
       }

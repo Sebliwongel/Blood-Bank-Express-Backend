@@ -5,8 +5,11 @@ import { DonorSchema, NewDonorSchema, UpdateDonorSchema } from "./donorSchema";
 
 export const donorRegistry = new AccessibleOpenAPIRegistry();
 
+// Register donor schemas
 donorRegistry.register("Donor", DonorSchema);
 donorRegistry.register("NewDonor", NewDonorSchema);
+donorRegistry.register("UpdateDonor", UpdateDonorSchema);
+
 // Register the POST path for creating a donor
 donorRegistry.registerPath({
   method: "post",
@@ -63,7 +66,7 @@ donorRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "integer" }, // Adjusted to match the ID type (Int)
     },
   ],
   responses: {
@@ -92,7 +95,7 @@ donorRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "integer" }, // Adjusted to match the ID type (Int)
     },
   ],
   request: {
@@ -130,7 +133,7 @@ donorRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "integer" }, // Adjusted to match the ID type (Int)
     },
   ],
   responses: {
