@@ -44,58 +44,31 @@ model Donor {
   medicalHistory String?
 
   collectorId    Int?
-  collector      SystemUser?    @relation("CollectorDonors", fields: [collectorId], references: [id])
+  collector      User?    @relation("CollectorDonors", fields: [collectorId], references: [id])
 
   systemAdminId  Int?
-  systemAdmin    SystemUser?    @relation("AdminDonors", fields: [systemAdminId], references: [id])
+  systemAdmin    User?    @relation("AdminDonors", fields: [systemAdminId], references: [id])
 
   notifications  Notification[]
   appointments   Appointment[]
   donations      Donation[]
-
+   Account       Account[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 }
 
-// The SystemUser model
-model SystemUser {
+// The User model
+model User {
   id             Int           @id @default(autoincrement())
   name           String
   email          String        @unique
   role           UserRole
   password       String
-
+ reports     Report[] 
   collectedDonors Donor[]      @relation("CollectorDonors")
   adminDonors    Donor[]       @relation("AdminDonors")
-  accounts       Account[]
-  notifications  Notification[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-}
-
-// The Account model
-model Account {
-  id            Int         @id @default(autoincrement())
-  accountType   String
-  accountStatus String
-  userId        Int         @unique
-  user          SystemUser  @relation(fields: [userId], references: [id])
-
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-}
-
-// The Notification model
-model Notification {
-  id          Int         @id @default(autoincrement())
-  content     String
-  sendDate    DateTime    @default(now())
-  hospitalId  Int?
-  donorId     Int?
-  adminId     Int?
-  hospital    Hospital?   @relation(fields: [hospitalId], references: [id])
-  donor       Donor?      @relation(fields: [donorId], references: [id])
-  systemAdmin SystemUser? @relation(fields: [adminId], references: [id])
 }
 
 // The Appointment model
@@ -157,7 +130,6 @@ model Integration {
   inventories   Inventory[] // One-to-many relation to Inventory
 }
 
-
 // Blood model
 model Blood {
   id            Int           @id @default(autoincrement())
@@ -188,3 +160,59 @@ model Collection {
   bloodId         Int
   blood           Blood     @relation(fields: [bloodId], references: [id])
 }
+
+// SystemAdmin Model
+model SystemAdmin {
+  id          Int          @id @default(autoincrement())
+  username    String
+  accounts    Account[]    @relation("UserAccounts") // One-to-many relationship with Account
+  notifications Notification[] // Optional one-to-many relationship with Notification (correcting this issue)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+
+// Account Model
+model Account {
+  id            Int         @id @default(autoincrement())
+  accountType   String
+  accountStatus String
+  userId        Int
+  user          SystemAdmin @relation("UserAccounts", fields: [userId], references: [id]) // One-to-one relation with SystemAdmin
+  Donor           Donor[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+// Notification Model
+model Notification {
+  id          Int         @id @default(autoincrement())
+  content     String      // Content of the notification
+  sendDate    DateTime    @default(now()) // Timestamp when the notification was sent
+  hospitalId  Int?        // Optional relation to Hospital
+  donorId     Int?        // Optional relation to Donor
+  adminId     Int?        // Optional relation to SystemAdmin
+  hospital    Hospital?   @relation(fields: [hospitalId], references: [id]) // Optional relation with Hospital
+  donor       Donor?      @relation(fields: [donorId], references: [id]) // Optional relation with Donor
+  systemAdmin SystemAdmin? @relation(fields: [adminId], references: [id]) // Optional relation with SystemAdmin
+
+  createdAt   DateTime    @default(now()) // Timestamp for creation
+  updatedAt   DateTime    @updatedAt // Timestamp for last update
+}
+
+model Report {
+  id          Int       @id @default(autoincrement())
+  title       String
+  content     String
+  generatedBy Int       // Foreign key to User model
+  user        User      @relation(fields: [generatedBy], references: [id]) // Relation to the User who generated the report
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+
+
+
+
+

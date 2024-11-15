@@ -12,10 +12,9 @@ import {
 // Create a new blood entry
 export const createBloodController = async (req: Request, res: Response) => {
   try {
+    console.log(req.body)
     // Validate and parse request body using the NewBloodSchema
     const parsed = await validateAndParse(NewBloodSchema, req);
-    
-    // Call the service to create the blood entry
     const newBlood = await createBlood(parsed.bloodType, parsed.quantity, parsed.donationDate);
     
     // Send response with the created blood entry
@@ -67,9 +66,8 @@ export const updateBloodController = async (req: Request, res: Response) => {
   try {
     // Validate and parse the update body using UpdateBloodSchema
     const parsed = await validateAndParse(UpdateBloodSchema, req);
-    
     // Call the service to update the blood entry
-    const updatedBlood = await updateBlood(bloodId, parsed);
+    const updatedBlood = await updateBlood(bloodId,parsed);
     
     if (!updatedBlood) {
       return res.status(404).json({ error: "Blood record not found" });

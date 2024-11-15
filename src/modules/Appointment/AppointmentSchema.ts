@@ -2,13 +2,22 @@ import { z } from "zod";
 import { DonorSchema } from "../donor/donorSchema";
 
 // Schema for creating a new appointment
+
 export const NewAppointmentSchema = z
   .object({
-    appointmentDate: z.date().openapi({ example: "2024-11-07T10:00:00.000Z" }),
-    status: z.string().openapi({ example: "Scheduled" }),
+    appointmentDate: z
+      .string()
+      .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
+        message: "Invalid date format",
+      })
+      .transform((dateStr) => new Date(dateStr))
+      .openapi({ example: "2023-07-15T10:00:00.000Z" }), // Date of donation
+
+    status: z.string().openapi({ example: "Scheduled" }), // Status of the appointment
+
     donorId: z.number().openapi({ example: 1 }), // Reference to Donor ID
   })
-  .openapi("New Appointment");
+  .openapi("NewAppointment");
 
 // Schema for retrieving an appointment (including relation with Donor)
 export const AppointmentSchema = z
@@ -24,11 +33,32 @@ export const AppointmentSchema = z
   .openapi("Appointment");
 
 // Schema for updating an appointment
+
 export const UpdateAppointmentSchema = z
   .object({
-    appointmentDate: z.date().optional().openapi({ example: "2024-11-07T10:00:00.000Z" }),
-    status: z.string().optional().openapi({ example: "Completed" }),
-    donorId: z.number().optional().openapi({ example: 1 }), // Optional, as it may not be updated
+    // Optional: Appointment date
+    appointmentDate: z
+      .string()
+      .optional()
+      .refine((dateStr) => {
+        // Only validate if the date string is provided
+        if (dateStr) {
+          return !isNaN(Date.parse(dateStr));
+        }
+        return true; // If no date is provided, it's valid
+      }, {
+        message: "Invalid date format",
+      })
+      .transform((dateStr) => (dateStr ? new Date(dateStr) : undefined)) // Transform to Date object or undefined
+      .openapi({ example: "2023-07-15T10:00:00.000Z" }),
+
+    // Optional: Status of the appointment
+    status: z.string().optional().openapi({ example: "Rescheduled" }),
+
+    // Optional: Donor ID reference
+    donorId: z.number().optional().openapi({ example: 2 }),
   })
-  .openapi("Update Appointment");
+  .openapi("UpdateAppointment");
+
+
 

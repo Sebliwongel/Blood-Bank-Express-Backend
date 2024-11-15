@@ -130,7 +130,7 @@
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
+            "example": "1990-01-01T00:00:00.000Z"
           },
           "age": {
             "type": "number",
@@ -259,7 +259,7 @@
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
+            "example": "1990-01-01T00:00:00.000Z"
           },
           "age": {
             "type": "number",
@@ -376,8 +376,7 @@
             "example": "Mr."
           },
           "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
+            "type": "string"
           },
           "age": {
             "type": "number",
@@ -900,7 +899,7 @@
         "properties": {
           "appointmentDate": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "2023-07-15T10:00:00.000Z"
           },
           "status": {
             "type": "string",
@@ -1367,7 +1366,7 @@
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
+            "example": "1990-01-01T00:00:00.000Z"
           },
           "age": {
             "type": "number",
@@ -1484,8 +1483,7 @@
             "example": "Mr."
           },
           "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
+            "type": "string"
           },
           "age": {
             "type": "number",
@@ -1806,60 +1804,20 @@
           "donationDate"
         ]
       },
-      "Update Blood": {
+      "UpdateAppointment": {
         "type": "object",
         "properties": {
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "example": 500
-          },
-          "donationDate": {
+          "appointmentDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
-      },
-      "New Appointment": {
-        "type": "object",
-        "properties": {
-          "appointmentDate": {
-            "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
           },
           "status": {
             "type": "string",
-            "example": "Scheduled"
+            "example": "Rescheduled"
           },
           "donorId": {
             "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "appointmentDate",
-          "status",
-          "donorId"
-        ]
-      },
-      "Update Appointment": {
-        "type": "object",
-        "properties": {
-          "appointmentDate": {
-            "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
-          },
-          "status": {
-            "type": "string",
-            "example": "Completed"
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
+            "example": 2
           }
         }
       },
@@ -2316,6 +2274,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input data"
           }
         }
       },
@@ -2337,6 +2298,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "No donors found"
           }
         }
       }
@@ -2367,6 +2331,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid ID format"
           },
           "404": {
             "description": "Donor not found"
@@ -2408,6 +2375,9 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid input data or ID"
+          },
           "404": {
             "description": "Donor not found"
           }
@@ -2431,6 +2401,9 @@
         "responses": {
           "204": {
             "description": "Donor deleted successfully"
+          },
+          "400": {
+            "description": "Invalid ID format"
           },
           "404": {
             "description": "Donor not found"
@@ -3252,7 +3225,22 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Blood"
+                "type": "object",
+                "properties": {
+                  "bloodType": {
+                    "type": "string",
+                    "example": "A+"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "example": 500
+                  },
+                  "donationDate": {
+                    "type": "string",
+                    "example": "2023-07-15T10:00:00.000Z"
+                  }
+                }
               }
             }
           }
@@ -3349,7 +3337,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Appointment"
+                "$ref": "#/components/schemas/NewAppointment"
               }
             }
           }
@@ -3440,7 +3428,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Appointment"
+                "$ref": "#/components/schemas/UpdateAppointment"
               }
             }
           }
