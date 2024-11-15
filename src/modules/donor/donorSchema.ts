@@ -7,12 +7,13 @@ export const NewDonorSchema = z
     middleName: z.string().optional().openapi({ example: "A." }),
     lastName: z.string().openapi({ example: "Doe" }),
     title: z.string().optional().openapi({ example: "Mr." }),
-    birthDate: z.preprocess((arg) => {
-      if (typeof arg === "string" || arg instanceof Date) {
-        return new Date(arg);
-      }
-      return arg;
-    }, z.date().openapi({ example: "1990-01-01T00:00:00.000Z" })),
+    birthDate: z
+    .string()
+    .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
+      message: "Invalid date format",
+    })
+    .transform((dateStr) => new Date(dateStr))
+    .openapi({ example: "1990-05-22T00:00:00.000Z" }), // Donor's birth date 
     age: z.number().openapi({ example: 33 }),
     gender: z.string().openapi({ example: "Male" }),
     occupation: z.string().optional().openapi({ example: "Engineer" }),
@@ -43,12 +44,13 @@ export const DonorSchema = z
     middleName: z.string().optional().openapi({ example: "A." }),
     lastName: z.string().openapi({ example: "Doe" }),
     title: z.string().optional().openapi({ example: "Mr." }),
-    birthDate: z.preprocess((arg) => {
-      if (typeof arg === "string" || arg instanceof Date) {
-        return new Date(arg);
-      }
-      return arg;
-    }, z.date().openapi({ example: "1990-01-01T00:00:00.000Z" })),
+    birthDate: z
+    .string()
+    .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
+      message: "Invalid date format",
+    })
+    .transform((dateStr) => new Date(dateStr))
+    .openapi({ example: "1990-05-22T00:00:00.000Z" }), // Donor's birth date  
     age: z.number().openapi({ example: 33 }),
     gender: z.string().openapi({ example: "Male" }),
     occupation: z.string().optional().openapi({ example: "Engineer" }),
@@ -80,12 +82,21 @@ export const UpdateDonorSchema = z
     middleName: z.string().optional().openapi({ example: "A." }),
     lastName: z.string().optional().openapi({ example: "Doe" }),
     title: z.string().optional().openapi({ example: "Mr." }),
-    birthDate: z.preprocess((arg) => {
-      if (typeof arg === "string" || arg instanceof Date) {
-        return new Date(arg);
-      }
-      return arg;
-    }, z.date().optional().openapi({ example: "1990-01-01T00:00:00.000Z" })),
+    birthDate: z
+  .string()
+  .optional()
+  .refine((dateStr) => {
+    // Only validate if the date string is provided
+    if (dateStr) {
+      return !isNaN(Date.parse(dateStr));
+    }
+    return true; // If no date is provided, it's valid
+  }, {
+    message: "Invalid date format",
+  })
+  .transform((dateStr) => (dateStr ? new Date(dateStr) : undefined)) // Transform to Date object or undefined
+  .openapi({ example: "1990-05-22T00:00:00.000Z" }), // Optional: Donor's birth date
+
     age: z.number().optional().openapi({ example: 33 }),
     gender: z.string().optional().openapi({ example: "Male" }),
     occupation: z.string().optional().openapi({ example: "Engineer" }),
