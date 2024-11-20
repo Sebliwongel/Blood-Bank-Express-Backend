@@ -1,105 +1,80 @@
-import { validateAndParse } from "../../utils/validateAndParseRequest";
-import { NewDonorSchema, UpdateDonorSchema } from "./donorSchema";
-import { Request, Response } from "express";
-import {
-  createDonor,
-  deleteDonor,
-  getAllDonors,
-  getDonorById,
-  updateDonor,
-} from "./donorService";
+import { Request, Response, NextFunction } from 'express';
+import { createDonor, getAllDonors, getDonorById, getDonorByPhoneNumber, updateDonor, deleteDonor, patchDonor } from './donorService'; // Assuming service functions are available
 
-// Create a new donor
-export const createDonorController = async (req: Request, res: Response) => {
+// Controller for creating a new donor
+export const createDonorHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const parsed = await validateAndParse(NewDonorSchema, req);
-    const newDonor = await createDonor(
-      parsed.firstName,
-      parsed.lastName,
-      new Date(parsed.birthDate),
-      parsed.age,
-      parsed.gender,
-      parsed.city,
-      parsed.subCity,
-      parsed.zone,
-      parsed.woreda,
-      parsed.kebele,
-      parsed.email,
-      parsed.password,
-      parsed.username,
-      parsed.bloodType,
-      parsed.collectorId,
-      parsed.systemAdminId,
-      parsed.middleName,
-      parsed.title,
-      parsed.occupation,
-      parsed.telephone,
-      parsed.cellPhone,
-      parsed.organization,
-      parsed.poBox,
-      parsed.medicalHistory
-    );
+    const donorData = req.body;  // Ensure to validate with schema before calling service
+    const newDonor = await createDonor(donorData);
     res.status(201).json(newDonor);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create donor" });
+    next(error);  // Pass error to global error handler
   }
 };
 
-// Get all donors
-export const getAllDonorController = async (req: Request, res: Response) => {
+// Controller for getting all donors
+export const getAllDonorsHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const donors = await getAllDonors();
     res.status(200).json(donors);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve donors" });
+    next(error);
   }
 };
 
-// Get a donor by ID
-export const getDonorByIdController = async (req: Request, res: Response) => {
-  const donorId = req.params.id; // Assuming the ID is passed as a route parameter
+// Controller for getting a donor by ID
+export const getDonorByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const donor = await getDonorById(parseInt(donorId));
-    if (!donor) {
-      return res.status(404).json({ error: "Donor not found" });
-    }
+    const donorId = parseInt(req.params.id, 10);
+    const donor = await getDonorById(donorId);
     res.status(200).json(donor);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve donor" });
+    next(error);
   }
 };
 
-// Update a donor
-export const updateDonorController = async (req: Request, res: Response) => {
-  const donorId = req.params.id;
+// Controller for getting a donor by phone number
+export const getDonorByPhoneNumberHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const parsed = await validateAndParse(UpdateDonorSchema, req);
-    const birthDate = parsed.birthDate ? new Date(parsed.birthDate) : undefined;
-    const updatedDonor = await updateDonor(parseInt(donorId), { ...parsed, birthDate });
-    if (!updatedDonor) {
-      return res.status(404).json({ error: "Donor not found" });
-    }
+    const phoneNumber = req.params.phoneNumber;
+    const donor = await getDonorByPhoneNumber(phoneNumber);
+    res.status(200).json(donor);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Controller for updating a donor
+export const updateDonorHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const donorId = parseInt(req.params.id, 10);
+    const updatedData = req.body;  // Ensure you validate the body with schema
+    const updatedDonor = await updateDonor(donorId, updatedData);
     res.status(200).json(updatedDonor);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to update donor" });
+    next(error);
   }
 };
 
-// Delete a donor
-export const deleteDonorController = async (req: Request, res: Response) => {
-  const donorId = req.params.id;
+// Controller for deleting a donor
+export const deleteDonorHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deleted = await deleteDonor(parseInt(donorId));
-    if (!deleted) {
-      return res.status(404).json({ error: "Donor not found" });
-    }
-    res.status(204).send(); // No content response
+    const donorId = parseInt(req.params.id, 10);
+    await deleteDonor(donorId);
+    res.status(204).send();
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete donor" });
+    next(error);
+  }
+};
+
+// Controller for patching (partial update) a donor
+export const patchDonorHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const donorId = parseInt(req.params.id, 10);
+    const patchData = req.body;  // Ensure you validate the body
+    const patchedDonor = await patchDonor(donorId, patchData);
+    res.status(200).json(patchedDonor);
+  } catch (error) {
+    next(error);
   }
 };

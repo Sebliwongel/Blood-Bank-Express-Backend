@@ -68,3 +68,5 @@ export const deleteBlood = async (id: number) => {
     where: { id },
   });
 };
+
+//parsed.birthDate != undefined ? parsed.birthDate : new Date(),
