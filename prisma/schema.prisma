@@ -19,36 +19,31 @@ enum UserRole {
 
 // The main Donor model
 model Donor {
-  id             Int            @id @default(autoincrement())
-  firstName      String
-  middleName     String?
-  lastName       String
-  title          String?
-  birthDate      DateTime
-  age            Int
-  gender         String
-  occupation     String?
-  city           String
-  subCity        String
-  zone           String
-  woreda         String
-  kebele         String
-  telephone      String?
-  cellPhone      String?
-  organization   String?
-  email          String         @unique
-  password       String
-  username       String         @unique
-  poBox          String?
-  bloodType      String
+  id            Int     @id @default(autoincrement())
+  firstName     String
+  middleName    String?
+  lastName      String
+  title         String?
+  birthDate     DateTime
+  age           Int
+  gender        String
+  occupation    String?
+  city          String
+  subCity       String
+  zone          String
+  woreda        String
+  kebele        String
+  telephone     String?
+  cellPhone     String?
+  organization  String?
+  email         String  // Removed `@unique`
+  password      String
+  username      String  // Removed `@unique`
+  poBox         String?
+ collectorId   Int?     // Foreign key to the User acting as a collector
+  collector     User?    @relation("CollectorDonations", fields: [collectorId], references: [id])
   medicalHistory String?
-
-  collectorId    Int?
-  collector      User?    @relation("CollectorDonors", fields: [collectorId], references: [id])
-
-  systemAdminId  Int?
-  systemAdmin    User?    @relation("AdminDonors", fields: [systemAdminId], references: [id])
-
+  qualifications Qualification[]  @relation("DonorQualification")
   notifications  Notification[]
   appointments   Appointment[]
   donations      Donation[]
@@ -64,9 +59,8 @@ model User {
   email          String        @unique
   role           UserRole
   password       String
- reports     Report[] 
-  collectedDonors Donor[]      @relation("CollectorDonors")
-  adminDonors    Donor[]       @relation("AdminDonors")
+   reports     Report[] 
+    donors   Donor[]   @relation("CollectorDonations") // A user can be a collector for many 
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 }
@@ -114,7 +108,6 @@ model Inventory {
   totalQuantity   Int          // Total quantity of this blood type
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
-
   integrationId   Int?
   integration     Integration? @relation(fields: [integrationId], references: [id]) // Add the inverse relation field here
 
@@ -209,6 +202,57 @@ model Report {
 
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+model Qualification {
+  id                  Int      @id @default(autoincrement())
+   donorId         Int      // Foreign key to the Donor model
+  donor           Donor    @relation("DonorQualification", fields: [donorId], references: [id])
+
+  weight              Float    // Weight of the donor
+  pulse               Int      // Pulse rate of the donor
+  hb                  Float    // Hemoglobin level
+  bp                  String   // Blood pressure as a string (e.g., "120/80")
+  temperature         Float    // Body temperature
+
+  lastDonationDate    DateTime? // Date of last blood donation
+  hasDonatedBefore    Boolean   // Whether the donor has donated previously
+
+  // Conditions within the last six months
+  hasTattooing        Boolean
+  hasEarPiercing      Boolean
+  hadDentalExtraction Boolean
+
+  // Medical history questions
+  hasHeartDisease     Boolean
+  hasCancer           Boolean
+  hasDiabetes         Boolean
+  hasHepatitis        Boolean
+  hasSTD              Boolean
+  hadTyphoidLastYear  Boolean
+  hasLungDisease      Boolean
+  hasTuberculosis     Boolean
+  hasAllergies        Boolean
+  hasKidneyDisease    Boolean
+  hasEpilepsy         Boolean
+  hasAbnormalBleeding Boolean
+  hadJaundiceLastYear Boolean
+  hadMalariaSixMonths Boolean
+  hasFaintingSpells   Boolean
+
+  // Medication and recent intake
+  takenAntibiotics    Boolean
+  takenSteroids       Boolean
+  takenAspirin        Boolean
+  hadVaccinations     Boolean
+  consumedAlcohol     Boolean
+  hadDogBiteVaccine   Boolean
+
+  // Surgery and transfusion history
+  hadSurgeryLastSixMonths     Boolean
+  hadBloodTransfusionLastSixMonths Boolean
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 

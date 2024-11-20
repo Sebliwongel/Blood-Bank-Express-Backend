@@ -44,7 +44,7 @@ donorRegistry.registerPath({
 donorRegistry.registerPath({
   method: "get",
   path: "/api/donor",
-  summary: "Get all donors",
+  summary: "Get all donor",
   tags: ["Donor"],
   responses: {
     200: {

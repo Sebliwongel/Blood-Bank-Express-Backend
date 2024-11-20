@@ -1,142 +1,103 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+import { NewDonorType, UpdateDonorType } from './donorSchema';  // Assuming you have the donorSchema set up as in the question
 
 const prisma = new PrismaClient();
 
-// Get all donors
+// Helper function to safely extract the error message
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return String(error);
+};
+
+// Service for creating a new donor
+export const createDonor = async (donorData: NewDonorType) => {
+  try {
+    const newDonor = await prisma.donor.create({
+      data: donorData,
+    });
+    return newDonor;
+  } catch (error) {
+    throw new Error(`Failed to create donor: ${getErrorMessage(error)}`);
+  }
+};
+
+// Service for fetching all donors
 export const getAllDonors = async () => {
-  return await prisma.donor.findMany({
-    include: {
-      collector: true,
-      systemAdmin: true,
-      notifications: true,
-      appointments: true,
-      donations: true,
-    },
-  });
+  try {
+    const donors = await prisma.donor.findMany();
+    return donors;
+  } catch (error) {
+    throw new Error(`Failed to fetch donors: ${getErrorMessage(error)}`);
+  }
 };
 
-// Update donor
-export const updateDonor = async (
-  donorId: number,
-  updates: {
-    firstName?: string;
-    middleName?: string;
-    lastName?: string;
-    title?: string;
-    birthDate?: Date;
-    age?: number;
-    gender?: string;
-    occupation?: string;
-    city?: string;
-    subCity?: string;
-    zone?: string;
-    woreda?: string;
-    kebele?: string;
-    telephone?: string;
-    cellPhone?: string;
-    organization?: string;
-    email?: string;
-    password?: string;
-    username?: string;
-    poBox?: string;
-    bloodType?: string;
-    medicalHistory?: string;
-    collectorId?: number;
-    systemAdminId?: number;
-  }
-) => {
-  // Find the donor by ID
-  const donor = await prisma.donor.findUnique({
-    where: { id: donorId },
-  });
-
-  // If the donor does not exist, return null or handle accordingly
-  if (!donor) {
-    return null;
-  }
-
-  // Update the donor with the provided fields
-  return await prisma.donor.update({
-    where: { id: donorId },
-    data: updates,
-  });
-};
-
-// Get donor by ID
+// Service for fetching a donor by ID
 export const getDonorById = async (id: number) => {
-  return await prisma.donor.findUnique({
-    where: { id },
-    include: {
-      collector: true,
-      systemAdmin: true,
-      notifications: true,
-      appointments: true,
-      donations: true,
-    },
-  });
+  try {
+    const donor = await prisma.donor.findUnique({
+      where: { id },
+    });
+    if (!donor) throw new Error(`Donor with ID ${id} not found`);
+    return donor;
+  } catch (error) {
+    throw new Error(`Failed to fetch donor: ${getErrorMessage(error)}`);
+  }
 };
 
-// Create a new donor
-export const createDonor = async (
-  firstName: string,
-  lastName: string,
-  birthDate: Date,
-  age: number,
-  gender: string,
-  city: string,
-  subCity: string,
-  zone: string,
-  woreda: string,
-  kebele: string,
-  email: string,
-  password: string,
-  username: string,
-  bloodType: string,
-  collectorId?: number,
-  systemAdminId?: number,
-  middleName?: string,
-  title?: string,
-  occupation?: string,
-  telephone?: string,
-  cellPhone?: string,
-  organization?: string,
-  poBox?: string,
-  medicalHistory?: string
-) => {
-  return await prisma.donor.create({
-    data: {
-      firstName,
-      middleName,
-      lastName,
-      title,
-      birthDate,
-      age,
-      gender,
-      occupation,
-      city,
-      subCity,
-      zone,
-      woreda,
-      kebele,
-      telephone,
-      cellPhone,
-      organization,
-      email,
-      password,
-      username,
-      poBox,
-      bloodType,
-      medicalHistory,
-      collectorId,
-      systemAdminId,
-    },
-  });
-  
+// Service for fetching a donor by phone number
+export const getDonorByPhoneNumber = async (phoneNumber: string) => {
+  try {
+    const donor = await prisma.donor.findFirst({
+      where: {
+        OR: [
+          { telephone: phoneNumber },
+          { cellPhone: phoneNumber },
+        ],
+      },
+    });
+    if (!donor) throw new Error(`Donor with phone number ${phoneNumber} not found`);
+    return donor;
+  } catch (error) {
+    throw new Error(`Failed to fetch donor by phone number: ${getErrorMessage(error)}`);
+  }
 };
 
-// Delete a donor
+// Service for updating a donor
+export const updateDonor = async (id: number, updatedData: UpdateDonorType) => {
+  try {
+    const updatedDonor = await prisma.donor.update({
+      where: { id },
+      data: updatedData,
+    });
+    return updatedDonor;
+  } catch (error) {
+    throw new Error(`Failed to update donor: ${getErrorMessage(error)}`);
+  }
+};
+
+// Service for deleting a donor
 export const deleteDonor = async (id: number) => {
-  return await prisma.donor.delete({
-    where: { id },
-  });
+  try {
+    const deletedDonor = await prisma.donor.delete({
+      where: { id },
+    });
+    return deletedDonor;
+  } catch (error) {
+    throw new Error(`Failed to delete donor: ${getErrorMessage(error)}`);
+  }
+};
+
+// Service for patching (partial update) a donor
+export const patchDonor = async (id: number, patchData: UpdateDonorType) => {
+  try {
+    const patchedDonor = await prisma.donor.update({
+      where: { id },
+      data: patchData,
+    });
+    return patchedDonor;
+  } catch (error) {
+    throw new Error(`Failed to patch donor: ${getErrorMessage(error)}`);
+  }
 };

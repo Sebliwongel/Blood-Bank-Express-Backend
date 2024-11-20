@@ -5,7 +5,6 @@ import { userRegistry } from "../modules/User/userRegistry";
 import { authRegistry } from "../modules/auth/authRegistry";
 import { combineRegistries } from "./combineRegistries";
 import { protectedRegistry } from "../modules/protected/registry/protectedRegistry";
-import { donorRegistry } from "../modules/donor/donorRegistry";
 import { inventoryRegistry } from "../modules/Inventory/InventoryRegistry";
 import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry";
 import { hospitalRegistry } from "../modules/Hospital/HospitalRegistry";
@@ -18,12 +17,15 @@ import { integrationRegistry } from "../modules/Integration/IntegrationRegistry"
 import { reportRegistry } from "../modules/Report/ReportRegistry";
 import { donationRegistry } from "../modules/Donation/DonationRegistry";
 import { collectionRegistry } from "../modules/Collection/CollectionRegistry";
+import { donorRegistry } from "../modules/donor/donorRegistry";
+import { qualificationRegistry } from "../modules/Qulification/QulificationRegistry";
 
 const combinedRegistry = combineRegistries(
   userRegistry,
   authRegistry,
   protectedRegistry,
   donorRegistry,
+  qualificationRegistry,
   accountRegistry,
   inventoryRegistry,
   systemAdminRegistry,

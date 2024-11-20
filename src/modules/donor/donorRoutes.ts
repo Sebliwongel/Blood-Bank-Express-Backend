@@ -1,18 +1,22 @@
-import { Router } from "express";
-import {
-  createDonorController,
-  deleteDonorController,
-  getAllDonorController,
-  getDonorByIdController,
-  updateDonorController,
-} from "./donorController";
+//import { errorHandler } from '../middlewares/errorHandler';
+import express from 'express';
+import { createDonorHandler, getAllDonorsHandler, getDonorByIdHandler, getDonorByPhoneNumberHandler, updateDonorHandler, deleteDonorHandler, patchDonorHandler } from './donorController'; // Ensure correct import paths
 
-const router = Router();
+const donorRoutes = express.Router();
 
-router.get("/api/donor", getAllDonorController);
-router.get("/api/donor/:id", getDonorByIdController);
-router.post("/api/donor", createDonorController);
-router.patch("/api/donor/:id", updateDonorController); // Updated to include the ID
-router.delete("/api/donor/:id", deleteDonorController); // Updated to include the ID
+// Define your routes and map them to the appropriate controller functions
+donorRoutes.post('donor', createDonorHandler); // Creates a new donor
+donorRoutes.get('donor', getAllDonorsHandler); // Gets all donors
+donorRoutes.get('donor/:id', getDonorByIdHandler); // Gets a donor by ID
+donorRoutes.get('donor/phone/:phoneNumber', getDonorByPhoneNumberHandler); // Gets donor by phone number
+donorRoutes.put('donor/:id', updateDonorHandler); // Updates donor by ID
+donorRoutes.delete('donor/:id', deleteDonorHandler); // Deletes donor by ID
+donorRoutes.patch('donor/:id', patchDonorHandler); // Partially updates a donor by ID
 
-export default router;
+export default donorRoutes; // Export the router to be used in the main app
+
+
+// Error handler middleware
+//app.use(errorHandler);
+
+

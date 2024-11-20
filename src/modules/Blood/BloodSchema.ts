@@ -1,4 +1,5 @@
 import { z } from "zod";
+import dateSchema from "../../utils/commonSchema";
 
 // Schema for creating a new blood record
 export const NewBloodSchema = z
@@ -11,10 +12,9 @@ export const NewBloodSchema = z
         message: "Invalid date format",
       })
       .transform((dateStr) => new Date(dateStr))
-      .openapi({ example: "2023-07-15T10:00:00.000Z" }),// Date of donation
+      .openapi({ example: "2023-07-15T10:00:00.000Z" }), // Date of donation
   })
   .openapi("New Blood");
-  
 
 // Schema for a blood record with full details
 export const BloodSchema = z
@@ -29,23 +29,9 @@ export const BloodSchema = z
   .openapi("Blood");
 
 // Schema for updating a blood record
-export const UpdateBloodSchema = z
-  .object({
-    bloodType: z.string().optional().openapi({ example: "A+" }), // Optional: Blood type
-    quantity: z.number().min(0).optional().openapi({ example: 500 }), // Optional: Blood quantity
-    // Optional: Date of donation
-    donationDate: z
-      .string()
-      .optional()
-      .refine((dateStr) => {
-        // Only validate if the date string is provided
-        if (dateStr) {
-          return !isNaN(Date.parse(dateStr));
-        }
-        return true; // If no date is provided, it's valid
-      }, {
-        message: "Invalid date format",
-      })
-      .transform((dateStr) => dateStr ? new Date(dateStr) : undefined) // Transform to Date object or undefined
-      .openapi({ example: "2023-07-15T10:00:00.000Z" }), // Optional: Date of donation
-  })
+export const UpdateBloodSchema = z.object({
+  bloodType: z.string().optional().openapi({ example: "A+" }), // Optional: Blood type
+  quantity: z.number().min(0).optional().openapi({ example: 500 }), // Optional: Blood quantity
+  // Optional: Date of donation
+  donationDate: dateSchema,
+});
