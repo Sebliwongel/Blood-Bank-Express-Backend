@@ -6,7 +6,7 @@ import { authRegistry } from "../modules/auth/authRegistry";
 import { combineRegistries } from "./combineRegistries";
 import { protectedRegistry } from "../modules/protected/registry/protectedRegistry";
 import { inventoryRegistry } from "../modules/Inventory/InventoryRegistry";
-import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry";
+//import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry";
 import { hospitalRegistry } from "../modules/Hospital/HospitalRegistry";
 import { accountRegistry } from "../modules/Account/AccountRegistry";
 import { bloodRegistry } from "../modules/Blood/BloodRegistry";
@@ -15,7 +15,7 @@ import { notificationRegistry } from "../modules/Notification/NotificationRegist
 import { orderRegistry } from "../modules/Order/OrderRegistry";
 import { integrationRegistry } from "../modules/Integration/IntegrationRegistry";
 import { reportRegistry } from "../modules/Report/ReportRegistry";
-import { donationRegistry } from "../modules/Donation/DonationRegistry";
+//import { donationRegistry } from "../modules/Donation/DonationRegistry";
 import { collectionRegistry } from "../modules/Collection/CollectionRegistry";
 import { donorRegistry } from "../modules/donor/donorRegistry";
 import { qualificationRegistry } from "../modules/Qulification/QulificationRegistry";
@@ -28,7 +28,7 @@ const combinedRegistry = combineRegistries(
   qualificationRegistry,
   accountRegistry,
   inventoryRegistry,
-  systemAdminRegistry,
+ // systemAdminRegistry,
   hospitalRegistry,
   bloodRegistry,
   appointmentRegistry,
@@ -36,7 +36,7 @@ const combinedRegistry = combineRegistries(
   orderRegistry,
   integrationRegistry,
    reportRegistry,
-   donationRegistry,
+   //donationRegistry,
    collectionRegistry,
 );
 

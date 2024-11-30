@@ -8,7 +8,7 @@ export const getAllBloods = async () => {
     include: {
       inventory: true, // Include related inventory if needed
       collections: true, // Include related collections if needed
-      donations: true, // Include related donations if needed
+      //donations: true, // Include related donations if needed
     },
   });
 };
@@ -20,15 +20,16 @@ export const getBloodById = async (id: number) => {
     include: {
       inventory: true, // Include related inventory if needed
       collections: true, // Include related collections if needed
-      donations: true, // Include related donations if needed
+      //donations: true, // Include related donations if needed
     },
   });
 };
 
 // Create a new blood entry
-export const createBlood = async (bloodType: string, quantity: number, donationDate: Date) => {
+export const createBlood = async (donorId: number, bloodType: string, quantity: number, donationDate: Date) => {
   return await prisma.blood.create({
     data: {
+      donorId,
       bloodType,
       quantity,
       donationDate,

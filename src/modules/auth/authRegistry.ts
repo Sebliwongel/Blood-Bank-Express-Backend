@@ -8,7 +8,7 @@ export const authRegistry = new AccessibleOpenAPIRegistry();
 
 authRegistry.registerPath({
   method: "post",
-  path: "/auth/login",
+  path: "/api/login",
   summary: "Login a user",
   tags: ["Auth"],
   request: {

@@ -13,7 +13,7 @@ import {
 export const createCollectionController = async (req: Request, res: Response) => {
   try {
     const parsed = await validateAndParse(NewCollectionSchema, req);
-    const newCollection = await createCollection(parsed.bloodId, parsed.collectedDate);
+    const newCollection = await createCollection(parsed);
     res.status(201).json(newCollection);
   } catch (error) {
     console.error(error);
@@ -52,11 +52,12 @@ export const updateCollectionController = async (req: Request, res: Response) =>
   const collectionId = req.params.id;
   try {
     const parsed = await validateAndParse(UpdateCollectionSchema, req);
-    const updatedCollection = await updateCollection(parseInt(collectionId), parsed);
-    if (!updatedCollection) {
-      return res.status(404).json({ error: "Collection not found" });
+    const result = await updateCollection(parseInt(collectionId), parsed);
+    
+    if (!result.success) {
+      return res.status(404).json(result.error);
     }
-    res.status(200).json(updatedCollection);
+    res.status(200).json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to update collection" });
@@ -67,11 +68,11 @@ export const updateCollectionController = async (req: Request, res: Response) =>
 export const deleteCollectionController = async (req: Request, res: Response) => {
   const collectionId = req.params.id;
   try {
-    const deleted = await deleteCollection(parseInt(collectionId));
-    if (!deleted) {
-      return res.status(404).json({ error: "Collection not found" });
+    const result = await deleteCollection(parseInt(collectionId));
+    if (!result.success) {
+      return res.status(404).json(result.error);
     }
-    res.status(204).send(); // No content response
+    res.status(200).json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to delete collection" });

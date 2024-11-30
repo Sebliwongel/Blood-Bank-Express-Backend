@@ -12,16 +12,25 @@ import {
 // Create a new blood entry
 export const createBloodController = async (req: Request, res: Response) => {
   try {
-    console.log(req.body)
     // Validate and parse request body using the NewBloodSchema
     const parsed = await validateAndParse(NewBloodSchema, req);
-    const newBlood = await createBlood(parsed.bloodType, parsed.quantity, parsed.donationDate);
+    
+    // TODO: Get donorId from authenticated user or request
+    // For now using a placeholder donorId
+    const donorId = 1; // This should be replaced with actual donor ID logic
+    
+    const newBlood = await createBlood(
+      donorId,
+      parsed.bloodType,
+      parsed.quantity,
+      parsed.donationDate
+    );
     
     // Send response with the created blood entry
     res.status(201).json(newBlood);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create blood record" });
+    res.status(500).json({ error: "Failed to retrieve blood records" });
   }
 };
 

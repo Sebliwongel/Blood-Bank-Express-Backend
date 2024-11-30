@@ -37,7 +37,6 @@
             "type": "string",
             "enum": [
               "SYSTEM_ADMIN",
-              "DONOR",
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
@@ -49,6 +48,10 @@
           "password": {
             "type": "string",
             "example": "password123"
+          },
+          "username": {
+            "type": "string",
+            "example": "seblewengel"
           },
           "createdAt": {
             "type": "string",
@@ -65,6 +68,7 @@
           "email",
           "role",
           "password",
+          "username",
           "createdAt",
           "updatedAt"
         ]
@@ -84,7 +88,6 @@
             "type": "string",
             "enum": [
               "SYSTEM_ADMIN",
-              "DONOR",
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
@@ -96,13 +99,18 @@
           "password": {
             "type": "string",
             "example": "password123"
+          },
+          "username": {
+            "type": "string",
+            "example": "seblewengel"
           }
         },
         "required": [
           "name",
           "email",
           "role",
-          "password"
+          "password",
+          "username"
         ]
       },
       "Donor": {
@@ -193,14 +201,6 @@
             "type": "string",
             "example": "P.O. Box 456"
           },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
-            "example": 1
-          },
           "createdAt": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
@@ -234,7 +234,8 @@
         "properties": {
           "firstName": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "John"
           },
           "middleName": {
             "type": "string",
@@ -242,47 +243,58 @@
           },
           "lastName": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Doe"
           },
           "title": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "example": "Mr."
           },
           "birthDate": {
-            "type": "string"
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
           },
           "age": {
             "type": "integer",
             "minimum": 0,
-            "exclusiveMinimum": true
+            "exclusiveMinimum": true,
+            "example": 33
           },
           "gender": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Male"
           },
           "occupation": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "example": "Software Engineer"
           },
           "city": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Addis Ababa"
           },
           "subCity": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Bole"
           },
           "zone": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Zone 3"
           },
           "woreda": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Woreda 11"
           },
           "kebele": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "Kebele 04"
           },
           "telephone": {
             "type": "string",
@@ -290,32 +302,32 @@
           },
           "cellPhone": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "example": "0912345678"
           },
           "organization": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "example": "Red Cross"
           },
           "email": {
             "type": "string",
-            "format": "email"
+            "format": "email",
+            "example": "john.doe@example.com"
           },
           "password": {
             "type": "string",
-            "minLength": 8
+            "minLength": 8,
+            "example": "strongPassword123"
           },
           "username": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "example": "john_doe"
           },
           "poBox": {
             "type": "string",
             "nullable": true
-          },
-          "collectorId": {
-            "type": "integer",
-            "minimum": 0,
-            "exclusiveMinimum": true
           }
         },
         "required": [
@@ -354,7 +366,8 @@
             "nullable": true
           },
           "birthDate": {
-            "type": "string"
+            "type": "string",
+            "example": "1990-05-22T00:00:00.000Z"
           },
           "age": {
             "type": "integer",
@@ -409,14 +422,11 @@
           "poBox": {
             "type": "string",
             "nullable": true
-          },
-          "collectorId": {
-            "type": "integer",
-            "nullable": true,
-            "minimum": 0,
-            "exclusiveMinimum": true
           }
-        }
+        },
+        "required": [
+          "birthDate"
+        ]
       },
       "Qualification": {
         "type": "object",
@@ -1118,119 +1128,6 @@
           "bloodId"
         ]
       },
-      "SystemAdmin Accounts": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "example": 1
-            },
-            "userId": {
-              "type": "number",
-              "example": 1
-            },
-            "accountType": {
-              "type": "string",
-              "example": "basic"
-            },
-            "accountStatus": {
-              "type": "string",
-              "example": "active"
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            }
-          },
-          "required": [
-            "id",
-            "userId",
-            "accountType",
-            "accountStatus",
-            "createdAt",
-            "updatedAt"
-          ]
-        }
-      },
-      "SystemAdmin Notifications": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "example": 1
-            },
-            "message": {
-              "type": "string",
-              "example": "New account created."
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            }
-          },
-          "required": [
-            "id",
-            "message",
-            "createdAt"
-          ]
-        }
-      },
-      "SystemAdmin": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "username": {
-            "type": "string",
-            "example": "admin_user"
-          },
-          "accounts": {
-            "$ref": "#/components/schemas/SystemAdmin Accounts"
-          },
-          "notifications": {
-            "$ref": "#/components/schemas/SystemAdmin Notifications"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "accounts",
-          "notifications",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewSystemAdmin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "minLength": 1,
-            "example": "admin_user"
-          }
-        },
-        "required": [
-          "username"
-        ]
-      },
       "Hospital": {
         "type": "object",
         "properties": {
@@ -1708,65 +1605,6 @@
           "generatedBy"
         ]
       },
-      "Donation": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "donorId",
-          "bloodId",
-          "donationDate",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewDonation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "donorId",
-          "bloodId",
-          "donationDate"
-        ]
-      },
       "Collection": {
         "type": "object",
         "properties": {
@@ -1782,6 +1620,10 @@
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
           },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
+          },
           "createdAt": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
@@ -1795,6 +1637,7 @@
           "id",
           "bloodId",
           "collectedDate",
+          "COLLECTORId",
           "createdAt",
           "updatedAt"
         ]
@@ -1809,11 +1652,16 @@
           "collectedDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
           "bloodId",
-          "collectedDate"
+          "collectedDate",
+          "COLLECTORId"
         ]
       },
       "Login": {
@@ -2256,63 +2104,6 @@
           }
         }
       },
-      "System Admin": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "username": {
-            "type": "string",
-            "example": "admin_user"
-          },
-          "accounts": {
-            "$ref": "#/components/schemas/SystemAdmin Accounts"
-          },
-          "notifications": {
-            "$ref": "#/components/schemas/SystemAdmin Notifications"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "accounts",
-          "notifications",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "New System Admin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "minLength": 1,
-            "example": "admin_user"
-          }
-        },
-        "required": [
-          "username"
-        ]
-      },
-      "Update System Admin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "example": "new_admin_user"
-          }
-        }
-      },
       "New Hospital": {
         "type": "object",
         "properties": {
@@ -2583,45 +2374,6 @@
           }
         }
       },
-      "New Donation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "donorId",
-          "bloodId",
-          "donationDate"
-        ]
-      },
-      "Update Donation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
-      },
       "New Collection": {
         "type": "object",
         "properties": {
@@ -2632,11 +2384,16 @@
           "collectedDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
           "bloodId",
-          "collectedDate"
+          "collectedDate",
+          "COLLECTORId"
         ]
       },
       "Update Collection": {
@@ -2649,6 +2406,10 @@
           "collectedDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
           }
         }
       }
@@ -2663,11 +2424,11 @@
     }
   },
   "paths": {
-    "/auth/register": {
+    "/api/users": {
       "post": {
         "summary": "Register a new user",
         "tags": [
-          "Auth"
+          "User"
         ],
         "requestBody": {
           "content": {
@@ -2690,9 +2451,87 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "Get all users",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/auth/login": {
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -2863,7 +2702,8 @@
                 "properties": {
                   "firstName": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "John"
                   },
                   "middleName": {
                     "type": "string",
@@ -2871,47 +2711,58 @@
                   },
                   "lastName": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Doe"
                   },
                   "title": {
                     "type": "string",
-                    "nullable": true
+                    "nullable": true,
+                    "example": "Mr."
                   },
                   "birthDate": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "2023-07-15T10:00:00.000Z"
                   },
                   "age": {
                     "type": "integer",
                     "minimum": 0,
-                    "exclusiveMinimum": true
+                    "exclusiveMinimum": true,
+                    "example": 33
                   },
                   "gender": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Male"
                   },
                   "occupation": {
                     "type": "string",
-                    "nullable": true
+                    "nullable": true,
+                    "example": "Software Engineer"
                   },
                   "city": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Addis Ababa"
                   },
                   "subCity": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Bole"
                   },
                   "zone": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Zone 3"
                   },
                   "woreda": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Woreda 11"
                   },
                   "kebele": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "Kebele 04"
                   },
                   "telephone": {
                     "type": "string",
@@ -2919,32 +2770,32 @@
                   },
                   "cellPhone": {
                     "type": "string",
-                    "nullable": true
+                    "nullable": true,
+                    "example": "0912345678"
                   },
                   "organization": {
                     "type": "string",
-                    "nullable": true
+                    "nullable": true,
+                    "example": "Red Cross"
                   },
                   "email": {
                     "type": "string",
-                    "format": "email"
+                    "format": "email",
+                    "example": "john.doe@example.com"
                   },
                   "password": {
                     "type": "string",
-                    "minLength": 8
+                    "minLength": 8,
+                    "example": "strongPassword123"
                   },
                   "username": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "example": "john_doe"
                   },
                   "poBox": {
                     "type": "string",
                     "nullable": true
-                  },
-                  "collectorId": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "exclusiveMinimum": true
                   }
                 },
                 "required": [
@@ -3080,7 +2931,8 @@
                     "nullable": true
                   },
                   "birthDate": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "1990-05-22T00:00:00.000Z"
                   },
                   "age": {
                     "type": "integer",
@@ -3135,14 +2987,11 @@
                   "poBox": {
                     "type": "string",
                     "nullable": true
-                  },
-                  "collectorId": {
-                    "type": "integer",
-                    "nullable": true,
-                    "minimum": 0,
-                    "exclusiveMinimum": true
                   }
-                }
+                },
+                "required": [
+                  "birthDate"
+                ]
               }
             }
           }
@@ -3633,153 +3482,6 @@
           },
           "404": {
             "description": "Inventory not found"
-          }
-        }
-      }
-    },
-    "/api/system-admin": {
-      "post": {
-        "summary": "Register a new system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New System Admin"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created system admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all system admins",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of system admins",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/System Admin"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/system-admin/{id}": {
-      "get": {
-        "summary": "Get a system admin by ID",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The system admin with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "System admin not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update System Admin"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated system admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "System admin not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "System admin deleted successfully"
-          },
-          "404": {
-            "description": "System admin not found"
           }
         }
       }
@@ -4988,153 +4690,6 @@
           },
           "404": {
             "description": "Report not found"
-          }
-        }
-      }
-    },
-    "/api/donation": {
-      "post": {
-        "summary": "Create a new donation",
-        "tags": [
-          "Donation"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Donation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created donation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all donations",
-        "tags": [
-          "Donation"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of donations",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Donation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/donation/{id}": {
-      "get": {
-        "summary": "Get a donation by ID",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The donation with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a donation",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Donation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated donation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a donation",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Donation deleted successfully"
-          },
-          "404": {
-            "description": "Donation not found"
           }
         }
       }

@@ -1,13 +1,16 @@
- 
- {
+{
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./", // Root directory set to the entire project folder
+    "baseUrl": "./",
+    "paths": {
+      "@prisma/*": ["prisma/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "prisma/**/*"], // Explicitly include the 'prisma' folder
   "exclude": ["node_modules"]
 }
