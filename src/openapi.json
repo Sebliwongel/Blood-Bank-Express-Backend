@@ -40,8 +40,7 @@
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
-              "LABORATORY",
-              "HOSPITAL"
+              "LABORATORY"
             ],
             "example": "SYSTEM_ADMIN"
           },
@@ -91,8 +90,7 @@
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
-              "LABORATORY",
-              "HOSPITAL"
+              "LABORATORY"
             ],
             "example": "SYSTEM_ADMIN"
           },
@@ -985,6 +983,68 @@
           "updatedAt": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "activationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "deactivationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "hospital": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "donor": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "firstName",
+              "lastName",
+              "email"
+            ]
           }
         },
         "required": [
@@ -993,7 +1053,8 @@
           "accountType",
           "accountStatus",
           "createdAt",
-          "updatedAt"
+          "updatedAt",
+          "isActive"
         ]
       },
       "NewAccount": {
@@ -1010,6 +1071,14 @@
           "accountStatus": {
             "type": "string",
             "example": "active"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
@@ -1018,115 +1087,42 @@
           "accountStatus"
         ]
       },
-      "Blood": {
+      "UpdateAccount": {
         "type": "object",
         "properties": {
-          "id": {
+          "userId": {
             "type": "number",
             "example": 1
           },
-          "bloodType": {
+          "accountType": {
             "type": "string",
-            "example": "A+"
+            "example": "premium"
           },
-          "quantity": {
-            "type": "number",
-            "example": 500
-          },
-          "donationDate": {
+          "accountStatus": {
             "type": "string",
-            "example": "2024-10-10T00:00:00Z"
-          }
-        },
-        "required": [
-          "id",
-          "bloodType",
-          "quantity",
-          "donationDate"
-        ]
-      },
-      "Inventory": {
-        "type": "object",
-        "properties": {
-          "id": {
+            "example": "inactive"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "activationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "deactivationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
             "type": "number",
             "example": 1
           },
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2024-11-05T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2024-11-05T10:00:00.000Z"
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "blood": {
-            "$ref": "#/components/schemas/Blood"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "bloodType",
-          "expirationDate",
-          "totalQuantity",
-          "createdAt",
-          "updatedAt",
-          "bloodId",
-          "blood"
-        ]
-      },
-      "NewInventory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          },
-          "bloodId": {
+          "donorId": {
             "type": "number",
             "example": 1
           }
-        },
-        "required": [
-          "name",
-          "bloodType",
-          "expirationDate",
-          "totalQuantity",
-          "bloodId"
-        ]
+        }
       },
       "Hospital": {
         "type": "object",
@@ -1141,24 +1137,191 @@
           },
           "address": {
             "type": "string",
-            "example": "123 Main St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "contact@cityhospital.com"
+            "example": "123 Main St, Cityville, State, 12345"
           },
           "username": {
             "type": "string",
             "example": "city_hospital_admin"
           },
+          "email": {
+            "type": "string",
+            "example": "city_hospital@example.com"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "deactivatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2024-01-01T00:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "address",
+          "username",
+          "email",
+          "isActive",
+          "deactivatedAt",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreateHospital": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "example": "City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "minLength": 1,
+            "example": "123 Main St, Cityville, State, 12345"
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "example": "city_hospital_admin"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email",
+            "example": "city_hospital@example.com"
+          },
           "password": {
             "type": "string",
+            "minLength": 6,
             "example": "securePassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          }
+        },
+        "required": [
+          "name",
+          "address",
+          "username",
+          "email",
+          "password"
+        ]
+      },
+      "UpdateHospital": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Updated City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "minLength": 1,
+            "example": "456 Main St, New City, New State, 67890"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email",
+            "example": "city_hospital@example.com"
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "example": "updated_hospital_admin"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "example": "newPassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": false
+          },
+          "deactivatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T15:30:00Z"
+          }
+        }
+      },
+      "HospitalId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "Blood": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodType": {
+            "type": "string",
+            "enum": [
+              "A+",
+              "A-",
+              "B+",
+              "B-",
+              "O+",
+              "O-",
+              "AB+",
+              "AB-"
+            ],
+            "example": "A+"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1,
+            "example": 500
+          },
+          "barcode": {
+            "type": "string",
+            "example": "1234567890"
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2023-08-15T10:00:00.000Z"
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "RESERVED",
+              "EXPIRED",
+              "USED"
+            ],
+            "example": "AVAILABLE"
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           },
           "createdAt": {
             "type": "string",
@@ -1171,52 +1334,15 @@
         },
         "required": [
           "id",
-          "name",
-          "address",
-          "contactInfo",
-          "email",
-          "username",
-          "password",
+          "bloodType",
+          "quantity",
+          "barcode",
+          "donationDate",
+          "expirationDate",
+          "storageStatus",
+          "donorId",
           "createdAt",
           "updatedAt"
-        ]
-      },
-      "NewHospital": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "City Hospital"
-          },
-          "address": {
-            "type": "string",
-            "example": "123 Main St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "contact@cityhospital.com"
-          },
-          "username": {
-            "type": "string",
-            "example": "city_hospital_admin"
-          },
-          "password": {
-            "type": "string",
-            "example": "securePassword123"
-          }
-        },
-        "required": [
-          "name",
-          "address",
-          "contactInfo",
-          "email",
-          "username",
-          "password"
         ]
       },
       "NewBlood": {
@@ -1224,22 +1350,58 @@
         "properties": {
           "bloodType": {
             "type": "string",
+            "enum": [
+              "A+",
+              "A-",
+              "B+",
+              "B-",
+              "O+",
+              "O-",
+              "AB+",
+              "AB-"
+            ],
             "example": "A+"
           },
           "quantity": {
             "type": "number",
-            "minimum": 0,
+            "minimum": 1,
             "example": 500
+          },
+          "barcode": {
+            "type": "string",
+            "example": "1234567890"
           },
           "donationDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2023-08-15T10:00:00.000Z"
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "RESERVED",
+              "EXPIRED",
+              "USED"
+            ],
+            "example": "AVAILABLE"
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
           "bloodType",
           "quantity",
-          "donationDate"
+          "barcode",
+          "donationDate",
+          "expirationDate",
+          "storageStatus",
+          "donorId"
         ]
       },
       "Appointment": {
@@ -1305,79 +1467,24 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
           "content": {
-            "type": "string",
-            "example": "Blood donation request"
-          },
-          "sendDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
+            "type": "string"
           },
           "donorId": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
-          "adminId": {
-            "type": "number",
-            "example": 1
+          "hospitalId": {
+            "type": "number"
           },
-          "hospital": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "name": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "name"
-            ]
-          },
-          "donor": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "bloodType": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "bloodType"
-            ]
-          },
-          "systemAdmin": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "username": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "username"
-            ]
+          "userId": {
+            "type": "number"
           }
         },
         "required": [
           "id",
-          "content",
-          "sendDate"
+          "content"
         ]
       },
       "NewNotification": {
@@ -1385,51 +1492,81 @@
         "properties": {
           "content": {
             "type": "string",
-            "example": "Blood donation request"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
+            "minLength": 1
           },
           "donorId": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
-          "adminId": {
-            "type": "number",
-            "example": 1
+          "hospitalId": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
           }
         },
         "required": [
           "content"
         ]
       },
+      "UpdateNotification": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "minLength": 1
+          },
+          "donorId": {
+            "type": "number"
+          },
+          "hospitalId": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
+          }
+        }
+      },
       "Order": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "example": 1
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
           "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "type": "string"
           },
           "bloodType": {
             "type": "string",
-            "example": "A+"
+            "enum": [
+              "A_POS",
+              "A_NEG",
+              "B_POS",
+              "B_NEG",
+              "AB_POS",
+              "AB_NEG",
+              "O_POS",
+              "O_NEG"
+            ]
           },
           "quantity": {
-            "type": "number",
-            "example": 3
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
           "status": {
             "type": "string",
-            "example": "Pending"
+            "enum": [
+              "PENDING",
+              "COMPLETED",
+              "CANCELED"
+            ]
           },
           "hospitalId": {
-            "type": "number",
-            "example": 1
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           }
         },
         "required": [
@@ -1441,36 +1578,66 @@
           "hospitalId"
         ]
       },
-      "NewOrder": {
+      "CreateOrder": {
         "type": "object",
         "properties": {
           "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "type": "string"
           },
           "bloodType": {
             "type": "string",
-            "example": "A+"
+            "enum": [
+              "A_POS",
+              "A_NEG",
+              "B_POS",
+              "B_NEG",
+              "AB_POS",
+              "AB_NEG",
+              "O_POS",
+              "O_NEG"
+            ]
           },
           "quantity": {
-            "type": "number",
-            "example": 3
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
-          "status": {
+          "storageStatus": {
             "type": "string",
-            "example": "Pending"
+            "enum": [
+              "PENDING",
+              "COMPLETED",
+              "CANCELED"
+            ]
           },
           "hospitalId": {
-            "type": "number",
-            "example": 1
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           }
         },
         "required": [
           "orderDate",
           "bloodType",
           "quantity",
-          "status",
+          "storageStatus",
           "hospitalId"
+        ]
+      },
+      "UpdateOrderStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "COMPLETED",
+              "CANCELED"
+            ]
+          }
+        },
+        "required": [
+          "status"
         ]
       },
       "Integration": {
@@ -1484,7 +1651,34 @@
             "type": "number",
             "example": 1
           },
-          "inventories": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ],
+            "example": "PENDING"
+          },
+          "managerId": {
+            "type": "number",
+            "example": 1
+          },
+          "managerComment": {
+            "type": "string",
+            "example": "Request approved"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T12:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T12:00:00Z"
+          },
+          "bloodInventories": {
             "type": "array",
             "items": {
               "type": "object",
@@ -1492,22 +1686,67 @@
                 "id": {
                   "type": "number",
                   "example": 1
+                },
+                "bloodType": {
+                  "type": "string",
+                  "enum": [
+                    "A+",
+                    "A-",
+                    "B+",
+                    "B-",
+                    "AB+",
+                    "AB-",
+                    "O+",
+                    "O-"
+                  ],
+                  "example": "A+"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 5
+                },
+                "barcode": {
+                  "type": "string",
+                  "example": "1234567890"
+                },
+                "donationDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-11-25T10:00:00Z"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-12-25T10:00:00Z"
                 }
               },
               "required": [
-                "id"
+                "id",
+                "bloodType",
+                "quantity",
+                "barcode",
+                "donationDate",
+                "expirationDate"
               ]
             },
             "example": [
               {
-                "id": 1
+                "id": 1,
+                "bloodType": "A+",
+                "quantity": 5,
+                "barcode": "1234567890",
+                "donationDate": "2024-11-25T10:00:00Z",
+                "expirationDate": "2024-12-25T10:00:00Z"
               }
             ]
           }
         },
         "required": [
           "id",
-          "hospitalId"
+          "hospitalId",
+          "status",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "NewIntegration": {
@@ -1521,6 +1760,28 @@
         "required": [
           "hospitalId"
         ]
+      },
+      "UpdateIntegration": {
+        "type": "object",
+        "properties": {
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ],
+            "example": "APPROVED"
+          },
+          "managerComment": {
+            "type": "string",
+            "example": "Request approved after review"
+          }
+        }
       },
       "Report": {
         "type": "object",
@@ -1603,65 +1864,6 @@
           "title",
           "content",
           "generatedBy"
-        ]
-      },
-      "Collection": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "COLLECTORId": {
-            "type": "number",
-            "example": 1
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "bloodId",
-          "collectedDate",
-          "COLLECTORId",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewCollection": {
-        "type": "object",
-        "properties": {
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "COLLECTORId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "bloodId",
-          "collectedDate",
-          "COLLECTORId"
         ]
       },
       "Login": {
@@ -2026,6 +2228,14 @@
           "accountStatus": {
             "type": "string",
             "example": "active"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
@@ -2048,97 +2258,69 @@
           "accountStatus": {
             "type": "string",
             "example": "inactive"
-          }
-        }
-      },
-      "New Inventory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
           },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
+          "isActive": {
+            "type": "boolean",
+            "example": true
           },
-          "expirationDate": {
+          "activationDate": {
             "type": "string",
-            "example": "2025-12-31T23:59:59Z"
+            "example": "2023-07-15T10:00:00.000Z"
           },
-          "totalQuantity": {
+          "deactivationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
             "type": "number",
-            "example": 1000
+            "example": 1
           },
-          "bloodId": {
+          "donorId": {
             "type": "number",
             "example": 1
           }
-        },
-        "required": [
-          "name",
-          "bloodType",
-          "expirationDate",
-          "totalQuantity",
-          "bloodId"
-        ]
-      },
-      "Update Inventory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          }
         }
       },
-      "New Hospital": {
+      "Create Hospital": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "minLength": 1,
             "example": "City Hospital"
           },
           "address": {
             "type": "string",
-            "example": "123 Main St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "contact@cityhospital.com"
+            "minLength": 1,
+            "example": "123 Main St, Cityville, State, 12345"
           },
           "username": {
             "type": "string",
+            "minLength": 1,
             "example": "city_hospital_admin"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email",
+            "example": "city_hospital@example.com"
           },
           "password": {
             "type": "string",
+            "minLength": 6,
             "example": "securePassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
           }
         },
         "required": [
           "name",
           "address",
-          "contactInfo",
-          "email",
           "username",
+          "email",
           "password"
         ]
       },
@@ -2147,53 +2329,40 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Central City Hospital"
+            "minLength": 1,
+            "example": "Updated City Hospital"
           },
           "address": {
             "type": "string",
-            "example": "456 Another St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+0987654321"
+            "minLength": 1,
+            "example": "456 Main St, New City, New State, 67890"
           },
           "email": {
             "type": "string",
+            "minLength": 1,
             "format": "email",
-            "example": "support@cityhospital.com"
+            "example": "city_hospital@example.com"
           },
           "username": {
             "type": "string",
-            "example": "new_city_hospital_admin"
+            "minLength": 1,
+            "example": "updated_hospital_admin"
           },
           "password": {
             "type": "string",
-            "example": "newSecurePassword123"
+            "minLength": 6,
+            "example": "newPassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": false
+          },
+          "deactivatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T15:30:00Z"
           }
         }
-      },
-      "New Blood": {
-        "type": "object",
-        "properties": {
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "example": 500
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "bloodType",
-          "quantity",
-          "donationDate"
-        ]
       },
       "UpdateAppointment": {
         "type": "object",
@@ -2209,108 +2378,6 @@
           "donorId": {
             "type": "number",
             "example": 2
-          }
-        }
-      },
-      "New Notification": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "Blood donation request"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "adminId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "content"
-        ]
-      },
-      "Update Notification": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "Updated blood donation request"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "adminId": {
-            "type": "number",
-            "example": 1
-          }
-        }
-      },
-      "New Order": {
-        "type": "object",
-        "properties": {
-          "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "example": 3
-          },
-          "status": {
-            "type": "string",
-            "example": "Pending"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "orderDate",
-          "bloodType",
-          "quantity",
-          "status",
-          "hospitalId"
-        ]
-      },
-      "Update Order": {
-        "type": "object",
-        "properties": {
-          "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "example": 3
-          },
-          "status": {
-            "type": "string",
-            "example": "Pending"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
           }
         }
       },
@@ -2332,6 +2399,19 @@
           "hospitalId": {
             "type": "number",
             "example": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ],
+            "example": "APPROVED"
+          },
+          "managerComment": {
+            "type": "string",
+            "example": "Request approved after review"
           }
         }
       },
@@ -2369,45 +2449,6 @@
             "example": "Updated content of the report."
           },
           "generatedBy": {
-            "type": "number",
-            "example": 1
-          }
-        }
-      },
-      "New Collection": {
-        "type": "object",
-        "properties": {
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "COLLECTORId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "bloodId",
-          "collectedDate",
-          "COLLECTORId"
-        ]
-      },
-      "Update Collection": {
-        "type": "object",
-        "properties": {
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "COLLECTORId": {
             "type": "number",
             "example": 1
           }
@@ -3217,9 +3258,7 @@
             }
           }
         }
-      }
-    },
-    "/api/account": {
+      },
       "get": {
         "summary": "Get all account records",
         "tags": [
@@ -3242,7 +3281,7 @@
         }
       }
     },
-    "/api/account/{id}": {
+    "/api/accounts/{id}": {
       "get": {
         "summary": "Get an account record by ID",
         "tags": [
@@ -3339,92 +3378,11 @@
         }
       }
     },
-    "/api/inventory": {
-      "post": {
-        "summary": "Create a new inventory record",
-        "tags": [
-          "Inventory"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Inventory"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created inventory record",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inventory"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all inventory records",
-        "tags": [
-          "Inventory"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of all inventory records",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Inventory"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/inventory/{id}": {
-      "get": {
-        "summary": "Get an inventory record by ID",
-        "tags": [
-          "Inventory"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The inventory record with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inventory"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Inventory not found"
-          }
-        }
-      },
+    "/api/accounts/{id}/activate": {
       "patch": {
-        "summary": "Update an inventory record",
+        "summary": "Activate an account",
         "tags": [
-          "Inventory"
+          "Account"
         ],
         "parameters": [
           {
@@ -3436,84 +3394,57 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Inventory"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "The updated inventory record",
+            "description": "The activated account record",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Inventory"
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
           },
           "404": {
-            "description": "Inventory not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete an inventory record",
-        "tags": [
-          "Inventory"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Inventory record deleted successfully"
-          },
-          "404": {
-            "description": "Inventory not found"
+            "description": "Account record not found"
           }
         }
       }
     },
-    "/api/hospitals": {
-      "post": {
-        "summary": "Register a new hospital",
+    "/api/accounts/{id}/deactivate": {
+      "patch": {
+        "summary": "Deactivate an account",
         "tags": [
-          "Hospital"
+          "Account"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Hospital"
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
-          "201": {
-            "description": "The created hospital",
+          "200": {
+            "description": "The deactivated account record",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Hospital"
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Account record not found"
           }
         }
-      },
+      }
+    },
+    "/hospitals": {
       "get": {
         "summary": "Get all hospitals",
         "tags": [
@@ -3521,7 +3452,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of hospitals",
+            "description": "List of hospitals",
             "content": {
               "application/json": {
                 "schema": {
@@ -3534,27 +3465,77 @@
             }
           }
         }
+      },
+      "post": {
+        "summary": "Create new hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create Hospital"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Hospital created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Hospital already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "details"
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/api/hospitals/{id}": {
+    "/hospitals/{id}": {
       "get": {
-        "summary": "Get a hospital by ID",
+        "summary": "Get hospital by ID",
         "tags": [
           "Hospital"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
           "200": {
-            "description": "The hospital with the specified ID",
+            "description": "Hospital details",
             "content": {
               "application/json": {
                 "schema": {
@@ -3564,23 +3545,39 @@
             }
           },
           "404": {
-            "description": "Hospital not found"
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "summary": "Update a hospital",
+        "summary": "Full update hospital",
         "tags": [
           "Hospital"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
           }
         ],
         "requestBody": {
@@ -3594,7 +3591,7 @@
         },
         "responses": {
           "200": {
-            "description": "The updated hospital",
+            "description": "Hospital updated successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -3604,31 +3601,179 @@
             }
           },
           "404": {
-            "description": "Hospital not found"
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Update failed due to conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "details"
+                  ]
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "summary": "Delete a hospital",
+        "summary": "Delete hospital",
         "tags": [
           "Hospital"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Hospital deleted successfully"
+          "200": {
+            "description": "Hospital deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Hospital not found"
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hospitals/{id}/patch": {
+      "patch": {
+        "summary": "Partial update hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Hospital"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hospital partially updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Update failed due to conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "details"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -3643,7 +3788,63 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Blood"
+                "type": "object",
+                "properties": {
+                  "bloodType": {
+                    "type": "string",
+                    "enum": [
+                      "A+",
+                      "A-",
+                      "B+",
+                      "B-",
+                      "O+",
+                      "O-",
+                      "AB+",
+                      "AB-"
+                    ],
+                    "example": "A+"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "minimum": 1,
+                    "example": 500
+                  },
+                  "barcode": {
+                    "type": "string",
+                    "example": "1234567890"
+                  },
+                  "donationDate": {
+                    "type": "string",
+                    "example": "2023-07-15T10:00:00.000Z"
+                  },
+                  "expirationDate": {
+                    "type": "string",
+                    "example": "2023-08-15T10:00:00.000Z"
+                  },
+                  "storageStatus": {
+                    "type": "string",
+                    "enum": [
+                      "AVAILABLE",
+                      "RESERVED",
+                      "EXPIRED",
+                      "USED"
+                    ],
+                    "example": "AVAILABLE"
+                  },
+                  "donorId": {
+                    "type": "number",
+                    "example": 1
+                  }
+                },
+                "required": [
+                  "bloodType",
+                  "quantity",
+                  "barcode",
+                  "donationDate",
+                  "expirationDate",
+                  "storageStatus",
+                  "donorId"
+                ]
               }
             }
           }
@@ -3654,47 +3855,77 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Blood"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    {
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "bloodType": {
-                          "type": "string",
-                          "example": "A+"
-                        },
-                        "quantity": {
-                          "type": "number",
-                          "minimum": 0,
-                          "example": 500
-                        },
-                        "donationDate": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "bloodType",
-                        "quantity",
-                        "donationDate",
-                        "createdAt",
-                        "updatedAt"
-                      ]
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A+",
+                        "A-",
+                        "B+",
+                        "B-",
+                        "O+",
+                        "O-",
+                        "AB+",
+                        "AB-"
+                      ],
+                      "example": "A+"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "minimum": 1,
+                      "example": 500
+                    },
+                    "barcode": {
+                      "type": "string",
+                      "example": "1234567890"
+                    },
+                    "donationDate": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "example": "2023-08-15T10:00:00.000Z"
+                    },
+                    "storageStatus": {
+                      "type": "string",
+                      "enum": [
+                        "AVAILABLE",
+                        "RESERVED",
+                        "EXPIRED",
+                        "USED"
+                      ],
+                      "example": "AVAILABLE"
+                    },
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
                     }
+                  },
+                  "required": [
+                    "id",
+                    "bloodType",
+                    "quantity",
+                    "barcode",
+                    "donationDate",
+                    "expirationDate",
+                    "storageStatus",
+                    "donorId",
+                    "createdAt",
+                    "updatedAt"
                   ]
                 }
               }
@@ -3715,47 +3946,77 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Blood"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
                       },
-                      {
-                        "properties": {
-                          "id": {
-                            "type": "number",
-                            "example": 1
-                          },
-                          "bloodType": {
-                            "type": "string",
-                            "example": "A+"
-                          },
-                          "quantity": {
-                            "type": "number",
-                            "minimum": 0,
-                            "example": 500
-                          },
-                          "donationDate": {
-                            "type": "string",
-                            "example": "2023-07-15T10:00:00.000Z"
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "example": "2023-07-15T10:00:00.000Z"
-                          },
-                          "updatedAt": {
-                            "type": "string",
-                            "example": "2023-07-15T10:00:00.000Z"
-                          }
-                        },
-                        "required": [
-                          "id",
-                          "bloodType",
-                          "quantity",
-                          "donationDate",
-                          "createdAt",
-                          "updatedAt"
-                        ]
+                      "bloodType": {
+                        "type": "string",
+                        "enum": [
+                          "A+",
+                          "A-",
+                          "B+",
+                          "B-",
+                          "O+",
+                          "O-",
+                          "AB+",
+                          "AB-"
+                        ],
+                        "example": "A+"
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "minimum": 1,
+                        "example": 500
+                      },
+                      "barcode": {
+                        "type": "string",
+                        "example": "1234567890"
+                      },
+                      "donationDate": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
+                      },
+                      "expirationDate": {
+                        "type": "string",
+                        "example": "2023-08-15T10:00:00.000Z"
+                      },
+                      "storageStatus": {
+                        "type": "string",
+                        "enum": [
+                          "AVAILABLE",
+                          "RESERVED",
+                          "EXPIRED",
+                          "USED"
+                        ],
+                        "example": "AVAILABLE"
+                      },
+                      "donorId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
                       }
+                    },
+                    "required": [
+                      "id",
+                      "bloodType",
+                      "quantity",
+                      "barcode",
+                      "donationDate",
+                      "expirationDate",
+                      "storageStatus",
+                      "donorId",
+                      "createdAt",
+                      "updatedAt"
                     ]
                   }
                 }
@@ -3787,47 +4048,77 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Blood"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    {
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "bloodType": {
-                          "type": "string",
-                          "example": "A+"
-                        },
-                        "quantity": {
-                          "type": "number",
-                          "minimum": 0,
-                          "example": 500
-                        },
-                        "donationDate": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "bloodType",
-                        "quantity",
-                        "donationDate",
-                        "createdAt",
-                        "updatedAt"
-                      ]
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A+",
+                        "A-",
+                        "B+",
+                        "B-",
+                        "O+",
+                        "O-",
+                        "AB+",
+                        "AB-"
+                      ],
+                      "example": "A+"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "minimum": 1,
+                      "example": 500
+                    },
+                    "barcode": {
+                      "type": "string",
+                      "example": "1234567890"
+                    },
+                    "donationDate": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "example": "2023-08-15T10:00:00.000Z"
+                    },
+                    "storageStatus": {
+                      "type": "string",
+                      "enum": [
+                        "AVAILABLE",
+                        "RESERVED",
+                        "EXPIRED",
+                        "USED"
+                      ],
+                      "example": "AVAILABLE"
+                    },
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
                     }
+                  },
+                  "required": [
+                    "id",
+                    "bloodType",
+                    "quantity",
+                    "barcode",
+                    "donationDate",
+                    "expirationDate",
+                    "storageStatus",
+                    "donorId",
+                    "createdAt",
+                    "updatedAt"
                   ]
                 }
               }
@@ -3861,18 +4152,49 @@
                 "properties": {
                   "bloodType": {
                     "type": "string",
+                    "enum": [
+                      "A+",
+                      "A-",
+                      "B+",
+                      "B-",
+                      "O+",
+                      "O-",
+                      "AB+",
+                      "AB-"
+                    ],
                     "example": "A+"
                   },
                   "quantity": {
                     "type": "number",
-                    "minimum": 0,
+                    "minimum": 1,
                     "example": 500
+                  },
+                  "barcode": {
+                    "type": "string",
+                    "example": "1234567890"
                   },
                   "donationDate": {
                     "type": "string",
                     "example": "2023-07-15T10:00:00.000Z"
+                  },
+                  "expirationDate": {
+                    "type": "string",
+                    "example": "2023-07-15T10:00:00.000Z"
+                  },
+                  "storageStatus": {
+                    "type": "string",
+                    "enum": [
+                      "AVAILABLE",
+                      "RESERVED",
+                      "EXPIRED",
+                      "USED"
+                    ],
+                    "example": "AVAILABLE"
                   }
-                }
+                },
+                "required": [
+                  "barcode"
+                ]
               }
             }
           }
@@ -3883,47 +4205,77 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Blood"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    {
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "bloodType": {
-                          "type": "string",
-                          "example": "A+"
-                        },
-                        "quantity": {
-                          "type": "number",
-                          "minimum": 0,
-                          "example": 500
-                        },
-                        "donationDate": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "bloodType",
-                        "quantity",
-                        "donationDate",
-                        "createdAt",
-                        "updatedAt"
-                      ]
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A+",
+                        "A-",
+                        "B+",
+                        "B-",
+                        "O+",
+                        "O-",
+                        "AB+",
+                        "AB-"
+                      ],
+                      "example": "A+"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "minimum": 1,
+                      "example": 500
+                    },
+                    "barcode": {
+                      "type": "string",
+                      "example": "1234567890"
+                    },
+                    "donationDate": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "example": "2023-08-15T10:00:00.000Z"
+                    },
+                    "storageStatus": {
+                      "type": "string",
+                      "enum": [
+                        "AVAILABLE",
+                        "RESERVED",
+                        "EXPIRED",
+                        "USED"
+                      ],
+                      "example": "AVAILABLE"
+                    },
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
                     }
+                  },
+                  "required": [
+                    "id",
+                    "bloodType",
+                    "quantity",
+                    "barcode",
+                    "donationDate",
+                    "expirationDate",
+                    "storageStatus",
+                    "donorId",
+                    "createdAt",
+                    "updatedAt"
                   ]
                 }
               }
@@ -4116,7 +4468,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Notification"
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "donorId": {
+                    "type": "number"
+                  },
+                  "hospitalId": {
+                    "type": "number"
+                  },
+                  "userId": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
               }
             }
           }
@@ -4127,7 +4497,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notification"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "donorId": {
+                      "type": "number"
+                    },
+                    "hospitalId": {
+                      "type": "number"
+                    },
+                    "userId": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "content"
+                  ]
                 }
               }
             }
@@ -4147,7 +4538,28 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Notification"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "donorId": {
+                        "type": "number"
+                      },
+                      "hospitalId": {
+                        "type": "number"
+                      },
+                      "userId": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "content"
+                    ]
                   }
                 }
               }
@@ -4178,7 +4590,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notification"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "donorId": {
+                      "type": "number"
+                    },
+                    "hospitalId": {
+                      "type": "number"
+                    },
+                    "userId": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "content"
+                  ]
                 }
               }
             }
@@ -4207,7 +4640,22 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Notification"
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "donorId": {
+                    "type": "number"
+                  },
+                  "hospitalId": {
+                    "type": "number"
+                  },
+                  "userId": {
+                    "type": "number"
+                  }
+                }
               }
             }
           }
@@ -4218,7 +4666,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notification"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "donorId": {
+                      "type": "number"
+                    },
+                    "hospitalId": {
+                      "type": "number"
+                    },
+                    "userId": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "content"
+                  ]
                 }
               }
             }
@@ -4263,18 +4732,110 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Order"
+                "type": "object",
+                "properties": {
+                  "orderDate": {
+                    "type": "string"
+                  },
+                  "bloodType": {
+                    "type": "string",
+                    "enum": [
+                      "A_POS",
+                      "A_NEG",
+                      "B_POS",
+                      "B_NEG",
+                      "AB_POS",
+                      "AB_NEG",
+                      "O_POS",
+                      "O_NEG"
+                    ]
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "storageStatus": {
+                    "type": "string",
+                    "enum": [
+                      "PENDING",
+                      "COMPLETED",
+                      "CANCELED"
+                    ]
+                  },
+                  "hospitalId": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  }
+                },
+                "required": [
+                  "orderDate",
+                  "bloodType",
+                  "quantity",
+                  "storageStatus",
+                  "hospitalId"
+                ]
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "The created order",
+            "description": "Order successfully created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "orderDate": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A_POS",
+                        "A_NEG",
+                        "B_POS",
+                        "B_NEG",
+                        "AB_POS",
+                        "AB_NEG",
+                        "O_POS",
+                        "O_NEG"
+                      ]
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "COMPLETED",
+                        "CANCELED"
+                      ]
+                    },
+                    "hospitalId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "orderDate",
+                    "bloodType",
+                    "quantity",
+                    "status",
+                    "hospitalId"
+                  ]
                 }
               }
             }
@@ -4282,19 +4843,68 @@
         }
       },
       "get": {
-        "summary": "Get all orders",
+        "summary": "Retrieve all orders",
         "tags": [
           "Order"
         ],
         "responses": {
           "200": {
-            "description": "A list of orders",
+            "description": "A list of all orders",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Order"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMinimum": true
+                      },
+                      "orderDate": {
+                        "type": "string"
+                      },
+                      "bloodType": {
+                        "type": "string",
+                        "enum": [
+                          "A_POS",
+                          "A_NEG",
+                          "B_POS",
+                          "B_NEG",
+                          "AB_POS",
+                          "AB_NEG",
+                          "O_POS",
+                          "O_NEG"
+                        ]
+                      },
+                      "quantity": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMinimum": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "PENDING",
+                          "COMPLETED",
+                          "CANCELED"
+                        ]
+                      },
+                      "hospitalId": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMinimum": true
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "orderDate",
+                      "bloodType",
+                      "quantity",
+                      "status",
+                      "hospitalId"
+                    ]
                   }
                 }
               }
@@ -4305,7 +4915,7 @@
     },
     "/api/orders/{id}": {
       "get": {
-        "summary": "Get an order by ID",
+        "summary": "Retrieve a specific order by ID",
         "tags": [
           "Order"
         ],
@@ -4315,7 +4925,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -4325,7 +4935,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "orderDate": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A_POS",
+                        "A_NEG",
+                        "B_POS",
+                        "B_NEG",
+                        "AB_POS",
+                        "AB_NEG",
+                        "O_POS",
+                        "O_NEG"
+                      ]
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "COMPLETED",
+                        "CANCELED"
+                      ]
+                    },
+                    "hospitalId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "orderDate",
+                    "bloodType",
+                    "quantity",
+                    "status",
+                    "hospitalId"
+                  ]
                 }
               }
             }
@@ -4336,7 +4995,7 @@
         }
       },
       "patch": {
-        "summary": "Update an order",
+        "summary": "Update an order's status",
         "tags": [
           "Order"
         ],
@@ -4346,7 +5005,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -4354,7 +5013,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Order"
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "PENDING",
+                      "COMPLETED",
+                      "CANCELED"
+                    ]
+                  }
+                },
+                "required": [
+                  "status"
+                ]
               }
             }
           }
@@ -4365,7 +5037,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "orderDate": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A_POS",
+                        "A_NEG",
+                        "B_POS",
+                        "B_NEG",
+                        "AB_POS",
+                        "AB_NEG",
+                        "O_POS",
+                        "O_NEG"
+                      ]
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "COMPLETED",
+                        "CANCELED"
+                      ]
+                    },
+                    "hospitalId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "orderDate",
+                    "bloodType",
+                    "quantity",
+                    "status",
+                    "hospitalId"
+                  ]
                 }
               }
             }
@@ -4376,7 +5097,7 @@
         }
       },
       "delete": {
-        "summary": "Delete an order",
+        "summary": "Delete a specific order",
         "tags": [
           "Order"
         ],
@@ -4386,13 +5107,13 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Order deleted successfully"
+            "description": "Order successfully deleted"
           },
           "404": {
             "description": "Order not found"
@@ -4547,6 +5268,112 @@
         }
       }
     },
+    "/api/integration/{id}/approve": {
+      "post": {
+        "summary": "Approve an integration request",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "managerId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "managerId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The approved integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      }
+    },
+    "/api/integration/{id}/decline": {
+      "post": {
+        "summary": "Decline an integration request",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "managerId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "managerId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The declined integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      }
+    },
     "/api/report": {
       "post": {
         "summary": "Create a new report",
@@ -4690,153 +5517,6 @@
           },
           "404": {
             "description": "Report not found"
-          }
-        }
-      }
-    },
-    "/api/collection": {
-      "post": {
-        "summary": "Register a new collection",
-        "tags": [
-          "Collection"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Collection"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created collection",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Collection"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all collections",
-        "tags": [
-          "Collection"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of collections",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Collection"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/collection/{id}": {
-      "get": {
-        "summary": "Get a collection by ID",
-        "tags": [
-          "Collection"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The collection with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Collection"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Collection not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a collection",
-        "tags": [
-          "Collection"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Collection"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated collection",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Collection"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Collection not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a collection",
-        "tags": [
-          "Collection"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Collection deleted successfully"
-          },
-          "404": {
-            "description": "Collection not found"
           }
         }
       }

@@ -30,7 +30,7 @@
 
     "@asteasolutions/zod-to-openapi": "^7.1.1",
 
-    "@prisma/client": "^5.18.0",
+    "@prisma/client": "^5.22.0",
 
     "bcrypt": "^5.1.1",
 
@@ -46,7 +46,7 @@
 
     "nodemailer": "^6.9.16",
 
-    "prisma": "^5.18.0",
+    "prisma": "^5.22.0",
 
     "swagger-jsdoc": "^6.2.8",
 

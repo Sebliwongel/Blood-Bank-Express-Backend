@@ -1,69 +1,76 @@
+import { prisma } from './../../../prisma/prisma'; // Adjust path as needed
+import { OrderStatus, BloodType } from '@prisma/client';
 
-import { PrismaClient } from "@prisma/client";
+interface CreateOrderDTO {
+  orderDate: Date;
+  bloodType: BloodType;
+  quantity: number;
+  storageStatus: keyof typeof OrderStatus; // Map string keys to enum
+  hospitalId: number;
+}
 
-const prisma = new PrismaClient();
+class OrderService {
+  async createOrder(data: CreateOrderDTO) {
+    const statusMapping: Record<string, OrderStatus> = {
+      PENDING: OrderStatus.PENDING,
+      COMPLETED: OrderStatus.COMPLETED,
+      CANCELED: OrderStatus.CANCELED,
+    };
 
-// Get all orders
-export const getAllOrders = async () => {
-  return await prisma.order.findMany();
-};
+    // Map string input to OrderStatus
+    const status = statusMapping[data.storageStatus];
+    if (!status) {
+      throw new Error('Invalid order status provided');
+    }
 
-// Update an order by ID
-export const updateOrder = async (
-  orderId: number,
-  updates: { bloodType?: string; quantity?: number; status?: string; hospitalId?: number }
-) => {
-  // First, find the order by ID
-  const order = await prisma.order.findUnique({
-    where: { id: orderId },
-  });
+    // Validate blood type
+    const validBloodTypes = [
+      "A_POS", "A_NEG", "B_POS", "B_NEG",
+      "AB_POS", "AB_NEG", "O_POS", "O_NEG",
+    ];
+    if (!validBloodTypes.includes(data.bloodType)) {
+      throw new Error('Invalid blood type provided');
+    }
 
-  // If the order does not exist, return null or handle accordingly
-  if (!order) {
-    return null;
+    // Create order
+    return await prisma.order.create({
+      data: {
+        orderDate: data.orderDate,
+        bloodType: data.bloodType,
+        quantity: data.quantity,
+        status,
+        hospital: {
+          connect: { id: data.hospitalId },
+        },
+      },
+    });
   }
 
-  // Update the order with the provided fields
-  return await prisma.order.update({
-    where: { id: orderId },
-    data: {
-      bloodType: updates.bloodType !== undefined ? updates.bloodType : order.bloodType,
-      quantity: updates.quantity !== undefined ? updates.quantity : order.quantity,
-      status: updates.status !== undefined ? updates.status : order.status,
-      hospitalId: updates.hospitalId !== undefined ? updates.hospitalId : order.hospitalId,
-    },
-  });
-};
+  async getAllOrders() {
+    return await prisma.order.findMany({
+      include: { hospital: true },
+    });
+  }
 
-// Get an order by ID
-export const getOrderById = async (id: number) => {
-  return await prisma.order.findUnique({
-    where: { id },
-  });
-};
+  async getOrderById(id: number) {
+    return await prisma.order.findUnique({
+      where: { id },
+      include: { hospital: true },
+    });
+  }
 
-// Create a new order
-export const createOrder = async (
-  orderDate: Date,
-  bloodType: string,
-  quantity: number,
-  status: string,
-  hospitalId: number
-) => {
-  return await prisma.order.create({
-    data: {
-      orderDate,
-      bloodType,
-      quantity,
-      status,
-      hospitalId,
-    },
-  });
-};
+  async updateOrderStatus(id: number, status: OrderStatus) {
+    return await prisma.order.update({
+      where: { id },
+      data: { status },
+    });
+  }
 
-// Delete an order by ID
-export const deleteOrder = async (id: number) => {
-  return await prisma.order.delete({
-    where: { id },
-  });
-};
+  async deleteOrder(id: number) {
+    return await prisma.order.delete({
+      where: { id },
+    });
+  }
+}
+
+export default new OrderService();

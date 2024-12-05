@@ -3,6 +3,12 @@ import { z } from "zod";
 
 // Schema for creating a new appointment
 
+
+// id              Int       @id @default(autoincrement())
+// appointmentDate DateTime
+// status          String
+// donorId         Int
+// donor   
 export const NewAppointmentSchema = z
   .object({
     appointmentDate: z

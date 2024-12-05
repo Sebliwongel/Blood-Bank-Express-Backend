@@ -5,18 +5,18 @@ import { userRegistry } from "../modules/User/userRegistry";
 import { authRegistry } from "../modules/auth/authRegistry";
 import { combineRegistries } from "./combineRegistries";
 import { protectedRegistry } from "../modules/protected/registry/protectedRegistry";
-import { inventoryRegistry } from "../modules/Inventory/InventoryRegistry";
+//import { inventoryRegistry } from "../modules/Inventory/InventoryRegistry";
 //import { systemAdminRegistry } from "../modules/systemAdmin/SystemAdminRegistry";
 import { hospitalRegistry } from "../modules/Hospital/HospitalRegistry";
 import { accountRegistry } from "../modules/Account/AccountRegistry";
-import { bloodRegistry } from "../modules/Blood/BloodRegistry";
+import { bloodRegistry } from "../modules/BloodInventory/BloodRegistry";
 import { appointmentRegistry } from "../modules/Appointment/AppointmentRegistry";
 import { notificationRegistry } from "../modules/Notification/NotificationRegistry";
 import { orderRegistry } from "../modules/Order/OrderRegistry";
 import { integrationRegistry } from "../modules/Integration/IntegrationRegistry";
 import { reportRegistry } from "../modules/Report/ReportRegistry";
 //import { donationRegistry } from "../modules/Donation/DonationRegistry";
-import { collectionRegistry } from "../modules/Collection/CollectionRegistry";
+//import { collectionRegistry } from "../modules/Collection/CollectionRegistry";
 import { donorRegistry } from "../modules/donor/donorRegistry";
 import { qualificationRegistry } from "../modules/Qulification/QulificationRegistry";
 
@@ -27,17 +27,17 @@ const combinedRegistry = combineRegistries(
   donorRegistry,
   qualificationRegistry,
   accountRegistry,
-  inventoryRegistry,
- // systemAdminRegistry,
+ // inventoryRegistry,
+  // systemAdminRegistry,
   hospitalRegistry,
   bloodRegistry,
   appointmentRegistry,
   notificationRegistry,
   orderRegistry,
   integrationRegistry,
-   reportRegistry,
-   //donationRegistry,
-   collectionRegistry,
+  reportRegistry,
+  //donationRegistry,
+  //collectionRegistry
 );
 
 const generator = new OpenApiGeneratorV3(combinedRegistry.definitions);

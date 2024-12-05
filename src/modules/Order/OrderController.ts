@@ -1,85 +1,69 @@
-import { validateAndParse } from "../../utils/validateAndParseRequest";
-import { OrderSchema, UpdateOrderSchema } from "./OrderSchema";
-import { Request, Response } from "express";
-import {
-  createOrder,
-  deleteOrder,
-  getAllOrders,
-  getOrderById,
-  updateOrder,
-} from "./OrderService";
+import { Request, Response } from 'express';
+import orderService from '../Order/OrderService';
+import { OrderStatus } from '@prisma/client';
 
-// Create a new order
-export const createOrderController = async (req: Request, res: Response) => {
-  try {
-    const parsed = await validateAndParse(OrderSchema, req);
-    const newOrder = await createOrder(
-      parsed.orderDate,
-      parsed.bloodType,
-      parsed.quantity,
-      parsed.status,
-      parsed.hospitalId
-    );
-    res.status(201).json(newOrder);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create order" });
-  }
-};
-
-// Get all orders
-export const getAllOrderController = async (req: Request, res: Response) => {
-  try {
-    const orders = await getAllOrders();
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve orders" });
-  }
-};
-
-// Get an order by ID
-export const getOrderByIdController = async (req: Request, res: Response) => {
-  const orderId = req.params.id; // Assuming the ID is passed as a route parameter
-  try {
-    const order = await getOrderById(parseInt(orderId));
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+class OrderController {
+  // Create a new order
+  async createOrder(req: Request, res: Response) {
+    try {
+      const order = await orderService.createOrder(req.body);
+      res.status(201).json(order);
+    } catch (error) {
+      const err = error as Error; // Typecast 'error' to Error
+      res.status(400).json({ message: err.message });
     }
-    res.status(200).json(order);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve order" });
   }
-};
 
-// Update an order
-export const updateOrderController = async (req: Request, res: Response) => {
-  const orderId = req.params.id;
-  try {
-    const parsed = await validateAndParse(UpdateOrderSchema, req);
-    const updatedOrder = await updateOrder(parseInt(orderId), parsed);
-    if (!updatedOrder) {
-      return res.status(404).json({ error: "Order not found" });
+  // Get all orders
+  async getAllOrders(req: Request, res: Response) {
+    try {
+      const orders = await orderService.getAllOrders();
+      res.status(200).json(orders);
+    } catch (error) {
+      const err = error as Error; // Typecast 'error' to Error
+      res.status(500).json({ message: err.message });
     }
-    res.status(200).json(updatedOrder);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to update order" });
   }
-};
 
-// Delete an order
-export const deleteOrderController = async (req: Request, res: Response) => {
-  const orderId = req.params.id;
-  try {
-    const deleted = await deleteOrder(parseInt(orderId));
-    if (!deleted) {
-      return res.status(404).json({ error: "Order not found" });
+  // Get an order by ID
+  async getOrderById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const order = await orderService.getOrderById(Number(id));
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+      res.status(200).json(order);
+    } catch (error) {
+      const err = error as Error; // Typecast 'error' to Error
+      res.status(400).json({ message: err.message });
     }
-    res.status(204).send(); // No content response
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete order" });
   }
-};
+
+  // Update an order's status
+  async updateOrderStatus(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+      const updatedOrder = await orderService.updateOrderStatus(Number(id), status as OrderStatus);
+      res.status(200).json(updatedOrder);
+    } catch (error) {
+      const err = error as Error; // Typecast 'error' to Error
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+  // Delete an order
+  async deleteOrder(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await orderService.deleteOrder(Number(id));
+      res.status(204).send();
+    } catch (error) {
+      const err = error as Error; // Typecast 'error' to Error
+      res.status(400).json({ message: err.message });
+    }
+  }
+}
+
+export default new OrderController();

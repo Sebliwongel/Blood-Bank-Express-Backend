@@ -1,4 +1,4 @@
-import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+//import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
 import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
 import {

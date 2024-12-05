@@ -12,6 +12,7 @@ enum UserRole {
   SYSTEM_ADMIN
   COLLECTOR
   MANAGER
+  HOSPITAL_REPRESENTATIVE
   STORE_MANAGER
   LABORATORY
 }
@@ -39,49 +40,27 @@ enum OrderStatus {
   COMPLETED
   CANCELED
 }
+enum IntegrationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
 
+// Models
 model Hospital {
   id              Int              @id @default(autoincrement())
   name            String
-  address         Address?         @relation("HospitalAddress", fields: [addressId], references: [id])
-  addressId       Int?             @unique // Add @unique for one-to-one relation
-  contactInfo     ContactInfo?     @relation("HospitalContactInfo", fields: [contactInfoId], references: [id])
-  contactInfoId   Int?             @unique // Ensure this field is unique for one-to-one relation
+  address         String
   username        String
+  email           String
   password        String
   integrations    Integration[]
   notifications   Notification[]
   orders          Order[]
   bloodInventory  BloodInventory[]
-  isActive        Boolean          @default(true)
-  deactivatedAt   DateTime?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-}
-
-model Address {
-  id         Int       @id @default(autoincrement())
-  city       String
-  subCity    String
-  zone       String
-  woreda     String
-  kebele     String
-  poBox      String?
-  donor      Donor?    @relation("DonorAddress")
-  hospital   Hospital? @relation("HospitalAddress")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-}
-
-model ContactInfo {
-  id         Int       @id @default(autoincrement())
-  telephone  String?
-  cellPhone  String?
-  email      String    @unique
-  donor      Donor?    @relation("DonorContactInfo")
-  hospital   Hospital? @relation("HospitalContactInfo")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  accounts Account[] 
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model Donor {
@@ -94,27 +73,26 @@ model Donor {
   age             Int
   gender          String
   occupation      String?
-  addressId       Int             @unique // Add @unique for one-to-one relation
-  address         Address         @relation("DonorAddress", fields: [addressId], references: [id])
-  contactInfoId   Int             @unique
-  contactInfo     ContactInfo     @relation("DonorContactInfo", fields: [contactInfoId], references: [id])
+  city            String
+  subCity         String
+  zone            String
+  woreda          String
+  kebele          String
+  email           String          @unique
+  telephone       String?
+  cellPhone       String?
   organization    String?
-  email           String
-  password        String
   username        String
+  password        String
   medicalHistory  String?
   qualifications  Qualification[] @relation("DonorQualification")
   notifications   Notification[]
   appointments    Appointment[]
   bloodInventory  BloodInventory[]
-  isActive        Boolean         @default(true)
-  deactivatedAt   DateTime?
+  accounts  Account[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 }
-
-
-
 
 model User {
   id            Int             @id @default(autoincrement())
@@ -124,30 +102,63 @@ model User {
   password      String
   username      String
   refreshToken  String?
-  isActive      Boolean         @default(true)
-  deactivatedAt DateTime?
   reports       Report[]
   collections   BloodInventory[]
   notifications Notification[]
+  integrationsHandled Integration[] @relation("UserHandledIntegrations") // Links to integrations
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
 
-  
+model Integration {
+  id            Int              @id @default(autoincrement())
+  hospitalId    Int
+  hospital      Hospital         @relation(fields: [hospitalId], references: [id])
+  status        IntegrationStatus @default(PENDING)
+  managerId     Int?             // References the User ID of the manager
+  manager       User?            @relation("UserHandledIntegrations", fields: [managerId], references: [id]) // Opposite side of the relation
+  managerComment String?         // Optional comment from the manager
+  bloodInventories BloodInventory[] @relation("IntegrationBloodInventory")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Account {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  accountType   String
+  accountStatus String   @default("active") // Default to 'active'
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+   donorId    Int?     
+  donor         Donor?   @relation(fields: [userId], references: [id]) // Relation with Donor
+  hospitalId    Int?     // Add hospitalId to define the relationship
+  hospital      Hospital?@relation(fields: [hospitalId], references: [id]) // Relation with Hospital
+
+  // Activation and Deactivation Logic:
+  isActive      Boolean  @default(true) // Account is active by default
+  activationDate DateTime? // Optional date when the account was activated
+  deactivationDate DateTime? // Optional date when the account was deactivated
+}
+
+
 
 model BloodInventory {
   id              Int           @id @default(autoincrement())
   bloodType       BloodType
   quantity        Int
+  barcode         String        @unique
   donationDate    DateTime
   expirationDate  DateTime
-  storageStatus   StorageStatus
+  storageStatus   StorageStatus @default(AVAILABLE)
   donorId         Int
   donor           Donor         @relation(fields: [donorId], references: [id])
   hospitalId      Int?
   hospital        Hospital?     @relation(fields: [hospitalId], references: [id])
   collectorId     Int?
   collector       User?         @relation(fields: [collectorId], references: [id])
+  integrationId   Int?
+  integration     Integration?     @relation("IntegrationBloodInventory", fields: [integrationId], references: [id])
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
@@ -202,14 +213,6 @@ model Qualification {
 }
 
 
-
-model Integration {
-  id            Int          @id @default(autoincrement())
-  hospitalId    Int
-  hospital      Hospital     @relation(fields: [hospitalId], references: [id])
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-}
 
 model Notification {
   id          Int         @id @default(autoincrement())

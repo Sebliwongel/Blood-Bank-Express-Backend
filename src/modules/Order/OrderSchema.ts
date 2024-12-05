@@ -1,35 +1,34 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-// Order Schema
-export const OrderSchema = z
-  .object({
-    id: z.number().openapi({ example: 1 }),
-    orderDate: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-    bloodType: z.string().openapi({ example: "A+" }),
-    quantity: z.number().openapi({ example: 3 }),
-    status: z.string().openapi({ example: "Pending" }),
-    hospitalId: z.number().openapi({ example: 1 }),
-  })
-  .openapi("Order");
+// Define the enums for validation
+const OrderStatusEnum = z.enum(['PENDING', 'COMPLETED', 'CANCELED']);
+const BloodTypeEnum = z.enum([
+  'A_POS',
+  'A_NEG',
+  'B_POS',
+  'B_NEG',
+  'AB_POS',
+  'AB_NEG',
+  'O_POS',
+  'O_NEG',
+]);
 
-// New Order Schema (for creating a new order)
-export const NewOrderSchema = z
-  .object({
-    orderDate: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-    bloodType: z.string().openapi({ example: "A+" }),
-    quantity: z.number().openapi({ example: 3 }),
-    status: z.string().openapi({ example: "Pending" }),
-    hospitalId: z.number().openapi({ example: 1 }),
-  })
-  .openapi("New Order");
+// Schema for creating a new order
+export const createOrderSchema = z.object({
+  orderDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+    message: 'Invalid date format',
+  }), // Validate as a proper date
+  bloodType: BloodTypeEnum,
+  quantity: z.number().int().positive({ message: 'Quantity must be a positive integer' }),
+  storageStatus: OrderStatusEnum,
+  hospitalId: z.number().int().positive({ message: 'Invalid hospital ID' }),
+});
 
-// Update Order Schema (for updating order information)
-export const UpdateOrderSchema = z
-  .object({
-    orderDate: z.date().optional().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-    bloodType: z.string().optional().openapi({ example: "A+" }),
-    quantity: z.number().optional().openapi({ example: 3 }),
-    status: z.string().optional().openapi({ example: "Pending" }),
-    hospitalId: z.number().optional().openapi({ example: 1 }),
-  })
-  .openapi("Update Order");
+// Schema for updating order status
+export const updateOrderStatusSchema = z.object({
+  status: OrderStatusEnum,
+});
+
+// Type definitions for TypeScript
+export type CreateOrderDTO = z.infer<typeof createOrderSchema>;
+export type UpdateOrderStatusDTO = z.infer<typeof updateOrderStatusSchema>;

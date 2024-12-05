@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
-import { UserRole } from "@prisma/client";
+//import { UserRole } from "@prisma/client";
 
 extendZodWithOpenApi(z)
 
@@ -10,7 +10,7 @@ const userRoles = [
   "MANAGER",
   "STORE_MANAGER",
   "LABORATORY",
-  "HOSPITAL",
+  
 ] as const;
 
 export const UserSchema = z
@@ -25,6 +25,14 @@ export const UserSchema = z
     updatedAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
   })
   .openapi("User");
+
+  // id            Int             @id @default(autoincrement())
+  // name          String
+  // email         String          @unique
+  // role          UserRole
+  // password      String
+  // username      String
+  // refreshToken  String?
 
 export const NewUserSchema = z
   .object({

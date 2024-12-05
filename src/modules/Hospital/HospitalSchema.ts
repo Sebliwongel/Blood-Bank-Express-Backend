@@ -1,40 +1,48 @@
 import { z } from "zod";
 
-// Define the schema for creating a new hospital
-export const NewHospitalSchema = z
-  .object({
-    name: z.string().openapi({ example: "City Hospital" }), // Name of the hospital
-    address: z.string().openapi({ example: "123 Main St, Cityville" }), // Address of the hospital
-    contactInfo: z.string().openapi({ example: "+1234567890" }), // Contact information for the hospital
-    email: z.string().email().openapi({ example: "contact@cityhospital.com" }), // Email address (validated as an email)
-    username: z.string().openapi({ example: "city_hospital_admin" }), // Admin username for hospital login
-    password: z.string().openapi({ example: "securePassword123" }), // Password for hospital admin
-  })
-  .openapi("New Hospital");
+// ==========================
+// Hospital Schema
+// ==========================
 
-// Define the schema for the hospital details (with related fields and timestamps)
-export const HospitalSchema = z
-  .object({
-    id: z.number().openapi({ example: 1 }), // Unique identifier for the hospital
-    name: z.string().openapi({ example: "City Hospital" }), // Name of the hospital
-    address: z.string().openapi({ example: "123 Main St, Cityville" }), // Address of the hospital
-    contactInfo: z.string().openapi({ example: "+1234567890" }), // Contact information for the hospital
-    email: z.string().email().openapi({ example: "contact@cityhospital.com" }), // Email address (validated as an email)
-    username: z.string().openapi({ example: "city_hospital_admin" }), // Admin username for hospital login
-    password: z.string().openapi({ example: "securePassword123" }), // Password for hospital admin
-    createdAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }), // Date the hospital record was created
-    updatedAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }), // Date the hospital record was last updated
-  })
-  .openapi("Hospital");
+// Schema for validating hospital IDs in routes
+export const HospitalIdSchema = z.object({
+  id: z.string().regex(/^\d+$/, "ID must be a number").transform(Number),
+}).openapi("Hospital ID");
 
-// Define the schema for updating hospital details (with optional fields)
-export const UpdateHospitalSchema = z
-  .object({
-    name: z.string().optional().openapi({ example: "Central City Hospital" }), // Optional name change
-    address: z.string().optional().openapi({ example: "456 Another St, Cityville" }), // Optional address change
-    contactInfo: z.string().optional().openapi({ example: "+0987654321" }), // Optional contact information change
-    email: z.string().email().optional().openapi({ example: "support@cityhospital.com" }), // Optional email change
-    username: z.string().optional().openapi({ example: "new_city_hospital_admin" }), // Optional username change
-    password: z.string().optional().openapi({ example: "newSecurePassword123" }), // Optional password change
-  })
-  .openapi("Update Hospital");
+// Schema for creating a new hospital
+export const CreateHospitalSchema = z.object({
+  name: z.string().min(1, "Hospital name is required").openapi({ example: "City Hospital" }),
+  address: z.string().min(1, "Address is required").openapi({ example: "123 Main St, Cityville, State, 12345" }),
+  username: z.string().min(1, "Username is required").openapi({ example: "city_hospital_admin" }),
+  email: z.string().min(1, "Email is required").email("Invalid email address").openapi({ example: "city_hospital@example.com" }),
+  password: z.string().min(6, "Password must be at least 6 characters long").openapi({ example: "securePassword123" }),
+  isActive: z.boolean().optional().default(true).openapi({ example: true }),
+}).openapi("Create Hospital");
+
+// Schema for hospital responses (includes all fields including generated ones)
+export const HospitalSchema = z.object({
+  id: z.number().openapi({ example: 1 }),
+  name: z.string().openapi({ example: "City Hospital" }),
+  address: z.string().openapi({ example: "123 Main St, Cityville, State, 12345" }),
+  username: z.string().openapi({ example: "city_hospital_admin" }),
+  email: z.string().openapi({ example: "city_hospital@example.com" }),
+  isActive: z.boolean().openapi({ example: true }),
+  deactivatedAt: z.date().nullable().openapi({ example: null }),
+  createdAt: z.date().openapi({ example: "2024-01-01T00:00:00Z" }),
+  updatedAt: z.date().openapi({ example: "2024-01-01T00:00:00Z" }),
+}).openapi("Hospital");
+
+// Schema for updating an existing hospital
+export const UpdateHospitalSchema = z.object({
+  name: z.string().min(1, "Hospital name is required").optional().openapi({ example: "Updated City Hospital" }),
+  address: z.string().min(1, "Address is required").optional().openapi({ example: "456 Main St, New City, New State, 67890" }),
+  email: z.string().min(1, "Email is required").email("Invalid email address").optional().openapi({ example: "city_hospital@example.com" }),
+  username: z.string().min(1, "Username is required").optional().openapi({ example: "updated_hospital_admin" }),
+  password: z.string().min(6, "Password must be at least 6 characters long").optional().openapi({ example: "newPassword123" }),
+  isActive: z.boolean().optional().openapi({ example: false }),
+  deactivatedAt: z
+    .string()
+    .datetime({ message: "Invalid date format for deactivation" })
+    .optional()
+    .openapi({ example: "2024-12-01T15:30:00Z" }),
+}).openapi("Update Hospital");

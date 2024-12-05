@@ -7,6 +7,8 @@ import {
   getAllAccounts,
   getAccountById,
   updateAccount,
+  activateAccount,
+  deactivateAccount,
 } from "./AccountService";
 
 // Create a new account
@@ -16,7 +18,9 @@ export const createAccountController = async (req: Request, res: Response) => {
     const newAccount = await createAccount(
       parsed.userId,
       parsed.accountType,
-      parsed.accountStatus
+      parsed.accountStatus,
+      parsed.hospitalId,
+      parsed.donorId
     );
     res.status(201).json(newAccount);
   } catch (error) {
@@ -70,8 +74,9 @@ export const updateAccountController = async (req: Request, res: Response) => {
 // Delete an account
 export const deleteAccountController = async (req: Request, res: Response) => {
   const accountId = req.params.id;
+  const adminId = req.body.adminId; // The admin ID should be passed in the request body or via an auth system
   try {
-    const deleted = await deleteAccount(parseInt(accountId));
+    const deleted = await deleteAccount(parseInt(accountId), adminId);
     if (!deleted) {
       return res.status(404).json({ error: "Account not found" });
     }
@@ -79,5 +84,37 @@ export const deleteAccountController = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to delete account" });
+  }
+};
+
+// Activate an account
+export const activateAccountController = async (req: Request, res: Response) => {
+  const accountId = req.params.id;
+  const adminId = req.body.adminId; // Admin ID should be passed in the request body
+  try {
+    const activatedAccount = await activateAccount(parseInt(accountId), adminId);
+    if (!activatedAccount) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+    res.status(200).json(activatedAccount);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to activate account" });
+  }
+};
+
+// Deactivate an account
+export const deactivateAccountController = async (req: Request, res: Response) => {
+  const accountId = req.params.id;
+  const adminId = req.body.adminId; // Admin ID should be passed in the request body
+  try {
+    const deactivatedAccount = await deactivateAccount(parseInt(accountId), adminId);
+    if (!deactivatedAccount) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+    res.status(200).json(deactivatedAccount);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to deactivate account" });
   }
 };

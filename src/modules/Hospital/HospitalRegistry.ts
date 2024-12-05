@@ -1,49 +1,25 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
 import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
-import { HospitalSchema, NewHospitalSchema, UpdateHospitalSchema } from "./HospitalSchema";
+import { HospitalSchema, CreateHospitalSchema, UpdateHospitalSchema, HospitalIdSchema } from "./HospitalSchema";
 
 export const hospitalRegistry = new AccessibleOpenAPIRegistry();
 
+// Register schemas
 hospitalRegistry.register("Hospital", HospitalSchema);
-hospitalRegistry.register("NewHospital", NewHospitalSchema);
+hospitalRegistry.register("CreateHospital", CreateHospitalSchema);
+hospitalRegistry.register("UpdateHospital", UpdateHospitalSchema);
+hospitalRegistry.register("HospitalId", HospitalIdSchema);
 
-// Register the POST path for creating a new hospital
-hospitalRegistry.registerPath({
-  method: "post",
-  path: "/api/hospitals",
-  summary: "Register a new hospital",
-  tags: ["Hospital"],
-  request: {
-    body: {
-      content: {
-        "application/json": {
-          schema: NewHospitalSchema,
-        },
-      },
-    },
-  },
-  responses: {
-    201: {
-      description: "The created hospital",
-      content: {
-        "application/json": {
-          schema: HospitalSchema,
-        },
-      },
-    },
-  },
-});
-
-// Register the GET path for retrieving all hospitals
+// GET /hospitals - Get all hospitals
 hospitalRegistry.registerPath({
   method: "get",
-  path: "/api/hospitals",
+  path: "/hospitals",
   summary: "Get all hospitals",
   tags: ["Hospital"],
   responses: {
     200: {
-      description: "A list of hospitals",
+      description: "List of hospitals",
       content: {
         "application/json": {
           schema: z.array(HospitalSchema),
@@ -53,23 +29,18 @@ hospitalRegistry.registerPath({
   },
 });
 
-// Register the GET path for retrieving a hospital by ID
+// GET /hospitals/:id - Get hospital by ID
 hospitalRegistry.registerPath({
   method: "get",
-  path: "/api/hospitals/{id}",
-  summary: "Get a hospital by ID",
+  path: "/hospitals/{id}",
+  summary: "Get hospital by ID",
   tags: ["Hospital"],
-  parameters: [
-    {
-      name: "id",
-      in: "path",
-      required: true,
-      schema: { type: "string" }, // Assuming ID is a string
-    },
-  ],
+  request: {
+    params: HospitalIdSchema,
+  },
   responses: {
     200: {
-      description: "The hospital with the specified ID",
+      description: "Hospital details",
       content: {
         "application/json": {
           schema: HospitalSchema,
@@ -78,25 +49,63 @@ hospitalRegistry.registerPath({
     },
     404: {
       description: "Hospital not found",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+          }),
+        },
+      },
     },
   },
 });
 
-// Register the PATCH path for updating a hospital
+// POST /hospitals - Create new hospital
+hospitalRegistry.registerPath({
+  method: "post",
+  path: "/hospitals",
+  summary: "Create new hospital",
+  tags: ["Hospital"],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: CreateHospitalSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    201: {
+      description: "Hospital created successfully",
+      content: {
+        "application/json": {
+          schema: HospitalSchema,
+        },
+      },
+    },
+    409: {
+      description: "Hospital already exists",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+            details: z.string(),
+          }),
+        },
+      },
+    },
+  },
+});
+
+// PATCH /hospitals/:id - Full update hospital
 hospitalRegistry.registerPath({
   method: "patch",
-  path: "/api/hospitals/{id}",
-  summary: "Update a hospital",
+  path: "/hospitals/{id}",
+  summary: "Full update hospital",
   tags: ["Hospital"],
-  parameters: [
-    {
-      name: "id",
-      in: "path",
-      required: true,
-      schema: { type: "string" }, // Assuming ID is a string
-    },
-  ],
   request: {
+    params: HospitalIdSchema,
     body: {
       content: {
         "application/json": {
@@ -107,7 +116,7 @@ hospitalRegistry.registerPath({
   },
   responses: {
     200: {
-      description: "The updated hospital",
+      description: "Hospital updated successfully",
       content: {
         "application/json": {
           schema: HospitalSchema,
@@ -116,30 +125,106 @@ hospitalRegistry.registerPath({
     },
     404: {
       description: "Hospital not found",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+          }),
+        },
+      },
+    },
+    409: {
+      description: "Update failed due to conflict",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+            details: z.string(),
+          }),
+        },
+      },
     },
   },
 });
 
-// Register the DELETE path for deleting a hospital
+// PATCH /hospitals/:id/patch - Partial update hospital
 hospitalRegistry.registerPath({
-  method: "delete",
-  path: "/api/hospitals/{id}",
-  summary: "Delete a hospital",
+  method: "patch",
+  path: "/hospitals/{id}/patch",
+  summary: "Partial update hospital",
   tags: ["Hospital"],
-  parameters: [
-    {
-      name: "id",
-      in: "path",
-      required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+  request: {
+    params: HospitalIdSchema,
+    body: {
+      content: {
+        "application/json": {
+          schema: UpdateHospitalSchema.partial(),
+        },
+      },
     },
-  ],
+  },
   responses: {
-    204: {
-      description: "Hospital deleted successfully",
+    200: {
+      description: "Hospital partially updated successfully",
+      content: {
+        "application/json": {
+          schema: HospitalSchema,
+        },
+      },
     },
     404: {
       description: "Hospital not found",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+          }),
+        },
+      },
+    },
+    409: {
+      description: "Update failed due to conflict",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+            details: z.string(),
+          }),
+        },
+      },
+    },
+  },
+});
+
+// DELETE /hospitals/:id - Delete hospital
+hospitalRegistry.registerPath({
+  method: "delete",
+  path: "/hospitals/{id}",
+  summary: "Delete hospital",
+  tags: ["Hospital"],
+  request: {
+    params: HospitalIdSchema,
+  },
+  responses: {
+    200: {
+      description: "Hospital deleted successfully",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    404: {
+      description: "Hospital not found",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string(),
+          }),
+        },
+      },
     },
   },
 });
