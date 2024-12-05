@@ -15,14 +15,22 @@ export const createBloodController = async (req: Request, res: Response) => {
     // Validate and parse request body using the NewBloodSchema
     const parsed = await validateAndParse(NewBloodSchema, req);
     
-    // Call the service to create the blood entry
-    const newBlood = await createBlood(parsed.bloodType, parsed.quantity, parsed.donationDate);
+    // TODO: Get donorId from authenticated user or request
+    // For now using a placeholder donorId
+    const donorId = 1; // This should be replaced with actual donor ID logic
+    
+    const newBlood = await createBlood(
+      donorId,
+      parsed.bloodType,
+      parsed.quantity,
+      parsed.donationDate
+    );
     
     // Send response with the created blood entry
     res.status(201).json(newBlood);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create blood record" });
+    res.status(500).json({ error: "Failed to retrieve blood records" });
   }
 };
 
@@ -67,9 +75,8 @@ export const updateBloodController = async (req: Request, res: Response) => {
   try {
     // Validate and parse the update body using UpdateBloodSchema
     const parsed = await validateAndParse(UpdateBloodSchema, req);
-    
     // Call the service to update the blood entry
-    const updatedBlood = await updateBlood(bloodId, parsed);
+    const updatedBlood = await updateBlood(bloodId,parsed);
     
     if (!updatedBlood) {
       return res.status(404).json({ error: "Blood record not found" });

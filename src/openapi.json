@@ -37,7 +37,6 @@
             "type": "string",
             "enum": [
               "SYSTEM_ADMIN",
-              "DONOR",
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
@@ -49,6 +48,10 @@
           "password": {
             "type": "string",
             "example": "password123"
+          },
+          "username": {
+            "type": "string",
+            "example": "seblewengel"
           },
           "createdAt": {
             "type": "string",
@@ -65,6 +68,7 @@
           "email",
           "role",
           "password",
+          "username",
           "createdAt",
           "updatedAt"
         ]
@@ -84,7 +88,6 @@
             "type": "string",
             "enum": [
               "SYSTEM_ADMIN",
-              "DONOR",
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
@@ -96,13 +99,18 @@
           "password": {
             "type": "string",
             "example": "password123"
+          },
+          "username": {
+            "type": "string",
+            "example": "seblewengel"
           }
         },
         "required": [
           "name",
           "email",
           "role",
-          "password"
+          "password",
+          "username"
         ]
       },
       "Donor": {
@@ -130,7 +138,7 @@
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
+            "example": "1990-05-22T00:00:00.000Z"
           },
           "age": {
             "type": "number",
@@ -192,22 +200,6 @@
           "poBox": {
             "type": "string",
             "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
-            "example": 1
           },
           "createdAt": {
             "type": "string",
@@ -233,7 +225,6 @@
           "email",
           "password",
           "username",
-          "bloodType",
           "createdAt",
           "updatedAt"
         ]
@@ -243,100 +234,100 @@
         "properties": {
           "firstName": {
             "type": "string",
+            "minLength": 1,
             "example": "John"
           },
           "middleName": {
             "type": "string",
-            "example": "A."
+            "nullable": true
           },
           "lastName": {
             "type": "string",
+            "minLength": 1,
             "example": "Doe"
           },
           "title": {
             "type": "string",
+            "nullable": true,
             "example": "Mr."
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
+            "example": "2023-07-15T10:00:00.000Z"
           },
           "age": {
-            "type": "number",
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true,
             "example": 33
           },
           "gender": {
             "type": "string",
+            "minLength": 1,
             "example": "Male"
           },
           "occupation": {
             "type": "string",
-            "example": "Engineer"
+            "nullable": true,
+            "example": "Software Engineer"
           },
           "city": {
             "type": "string",
-            "example": "New York"
+            "minLength": 1,
+            "example": "Addis Ababa"
           },
           "subCity": {
             "type": "string",
-            "example": "Manhattan"
+            "minLength": 1,
+            "example": "Bole"
           },
           "zone": {
             "type": "string",
-            "example": "Central"
+            "minLength": 1,
+            "example": "Zone 3"
           },
           "woreda": {
             "type": "string",
-            "example": "5"
+            "minLength": 1,
+            "example": "Woreda 11"
           },
           "kebele": {
             "type": "string",
-            "example": "12"
+            "minLength": 1,
+            "example": "Kebele 04"
           },
           "telephone": {
             "type": "string",
-            "example": "123-456-7890"
+            "nullable": true
           },
           "cellPhone": {
             "type": "string",
-            "example": "987-654-3210"
+            "nullable": true,
+            "example": "0912345678"
           },
           "organization": {
             "type": "string",
-            "example": "Tech Corp"
+            "nullable": true,
+            "example": "Red Cross"
           },
           "email": {
             "type": "string",
             "format": "email",
-            "example": "johndoe@example.com"
+            "example": "john.doe@example.com"
           },
           "password": {
             "type": "string",
-            "example": "securePassword123"
+            "minLength": 8,
+            "example": "strongPassword123"
           },
           "username": {
             "type": "string",
+            "minLength": 1,
             "example": "john_doe"
           },
           "poBox": {
             "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
-            "example": 1
+            "nullable": true
           }
         },
         "required": [
@@ -352,8 +343,7 @@
           "kebele",
           "email",
           "password",
-          "username",
-          "bloodType"
+          "username"
         ]
       },
       "UpdateDonor": {
@@ -361,100 +351,611 @@
         "properties": {
           "firstName": {
             "type": "string",
-            "example": "John"
+            "minLength": 1
           },
           "middleName": {
             "type": "string",
-            "example": "A."
+            "nullable": true
           },
           "lastName": {
             "type": "string",
-            "example": "Doe"
+            "minLength": 1
           },
           "title": {
             "type": "string",
-            "example": "Mr."
+            "nullable": true
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
+            "example": "1990-05-22T00:00:00.000Z"
           },
           "age": {
-            "type": "number",
-            "example": 33
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
           "gender": {
-            "type": "string",
-            "example": "Male"
+            "type": "string"
           },
           "occupation": {
             "type": "string",
-            "example": "Engineer"
+            "nullable": true
           },
           "city": {
-            "type": "string",
-            "example": "New York"
+            "type": "string"
           },
           "subCity": {
-            "type": "string",
-            "example": "Manhattan"
+            "type": "string"
           },
           "zone": {
-            "type": "string",
-            "example": "Central"
+            "type": "string"
           },
           "woreda": {
-            "type": "string",
-            "example": "5"
+            "type": "string"
           },
           "kebele": {
-            "type": "string",
-            "example": "12"
+            "type": "string"
           },
           "telephone": {
             "type": "string",
-            "example": "123-456-7890"
+            "nullable": true
           },
           "cellPhone": {
             "type": "string",
-            "example": "987-654-3210"
+            "nullable": true
           },
           "organization": {
             "type": "string",
-            "example": "Tech Corp"
+            "nullable": true
           },
           "email": {
             "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
+            "format": "email"
           },
           "password": {
             "type": "string",
-            "example": "securePassword123"
+            "minLength": 8
           },
           "username": {
-            "type": "string",
-            "example": "john_doe"
+            "type": "string"
           },
           "poBox": {
             "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "birthDate"
+        ]
+      },
+      "Qualification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
             "example": 1
+          },
+          "donorId": {
+            "type": "integer",
+            "example": 123
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 70.5
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 72
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 13.5
+          },
+          "bp": {
+            "type": "string",
+            "example": "120/80"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 36.5
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-15T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": false
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "donorId",
+          "weight",
+          "pulse",
+          "hb",
+          "bp",
+          "temperature",
+          "hasDonatedBefore",
+          "hasTattooing",
+          "hasEarPiercing",
+          "hadDentalExtraction",
+          "hasHeartDisease",
+          "hasCancer",
+          "hasDiabetes",
+          "hasHepatitis",
+          "hasSTD",
+          "hadTyphoidLastYear",
+          "hasLungDisease",
+          "hasTuberculosis",
+          "hasAllergies",
+          "hasKidneyDisease",
+          "hasEpilepsy",
+          "hasAbnormalBleeding",
+          "hadJaundiceLastYear",
+          "hadMalariaSixMonths",
+          "hasFaintingSpells",
+          "takenAntibiotics",
+          "takenSteroids",
+          "takenAspirin",
+          "hadVaccinations",
+          "consumedAlcohol",
+          "hadDogBiteVaccine",
+          "hadSurgeryLastSixMonths",
+          "hadBloodTransfusionLastSixMonths",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewQualification": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "integer",
+            "example": 123
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 70.5
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 72
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 13.5
+          },
+          "bp": {
+            "type": "string",
+            "example": "120/80"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 36.5
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-15T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": false
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "donorId",
+          "weight",
+          "pulse",
+          "hb",
+          "bp",
+          "temperature",
+          "hasDonatedBefore",
+          "hasTattooing",
+          "hasEarPiercing",
+          "hadDentalExtraction",
+          "hasHeartDisease",
+          "hasCancer",
+          "hasDiabetes",
+          "hasHepatitis",
+          "hasSTD",
+          "hadTyphoidLastYear",
+          "hasLungDisease",
+          "hasTuberculosis",
+          "hasAllergies",
+          "hasKidneyDisease",
+          "hasEpilepsy",
+          "hasAbnormalBleeding",
+          "hadJaundiceLastYear",
+          "hadMalariaSixMonths",
+          "hasFaintingSpells",
+          "takenAntibiotics",
+          "takenSteroids",
+          "takenAspirin",
+          "hadVaccinations",
+          "consumedAlcohol",
+          "hadDogBiteVaccine",
+          "hadSurgeryLastSixMonths",
+          "hadBloodTransfusionLastSixMonths"
+        ]
+      },
+      "UpdateQualification": {
+        "type": "object",
+        "properties": {
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 71
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 74
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 14
+          },
+          "bp": {
+            "type": "string",
+            "example": "130/85"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 37
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-20T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": true
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": true
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": true
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
           }
         }
       },
@@ -627,119 +1128,6 @@
           "bloodId"
         ]
       },
-      "SystemAdmin Accounts": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "example": 1
-            },
-            "userId": {
-              "type": "number",
-              "example": 1
-            },
-            "accountType": {
-              "type": "string",
-              "example": "basic"
-            },
-            "accountStatus": {
-              "type": "string",
-              "example": "active"
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            }
-          },
-          "required": [
-            "id",
-            "userId",
-            "accountType",
-            "accountStatus",
-            "createdAt",
-            "updatedAt"
-          ]
-        }
-      },
-      "SystemAdmin Notifications": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "example": 1
-            },
-            "message": {
-              "type": "string",
-              "example": "New account created."
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            }
-          },
-          "required": [
-            "id",
-            "message",
-            "createdAt"
-          ]
-        }
-      },
-      "SystemAdmin": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "username": {
-            "type": "string",
-            "example": "admin_user"
-          },
-          "accounts": {
-            "$ref": "#/components/schemas/SystemAdmin Accounts"
-          },
-          "notifications": {
-            "$ref": "#/components/schemas/SystemAdmin Notifications"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "accounts",
-          "notifications",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewSystemAdmin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "minLength": 1,
-            "example": "admin_user"
-          }
-        },
-        "required": [
-          "username"
-        ]
-      },
       "Hospital": {
         "type": "object",
         "properties": {
@@ -873,9 +1261,6 @@
             "type": "number",
             "example": 1
           },
-          "donor": {
-            "$ref": "#/components/schemas/Donor"
-          },
           "createdAt": {
             "type": "string",
             "example": "2024-11-01T10:00:00.000Z"
@@ -890,7 +1275,6 @@
           "appointmentDate",
           "status",
           "donorId",
-          "donor",
           "createdAt",
           "updatedAt"
         ]
@@ -900,7 +1284,7 @@
         "properties": {
           "appointmentDate": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "2023-07-15T10:00:00.000Z"
           },
           "status": {
             "type": "string",
@@ -1221,65 +1605,6 @@
           "generatedBy"
         ]
       },
-      "Donation": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "donorId",
-          "bloodId",
-          "donationDate",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewDonation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "donorId",
-          "bloodId",
-          "donationDate"
-        ]
-      },
       "Collection": {
         "type": "object",
         "properties": {
@@ -1295,6 +1620,10 @@
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
           },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
+          },
           "createdAt": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
@@ -1308,6 +1637,7 @@
           "id",
           "bloodId",
           "collectedDate",
+          "COLLECTORId",
           "createdAt",
           "updatedAt"
         ]
@@ -1322,230 +1652,363 @@
           "collectedDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
           "bloodId",
-          "collectedDate"
+          "collectedDate",
+          "COLLECTORId"
         ]
       },
-      "New Donor": {
+      "Login": {
         "type": "object",
         "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "middleName": {
-            "type": "string",
-            "example": "A."
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr."
-          },
-          "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
-            "type": "number",
-            "example": 33
-          },
-          "gender": {
-            "type": "string",
-            "example": "Male"
-          },
-          "occupation": {
-            "type": "string",
-            "example": "Engineer"
-          },
-          "city": {
-            "type": "string",
-            "example": "New York"
-          },
-          "subCity": {
-            "type": "string",
-            "example": "Manhattan"
-          },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
-          "woreda": {
-            "type": "string",
-            "example": "5"
-          },
-          "kebele": {
-            "type": "string",
-            "example": "12"
-          },
-          "telephone": {
-            "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
-          },
           "email": {
             "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
+            "example": "gogemekuse@gmail.com"
           },
           "password": {
             "type": "string",
-            "example": "securePassword123"
-          },
-          "username": {
-            "type": "string",
-            "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
-            "example": 1
+            "example": "password123"
           }
         },
         "required": [
-          "firstName",
-          "lastName",
-          "birthDate",
-          "age",
-          "gender",
-          "city",
-          "subCity",
-          "zone",
-          "woreda",
-          "kebele",
           "email",
-          "password",
-          "username",
-          "bloodType"
+          "password"
         ]
       },
-      "Update Donor": {
+      "New Qualification": {
         "type": "object",
         "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "John"
+          "donorId": {
+            "type": "integer",
+            "example": 123
           },
-          "middleName": {
-            "type": "string",
-            "example": "A."
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr."
-          },
-          "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
+          "weight": {
             "type": "number",
-            "example": 33
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 70.5
           },
-          "gender": {
-            "type": "string",
-            "example": "Male"
-          },
-          "occupation": {
-            "type": "string",
-            "example": "Engineer"
-          },
-          "city": {
-            "type": "string",
-            "example": "New York"
-          },
-          "subCity": {
-            "type": "string",
-            "example": "Manhattan"
-          },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
-          "woreda": {
-            "type": "string",
-            "example": "5"
-          },
-          "kebele": {
-            "type": "string",
-            "example": "12"
-          },
-          "telephone": {
-            "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "securePassword123"
-          },
-          "username": {
-            "type": "string",
-            "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
+          "pulse": {
             "type": "number",
-            "example": 2
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 72
           },
-          "systemAdminId": {
+          "hb": {
             "type": "number",
-            "example": 1
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 13.5
+          },
+          "bp": {
+            "type": "string",
+            "example": "120/80"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 36.5
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-15T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": false
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "donorId",
+          "weight",
+          "pulse",
+          "hb",
+          "bp",
+          "temperature",
+          "hasDonatedBefore",
+          "hasTattooing",
+          "hasEarPiercing",
+          "hadDentalExtraction",
+          "hasHeartDisease",
+          "hasCancer",
+          "hasDiabetes",
+          "hasHepatitis",
+          "hasSTD",
+          "hadTyphoidLastYear",
+          "hasLungDisease",
+          "hasTuberculosis",
+          "hasAllergies",
+          "hasKidneyDisease",
+          "hasEpilepsy",
+          "hasAbnormalBleeding",
+          "hadJaundiceLastYear",
+          "hadMalariaSixMonths",
+          "hasFaintingSpells",
+          "takenAntibiotics",
+          "takenSteroids",
+          "takenAspirin",
+          "hadVaccinations",
+          "consumedAlcohol",
+          "hadDogBiteVaccine",
+          "hadSurgeryLastSixMonths",
+          "hadBloodTransfusionLastSixMonths"
+        ]
+      },
+      "Update Qualification": {
+        "type": "object",
+        "properties": {
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 71
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 74
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 14
+          },
+          "bp": {
+            "type": "string",
+            "example": "130/85"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 37
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-20T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": true
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": true
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": true
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
           }
         }
       },
@@ -1641,63 +2104,6 @@
           }
         }
       },
-      "System Admin": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "username": {
-            "type": "string",
-            "example": "admin_user"
-          },
-          "accounts": {
-            "$ref": "#/components/schemas/SystemAdmin Accounts"
-          },
-          "notifications": {
-            "$ref": "#/components/schemas/SystemAdmin Notifications"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "accounts",
-          "notifications",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "New System Admin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "minLength": 1,
-            "example": "admin_user"
-          }
-        },
-        "required": [
-          "username"
-        ]
-      },
-      "Update System Admin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "example": "new_admin_user"
-          }
-        }
-      },
       "New Hospital": {
         "type": "object",
         "properties": {
@@ -1789,60 +2195,20 @@
           "donationDate"
         ]
       },
-      "Update Blood": {
+      "UpdateAppointment": {
         "type": "object",
         "properties": {
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "example": 500
-          },
-          "donationDate": {
+          "appointmentDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
-      },
-      "New Appointment": {
-        "type": "object",
-        "properties": {
-          "appointmentDate": {
-            "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
           },
           "status": {
             "type": "string",
-            "example": "Scheduled"
+            "example": "Rescheduled"
           },
           "donorId": {
             "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "appointmentDate",
-          "status",
-          "donorId"
-        ]
-      },
-      "Update Appointment": {
-        "type": "object",
-        "properties": {
-          "appointmentDate": {
-            "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
-          },
-          "status": {
-            "type": "string",
-            "example": "Completed"
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
+            "example": 2
           }
         }
       },
@@ -2008,45 +2374,6 @@
           }
         }
       },
-      "New Donation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "donorId",
-          "bloodId",
-          "donationDate"
-        ]
-      },
-      "Update Donation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
-      },
       "New Collection": {
         "type": "object",
         "properties": {
@@ -2057,11 +2384,16 @@
           "collectedDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
           "bloodId",
-          "collectedDate"
+          "collectedDate",
+          "COLLECTORId"
         ]
       },
       "Update Collection": {
@@ -2074,6 +2406,10 @@
           "collectedDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "COLLECTORId": {
+            "type": "number",
+            "example": 1
           }
         }
       }
@@ -2088,11 +2424,11 @@
     }
   },
   "paths": {
-    "/auth/register": {
+    "/api/users": {
       "post": {
         "summary": "Register a new user",
         "tags": [
-          "Auth"
+          "User"
         ],
         "requestBody": {
           "content": {
@@ -2115,9 +2451,87 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "Get all users",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/auth/login": {
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -2127,7 +2541,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUser"
+                "$ref": "#/components/schemas/Login"
               }
             }
           }
@@ -2284,7 +2698,121 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Donor"
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "John"
+                  },
+                  "middleName": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Doe"
+                  },
+                  "title": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Mr."
+                  },
+                  "birthDate": {
+                    "type": "string",
+                    "example": "2023-07-15T10:00:00.000Z"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "example": 33
+                  },
+                  "gender": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Male"
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Software Engineer"
+                  },
+                  "city": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Addis Ababa"
+                  },
+                  "subCity": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Bole"
+                  },
+                  "zone": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Zone 3"
+                  },
+                  "woreda": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Woreda 11"
+                  },
+                  "kebele": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Kebele 04"
+                  },
+                  "telephone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "cellPhone": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "0912345678"
+                  },
+                  "organization": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Red Cross"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "example": "strongPassword123"
+                  },
+                  "username": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "john_doe"
+                  },
+                  "poBox": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "birthDate",
+                  "age",
+                  "gender",
+                  "city",
+                  "subCity",
+                  "zone",
+                  "woreda",
+                  "kebele",
+                  "email",
+                  "password",
+                  "username"
+                ]
               }
             }
           }
@@ -2299,11 +2827,14 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input data"
           }
         }
       },
       "get": {
-        "summary": "Get all donors",
+        "summary": "Get all donor",
         "tags": [
           "Donor"
         ],
@@ -2320,6 +2851,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "No donors found"
           }
         }
       }
@@ -2351,6 +2885,9 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid ID format"
+          },
           "404": {
             "description": "Donor not found"
           }
@@ -2375,7 +2912,86 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Donor"
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "middleName": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "birthDate": {
+                    "type": "string",
+                    "example": "1990-05-22T00:00:00.000Z"
+                  },
+                  "age": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "subCity": {
+                    "type": "string"
+                  },
+                  "zone": {
+                    "type": "string"
+                  },
+                  "woreda": {
+                    "type": "string"
+                  },
+                  "kebele": {
+                    "type": "string"
+                  },
+                  "telephone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "cellPhone": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "organization": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "poBox": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "birthDate"
+                ]
               }
             }
           }
@@ -2390,6 +3006,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input data or ID"
           },
           "404": {
             "description": "Donor not found"
@@ -2415,8 +3034,158 @@
           "204": {
             "description": "Donor deleted successfully"
           },
+          "400": {
+            "description": "Invalid ID format"
+          },
           "404": {
             "description": "Donor not found"
+          }
+        }
+      }
+    },
+    "/api/qualifications": {
+      "post": {
+        "summary": "Register a new qualification",
+        "tags": [
+          "Qualification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Qualification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created qualification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Qualification"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all qualifications",
+        "tags": [
+          "Qualification"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of qualifications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Qualification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/qualifications/{id}": {
+      "get": {
+        "summary": "Get a qualification by ID",
+        "tags": [
+          "Qualification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The qualification with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Qualification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Qualification not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a qualification",
+        "tags": [
+          "Qualification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Qualification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated qualification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Qualification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Qualification not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a qualification",
+        "tags": [
+          "Qualification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Qualification deleted successfully"
+          },
+          "404": {
+            "description": "Qualification not found"
           }
         }
       }
@@ -2713,153 +3482,6 @@
           },
           "404": {
             "description": "Inventory not found"
-          }
-        }
-      }
-    },
-    "/api/system-admin": {
-      "post": {
-        "summary": "Register a new system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New System Admin"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created system admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all system admins",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of system admins",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/System Admin"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/system-admin/{id}": {
-      "get": {
-        "summary": "Get a system admin by ID",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The system admin with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "System admin not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update System Admin"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated system admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "System admin not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "System admin deleted successfully"
-          },
-          "404": {
-            "description": "System admin not found"
           }
         }
       }
@@ -3235,7 +3857,22 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Blood"
+                "type": "object",
+                "properties": {
+                  "bloodType": {
+                    "type": "string",
+                    "example": "A+"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "example": 500
+                  },
+                  "donationDate": {
+                    "type": "string",
+                    "example": "2023-07-15T10:00:00.000Z"
+                  }
+                }
               }
             }
           }
@@ -3332,7 +3969,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Appointment"
+                "$ref": "#/components/schemas/NewAppointment"
               }
             }
           }
@@ -3423,7 +4060,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Appointment"
+                "$ref": "#/components/schemas/UpdateAppointment"
               }
             }
           }
@@ -4053,153 +4690,6 @@
           },
           "404": {
             "description": "Report not found"
-          }
-        }
-      }
-    },
-    "/api/donation": {
-      "post": {
-        "summary": "Create a new donation",
-        "tags": [
-          "Donation"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Donation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created donation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all donations",
-        "tags": [
-          "Donation"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of donations",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Donation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/donation/{id}": {
-      "get": {
-        "summary": "Get a donation by ID",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The donation with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a donation",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Donation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated donation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a donation",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Donation deleted successfully"
-          },
-          "404": {
-            "description": "Donation not found"
           }
         }
       }

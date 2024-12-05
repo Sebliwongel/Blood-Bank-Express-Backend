@@ -34,6 +34,9 @@ donorRegistry.registerPath({
         },
       },
     },
+    400: {
+      description: "Invalid input data",
+    },
   },
 });
 
@@ -41,7 +44,7 @@ donorRegistry.registerPath({
 donorRegistry.registerPath({
   method: "get",
   path: "/api/donor",
-  summary: "Get all donors",
+  summary: "Get all donor",
   tags: ["Donor"],
   responses: {
     200: {
@@ -51,6 +54,9 @@ donorRegistry.registerPath({
           schema: z.array(DonorSchema),
         },
       },
+    },
+    404: {
+      description: "No donors found",
     },
   },
 });
@@ -66,7 +72,7 @@ donorRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "integer" }, // Adjusted to match the ID type (Int)
+      schema: { type: "integer" }, // Ensure consistency with ID type
     },
   ],
   responses: {
@@ -80,6 +86,9 @@ donorRegistry.registerPath({
     },
     404: {
       description: "Donor not found",
+    },
+    400: {
+      description: "Invalid ID format",
     },
   },
 });
@@ -95,7 +104,7 @@ donorRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "integer" }, // Adjusted to match the ID type (Int)
+      schema: { type: "integer" }, // Ensure consistency with ID type
     },
   ],
   request: {
@@ -119,6 +128,9 @@ donorRegistry.registerPath({
     404: {
       description: "Donor not found",
     },
+    400: {
+      description: "Invalid input data or ID",
+    },
   },
 });
 
@@ -133,7 +145,7 @@ donorRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "integer" }, // Adjusted to match the ID type (Int)
+      schema: { type: "integer" }, // Ensure consistency with ID type
     },
   ],
   responses: {
@@ -142,6 +154,9 @@ donorRegistry.registerPath({
     },
     404: {
       description: "Donor not found",
+    },
+    400: {
+      description: "Invalid ID format",
     },
   },
 });
