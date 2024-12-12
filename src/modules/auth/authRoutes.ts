@@ -1,10 +1,16 @@
 import { Router } from "express";
-import { login, refreshToken, logout, forgotPassword, resetPassword } from "./authController";
+import {
+  donorLogin,
+  refreshToken,
+  logout,
+  forgotPassword,
+  resetPassword,
+} from "./authController";
 
 const router = Router();
 
 // Login endpoint
-router.post("/login", login);
+router.post("/donor/login", donorLogin);
 
 // Refresh token endpoint
 router.post("/refresh-token", refreshToken);

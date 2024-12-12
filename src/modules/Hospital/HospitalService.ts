@@ -31,8 +31,7 @@ export const getHospital = async (hospitalId: number) => {
 export const createHospital = async (hospitalData: CreateHospitalInput) => {
   return await prisma.hospital.create({
     data: {
-      ...hospitalData,
-     // isActive: true,
+      ...hospitalData
     },
   });
 };

@@ -16,8 +16,7 @@ export const CreateHospitalSchema = z.object({
   username: z.string().min(1, "Username is required").openapi({ example: "city_hospital_admin" }),
   email: z.string().min(1, "Email is required").email("Invalid email address").openapi({ example: "city_hospital@example.com" }),
   password: z.string().min(6, "Password must be at least 6 characters long").openapi({ example: "securePassword123" }),
-  isActive: z.boolean().optional().default(true).openapi({ example: true }),
-}).openapi("Create Hospital");
+ }).openapi("Create Hospital");
 
 // Schema for hospital responses (includes all fields including generated ones)
 export const HospitalSchema = z.object({

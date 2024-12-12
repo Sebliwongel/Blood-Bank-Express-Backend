@@ -8,7 +8,7 @@ export const authRegistry = new AccessibleOpenAPIRegistry();
 
 authRegistry.registerPath({
   method: "post",
-  path: "/api/login",
+  path: "/auth/donor/login",
   summary: "Login a user",
   tags: ["Auth"],
   request: {
@@ -17,8 +17,10 @@ authRegistry.registerPath({
         "application/json": {
           schema: z
             .object({
-              email: z.string().openapi({ example: "gogemekuse@gmail.com" }),
-              password: z.string().openapi({ example: "password123" }),
+              email: z
+                .string()
+                .openapi({ example: "abelshibabaw291@gmail.com" }),
+              password: z.string().openapi({ example: "12345678" }),
             })
             .openapi("Login"),
         },

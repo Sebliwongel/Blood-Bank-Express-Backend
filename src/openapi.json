@@ -124,7 +124,7 @@
           },
           "middleName": {
             "type": "string",
-            "example": "A."
+            "nullable": true
           },
           "lastName": {
             "type": "string",
@@ -132,15 +132,12 @@
           },
           "title": {
             "type": "string",
+            "nullable": true,
             "example": "Mr."
           },
           "birthDate": {
             "type": "string",
             "example": "1990-05-22T00:00:00.000Z"
-          },
-          "age": {
-            "type": "number",
-            "example": 33
           },
           "gender": {
             "type": "string",
@@ -148,6 +145,7 @@
           },
           "occupation": {
             "type": "string",
+            "nullable": true,
             "example": "Engineer"
           },
           "city": {
@@ -158,10 +156,6 @@
             "type": "string",
             "example": "Manhattan"
           },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
           "woreda": {
             "type": "string",
             "example": "5"
@@ -170,17 +164,10 @@
             "type": "string",
             "example": "12"
           },
-          "telephone": {
+          "PhoneNumber": {
             "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
+            "nullable": true,
+            "example": "0912345678"
           },
           "email": {
             "type": "string",
@@ -194,10 +181,6 @@
           "username": {
             "type": "string",
             "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
           },
           "createdAt": {
             "type": "string",
@@ -213,11 +196,9 @@
           "firstName",
           "lastName",
           "birthDate",
-          "age",
           "gender",
           "city",
           "subCity",
-          "zone",
           "woreda",
           "kebele",
           "email",
@@ -251,13 +232,7 @@
           },
           "birthDate": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "age": {
-            "type": "integer",
-            "minimum": 0,
-            "exclusiveMinimum": true,
-            "example": 33
+            "example": "1990-05-22T00:00:00.000Z"
           },
           "gender": {
             "type": "string",
@@ -279,11 +254,6 @@
             "minLength": 1,
             "example": "Bole"
           },
-          "zone": {
-            "type": "string",
-            "minLength": 1,
-            "example": "Zone 3"
-          },
           "woreda": {
             "type": "string",
             "minLength": 1,
@@ -294,19 +264,10 @@
             "minLength": 1,
             "example": "Kebele 04"
           },
-          "telephone": {
-            "type": "string",
-            "nullable": true
-          },
-          "cellPhone": {
+          "PhoneNumber": {
             "type": "string",
             "nullable": true,
             "example": "0912345678"
-          },
-          "organization": {
-            "type": "string",
-            "nullable": true,
-            "example": "Red Cross"
           },
           "email": {
             "type": "string",
@@ -322,21 +283,15 @@
             "type": "string",
             "minLength": 1,
             "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "nullable": true
           }
         },
         "required": [
           "firstName",
           "lastName",
           "birthDate",
-          "age",
           "gender",
           "city",
           "subCity",
-          "zone",
           "woreda",
           "kebele",
           "email",
@@ -364,13 +319,7 @@
             "nullable": true
           },
           "birthDate": {
-            "type": "string",
-            "example": "1990-05-22T00:00:00.000Z"
-          },
-          "age": {
-            "type": "integer",
-            "minimum": 0,
-            "exclusiveMinimum": true
+            "type": "string"
           },
           "gender": {
             "type": "string"
@@ -385,24 +334,13 @@
           "subCity": {
             "type": "string"
           },
-          "zone": {
-            "type": "string"
-          },
           "woreda": {
             "type": "string"
           },
           "kebele": {
             "type": "string"
           },
-          "telephone": {
-            "type": "string",
-            "nullable": true
-          },
-          "cellPhone": {
-            "type": "string",
-            "nullable": true
-          },
-          "organization": {
+          "PhoneNumber": {
             "type": "string",
             "nullable": true
           },
@@ -416,15 +354,8 @@
           },
           "username": {
             "type": "string"
-          },
-          "poBox": {
-            "type": "string",
-            "nullable": true
           }
-        },
-        "required": [
-          "birthDate"
-        ]
+        }
       },
       "Qualification": {
         "type": "object",
@@ -1204,11 +1135,6 @@
             "type": "string",
             "minLength": 6,
             "example": "securePassword123"
-          },
-          "isActive": {
-            "type": "boolean",
-            "default": true,
-            "example": true
           }
         },
         "required": [
@@ -1871,11 +1797,11 @@
         "properties": {
           "email": {
             "type": "string",
-            "example": "gogemekuse@gmail.com"
+            "example": "abelshibabaw291@gmail.com"
           },
           "password": {
             "type": "string",
-            "example": "password123"
+            "example": "12345678"
           }
         },
         "required": [
@@ -2309,11 +2235,6 @@
             "type": "string",
             "minLength": 6,
             "example": "securePassword123"
-          },
-          "isActive": {
-            "type": "boolean",
-            "default": true,
-            "example": true
           }
         },
         "required": [
@@ -2572,7 +2493,7 @@
         }
       }
     },
-    "/api/login": {
+    "/auth/donor/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -2762,13 +2683,7 @@
                   },
                   "birthDate": {
                     "type": "string",
-                    "example": "2023-07-15T10:00:00.000Z"
-                  },
-                  "age": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "exclusiveMinimum": true,
-                    "example": 33
+                    "example": "1990-05-22T00:00:00.000Z"
                   },
                   "gender": {
                     "type": "string",
@@ -2790,11 +2705,6 @@
                     "minLength": 1,
                     "example": "Bole"
                   },
-                  "zone": {
-                    "type": "string",
-                    "minLength": 1,
-                    "example": "Zone 3"
-                  },
                   "woreda": {
                     "type": "string",
                     "minLength": 1,
@@ -2805,19 +2715,10 @@
                     "minLength": 1,
                     "example": "Kebele 04"
                   },
-                  "telephone": {
-                    "type": "string",
-                    "nullable": true
-                  },
-                  "cellPhone": {
+                  "PhoneNumber": {
                     "type": "string",
                     "nullable": true,
                     "example": "0912345678"
-                  },
-                  "organization": {
-                    "type": "string",
-                    "nullable": true,
-                    "example": "Red Cross"
                   },
                   "email": {
                     "type": "string",
@@ -2833,21 +2734,15 @@
                     "type": "string",
                     "minLength": 1,
                     "example": "john_doe"
-                  },
-                  "poBox": {
-                    "type": "string",
-                    "nullable": true
                   }
                 },
                 "required": [
                   "firstName",
                   "lastName",
                   "birthDate",
-                  "age",
                   "gender",
                   "city",
                   "subCity",
-                  "zone",
                   "woreda",
                   "kebele",
                   "email",
@@ -2864,7 +2759,101 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Donor"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Mr."
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-05-22T00:00:00.000Z"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "Male"
+                    },
+                    "occupation": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Engineer"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York"
+                    },
+                    "subCity": {
+                      "type": "string",
+                      "example": "Manhattan"
+                    },
+                    "woreda": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "kebele": {
+                      "type": "string",
+                      "example": "12"
+                    },
+                    "PhoneNumber": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "0912345678"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "johndoe@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "securePassword123"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "john_doe"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "birthDate",
+                    "gender",
+                    "city",
+                    "subCity",
+                    "woreda",
+                    "kebele",
+                    "email",
+                    "password",
+                    "username",
+                    "createdAt",
+                    "updatedAt"
+                  ]
                 }
               }
             }
@@ -2887,7 +2876,101 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Donor"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "example": "John"
+                      },
+                      "middleName": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "example": "Doe"
+                      },
+                      "title": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Mr."
+                      },
+                      "birthDate": {
+                        "type": "string",
+                        "example": "1990-05-22T00:00:00.000Z"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "Male"
+                      },
+                      "occupation": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Engineer"
+                      },
+                      "city": {
+                        "type": "string",
+                        "example": "New York"
+                      },
+                      "subCity": {
+                        "type": "string",
+                        "example": "Manhattan"
+                      },
+                      "woreda": {
+                        "type": "string",
+                        "example": "5"
+                      },
+                      "kebele": {
+                        "type": "string",
+                        "example": "12"
+                      },
+                      "PhoneNumber": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "0912345678"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@example.com"
+                      },
+                      "password": {
+                        "type": "string",
+                        "example": "securePassword123"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "john_doe"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "firstName",
+                      "lastName",
+                      "birthDate",
+                      "gender",
+                      "city",
+                      "subCity",
+                      "woreda",
+                      "kebele",
+                      "email",
+                      "password",
+                      "username",
+                      "createdAt",
+                      "updatedAt"
+                    ]
                   }
                 }
               }
@@ -2921,7 +3004,101 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Donor"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Mr."
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-05-22T00:00:00.000Z"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "Male"
+                    },
+                    "occupation": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Engineer"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York"
+                    },
+                    "subCity": {
+                      "type": "string",
+                      "example": "Manhattan"
+                    },
+                    "woreda": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "kebele": {
+                      "type": "string",
+                      "example": "12"
+                    },
+                    "PhoneNumber": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "0912345678"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "johndoe@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "securePassword123"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "john_doe"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "birthDate",
+                    "gender",
+                    "city",
+                    "subCity",
+                    "woreda",
+                    "kebele",
+                    "email",
+                    "password",
+                    "username",
+                    "createdAt",
+                    "updatedAt"
+                  ]
                 }
               }
             }
@@ -2972,13 +3149,7 @@
                     "nullable": true
                   },
                   "birthDate": {
-                    "type": "string",
-                    "example": "1990-05-22T00:00:00.000Z"
-                  },
-                  "age": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "exclusiveMinimum": true
+                    "type": "string"
                   },
                   "gender": {
                     "type": "string"
@@ -2993,24 +3164,13 @@
                   "subCity": {
                     "type": "string"
                   },
-                  "zone": {
-                    "type": "string"
-                  },
                   "woreda": {
                     "type": "string"
                   },
                   "kebele": {
                     "type": "string"
                   },
-                  "telephone": {
-                    "type": "string",
-                    "nullable": true
-                  },
-                  "cellPhone": {
-                    "type": "string",
-                    "nullable": true
-                  },
-                  "organization": {
+                  "PhoneNumber": {
                     "type": "string",
                     "nullable": true
                   },
@@ -3024,15 +3184,8 @@
                   },
                   "username": {
                     "type": "string"
-                  },
-                  "poBox": {
-                    "type": "string",
-                    "nullable": true
                   }
-                },
-                "required": [
-                  "birthDate"
-                ]
+                }
               }
             }
           }
@@ -3043,7 +3196,101 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Donor"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Mr."
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-05-22T00:00:00.000Z"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "Male"
+                    },
+                    "occupation": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Engineer"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York"
+                    },
+                    "subCity": {
+                      "type": "string",
+                      "example": "Manhattan"
+                    },
+                    "woreda": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "kebele": {
+                      "type": "string",
+                      "example": "12"
+                    },
+                    "PhoneNumber": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "0912345678"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "johndoe@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "securePassword123"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "john_doe"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "birthDate",
+                    "gender",
+                    "city",
+                    "subCity",
+                    "woreda",
+                    "kebele",
+                    "email",
+                    "password",
+                    "username",
+                    "createdAt",
+                    "updatedAt"
+                  ]
                 }
               }
             }
@@ -3444,7 +3691,7 @@
         }
       }
     },
-    "/hospitals": {
+    "/api/hospitals": {
       "get": {
         "summary": "Get all hospitals",
         "tags": [
@@ -3516,7 +3763,7 @@
         }
       }
     },
-    "/hospitals/{id}": {
+    "/api/hospitals/{id}": {
       "get": {
         "summary": "Get hospital by ID",
         "tags": [
@@ -3698,7 +3945,7 @@
         }
       }
     },
-    "/hospitals/{id}/patch": {
+    "/api/hospitals/{id}/patch": {
       "patch": {
         "summary": "Partial update hospital",
         "tags": [

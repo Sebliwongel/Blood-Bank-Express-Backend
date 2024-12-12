@@ -1,7 +1,12 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
 import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
-import { HospitalSchema, CreateHospitalSchema, UpdateHospitalSchema, HospitalIdSchema } from "./HospitalSchema";
+import {
+  HospitalSchema,
+  CreateHospitalSchema,
+  UpdateHospitalSchema,
+  HospitalIdSchema,
+} from "./HospitalSchema";
 
 export const hospitalRegistry = new AccessibleOpenAPIRegistry();
 
@@ -11,10 +16,10 @@ hospitalRegistry.register("CreateHospital", CreateHospitalSchema);
 hospitalRegistry.register("UpdateHospital", UpdateHospitalSchema);
 hospitalRegistry.register("HospitalId", HospitalIdSchema);
 
-// GET /hospitals - Get all hospitals
+// GET /api/hospitals - Get all hospitals
 hospitalRegistry.registerPath({
   method: "get",
-  path: "/hospitals",
+  path: "/api/hospitals",
   summary: "Get all hospitals",
   tags: ["Hospital"],
   responses: {
@@ -29,10 +34,10 @@ hospitalRegistry.registerPath({
   },
 });
 
-// GET /hospitals/:id - Get hospital by ID
+// GET /api/hospitals/:id - Get hospital by ID
 hospitalRegistry.registerPath({
   method: "get",
-  path: "/hospitals/{id}",
+  path: "/api/hospitals/{id}",
   summary: "Get hospital by ID",
   tags: ["Hospital"],
   request: {
@@ -60,10 +65,10 @@ hospitalRegistry.registerPath({
   },
 });
 
-// POST /hospitals - Create new hospital
+// POST /api/hospitals - Create new hospital
 hospitalRegistry.registerPath({
   method: "post",
-  path: "/hospitals",
+  path: "/api/hospitals",
   summary: "Create new hospital",
   tags: ["Hospital"],
   request: {
@@ -98,10 +103,10 @@ hospitalRegistry.registerPath({
   },
 });
 
-// PATCH /hospitals/:id - Full update hospital
+// PATCH /api/hospitals/:id - Full update hospital
 hospitalRegistry.registerPath({
   method: "patch",
-  path: "/hospitals/{id}",
+  path: "/api/hospitals/{id}",
   summary: "Full update hospital",
   tags: ["Hospital"],
   request: {
@@ -147,10 +152,10 @@ hospitalRegistry.registerPath({
   },
 });
 
-// PATCH /hospitals/:id/patch - Partial update hospital
+// PATCH /api/hospitals/:id/patch - Partial update hospital
 hospitalRegistry.registerPath({
   method: "patch",
-  path: "/hospitals/{id}/patch",
+  path: "/api/hospitals/{id}/patch",
   summary: "Partial update hospital",
   tags: ["Hospital"],
   request: {
@@ -196,10 +201,10 @@ hospitalRegistry.registerPath({
   },
 });
 
-// DELETE /hospitals/:id - Delete hospital
+// DELETE /api/hospitals/:id - Delete hospital
 hospitalRegistry.registerPath({
   method: "delete",
-  path: "/hospitals/{id}",
+  path: "/api/hospitals/{id}",
   summary: "Delete hospital",
   tags: ["Hospital"],
   request: {
