@@ -1528,7 +1528,7 @@
             "minimum": 0,
             "exclusiveMinimum": true
           },
-          "storageStatus": {
+          "OrderStatus": {
             "type": "string",
             "enum": [
               "PENDING",
@@ -1546,7 +1546,7 @@
           "orderDate",
           "bloodType",
           "quantity",
-          "storageStatus",
+          "OrderStatus",
           "hospitalId"
         ]
       },
@@ -5002,7 +5002,7 @@
                     "minimum": 0,
                     "exclusiveMinimum": true
                   },
-                  "storageStatus": {
+                  "OrderStatus": {
                     "type": "string",
                     "enum": [
                       "PENDING",
@@ -5020,7 +5020,7 @@
                   "orderDate",
                   "bloodType",
                   "quantity",
-                  "storageStatus",
+                  "OrderStatus",
                   "hospitalId"
                 ]
               }

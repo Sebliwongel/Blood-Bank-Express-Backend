@@ -99,7 +99,6 @@ import {
   refreshAccessToken,
 } from "../../modules/auth/authService";
 import { prisma } from "../../../prisma/prisma";
-//import { sendResetEmail } from "../auth/emailservice";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -109,17 +108,26 @@ const RESET_SECRET_KEY =
   process.env.JWT_RESET_SECRET_KEY || "your-reset-secret-key"; // Different secret for reset token
 
 /**
- * Handle user login.
+ * Handle user login with role specification.
  */
 export const donorLogin = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     console.log(req.body);
-    const response = await authenticateDonor({
+
+    // Authenticate the user and retrieve details including role
+    const user = await authenticateDonor({
       email: email,
       password: password,
     });
-    return res.status(200).json({ tokens: response });
+
+    if (!user || "statusCode" in user) {
+      return res.status(user?.statusCode || 401).json({
+        error: user?.message || "Invalid credentials",
+      });
+    }
+
+    return res.status(200).json({user });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -163,34 +171,6 @@ export const logout = (req: Request, res: Response) => {
 /**
  * Forgot password - send password reset link to the user's email.
  */
-
-
-// export const forgotPassword = async (req: Request, res: Response) => {
-//   const { email } = req.body;
-
-//   try {
-//       const token = crypto.randomBytes(32).toString("hex");
-//       await updateResetToken(email, token);
-//       await sendResetEmail(email, token);
-
-//       res.status(200).json({ message: "Password reset email sent." });
-//   } catch (err) {
-//       res.status(500).json({ error: "Error sending reset email." });
-//   }
-// };
-
-// export const resetPassword = async (req: Request, res: Response) => {
-//   const { token } = req.params;
-//   const { password } = req.body;
-
-//   try {
-//       await resetUserPassword(token, password);
-//       res.status(200).json({ message: "Password reset successful." });
-//   } catch (err) {
-//       res.status(500).json({ error: "Error resetting password." });
-//   }
-// };
-
 export const forgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body;
 
@@ -202,7 +182,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
   }
 
   // Generate password reset token
-  const resetToken = jwt.sign({ email: user.email }, RESET_SECRET_KEY, {
+  const resetToken = jwt.sign({ email: user.email, role: user.role }, RESET_SECRET_KEY, {
     expiresIn: "15m",
   });
 
@@ -249,8 +229,8 @@ export const resetPassword = async (req: Request, res: Response) => {
           .json({ message: "Invalid or expired reset token" });
       }
 
-      // Decode the token and retrieve the email
-      const email = (decoded as any).email;
+      // Decode the token and retrieve the email and role
+      const { email, role } = decoded as { email: string; role: string };
 
       // Hash the new password
       const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -264,7 +244,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
         return res
           .status(200)
-          .json({ message: "Password has been successfully updated" });
+          .json({ message: `Password has been successfully updated for role: ${role}` });
       } catch (error) {
         console.error("Error updating password:", error);
         return res.status(500).json({ message: "Failed to update password" });

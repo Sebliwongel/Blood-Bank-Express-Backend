@@ -136,7 +136,7 @@ export const authenticateDonor = async ({
     };
 
   // Include user ID and role in the JWT payload
-  const payload = { donorId: donor.id };
+  const payload = { donorId: donor.id ,};
   console.log("tokens", payload, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_EXPIRES_IN!,
   });

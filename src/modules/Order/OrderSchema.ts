@@ -20,7 +20,7 @@ export const createOrderSchema = z.object({
   }), // Validate as a proper date
   bloodType: BloodTypeEnum,
   quantity: z.number().int().positive({ message: 'Quantity must be a positive integer' }),
-  storageStatus: OrderStatusEnum,
+  OrderStatus: OrderStatusEnum,
   hospitalId: z.number().int().positive({ message: 'Invalid hospital ID' }),
 });
 

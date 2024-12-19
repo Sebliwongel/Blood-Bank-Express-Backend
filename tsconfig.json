@@ -11,6 +11,12 @@
       "@prisma/*": ["prisma/*"]
     }
   },
-  "include": ["src/**/*", "prisma/**/*"], // Explicitly include the 'prisma' folder
+  "include": [
+    "src/**/*", 
+    "prisma/**/*", 
+    "src/types.d.ts" // Combine all paths into a single "include" array
+  ],
+
+
   "exclude": ["node_modules"]
 }

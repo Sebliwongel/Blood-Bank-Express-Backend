@@ -87,6 +87,7 @@ export const deactivateAccount = async (accountId: number, adminId: number) => {
     where: { id: accountId },
     data: {
       isActive: false,
+      accountStatus: "deactivated", // Optionally update status
       deactivationDate: new Date(),
     },
   });
@@ -117,6 +118,7 @@ export const activateAccount = async (accountId: number, adminId: number) => {
     where: { id: accountId },
     data: {
       isActive: true,
+      accountStatus: "active", // Optionally update status
       activationDate: new Date(),
     },
   });
