@@ -16,8 +16,8 @@ export const createQualificationController = async (req: Request, res: Response)
     // Validate and parse the request body using the schema
     const parsedData = await validateAndParse(NewQualificationSchema, req);
 
-    // Convert lastDonationDate to Date if it's provided
-    const lastDonationDate = parsedData.lastDonationDate ? new Date(parsedData.lastDonationDate) : undefined;
+    // Ensure lastDonationDate is a string
+    const lastDonationDate = parsedData.lastDonationDate || undefined;
 
     // Create a new qualification record using the service function
     const newQualification = await createQualification(
@@ -27,7 +27,7 @@ export const createQualificationController = async (req: Request, res: Response)
       parsedData.hb,
       parsedData.bp,
       parsedData.temperature,
-      lastDonationDate, // Pass the converted date
+      lastDonationDate, // Pass the string date
       parsedData.hasDonatedBefore,
       parsedData.hasTattooing,
       parsedData.hasEarPiercing,
@@ -103,12 +103,12 @@ export const updateQualificationController = async (req: Request, res: Response)
     // Validate and parse the request body using the schema
     const parsedData = await validateAndParse(UpdateQualificationSchema, req);
 
-    // Convert lastDonationDate to Date if it's provided
-    const lastDonationDate = parsedData.lastDonationDate ? new Date(parsedData.lastDonationDate) : undefined;
+    // Ensure lastDonationDate is a string
+    const lastDonationDate = parsedData.lastDonationDate || undefined;
 
     const updatedQualification = await updateQualification(parseInt(qualificationId), {
       ...parsedData,
-      lastDonationDate, // Pass the converted date
+      lastDonationDate, // Pass the string date
     });
 
     if (!updatedQualification) {

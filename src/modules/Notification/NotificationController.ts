@@ -86,3 +86,23 @@ export const deleteNotificationController = async (req: Request, res: Response) 
     res.status(500).json({ error: "Failed to delete notification" });
   }
 };
+
+// export const getNotifications = async (req: Request, res: Response) => {
+//   const { hospitalId, donorId, userId } = req.query;
+
+//   try {
+//     const notifications = await prisma.notification.findMany({
+//       where: {
+//         OR: [
+//           { hospitalId: hospitalId ? Number(hospitalId) : undefined },
+//           { donorId: donorId ? Number(donorId) : undefined },
+//           { userId: userId ? Number(userId) : undefined },
+//         ],
+//       },
+//     });
+
+//     res.status(200).json({ notifications });
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch notifications" });
+//   }
+// };

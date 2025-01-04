@@ -1,61 +1,62 @@
 import { z } from "zod";
-import dateSchema from "../../utils/commonSchema";
 
+// Schema for creating a new blood inventory record
 export const NewBloodSchema = z.object({
-  bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]).openapi({
-    example: "A+",
-  }),
-  quantity: z.number().min(1).openapi({ example: 500 }),
-  barcode: z.string().openapi({ example: "1234567890" }),
+  donorId: z.number().openapi({ example: 1 }),
+  bloodType: z
+    .string()
+    .min(1, "Blood type is required")
+    .openapi({ example: "O_POS" }),
+  barcode: z
+    .string()
+    .min(1, "Barcode is required")
+    .openapi({ example: "123456789" }),
   donationDate: z
     .string()
     .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
       message: "Invalid date format",
     })
-    .transform((dateStr) => new Date(dateStr))
-    .openapi({ example: "2023-07-15T10:00:00.000Z" }),
+    .openapi({ example: "2023-12-15T10:00:00.000Z" }),
   expirationDate: z
     .string()
     .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
       message: "Invalid date format",
     })
-    .transform((dateStr) => new Date(dateStr))
-    .openapi({ example: "2023-08-15T10:00:00.000Z" }),
+    .openapi({ example: "2024-01-15T10:00:00.000Z" }),
   storageStatus: z
-    .enum(["AVAILABLE", "RESERVED", "EXPIRED", "USED"])
+    .enum(["AVAILABLE", "RESERVED", "EXPIRED"])
     .openapi({ example: "AVAILABLE" }),
-  donorId: z.number().openapi({ example: 1 }),
+  quantity: z
+    .number()
+    .min(1, "Quantity must be at least 1")
+    .openapi({ example: 5 }),
 });
 
-export const BloodSchema = z.object({
-  id: z.number().openapi({ example: 1 }),
-  bloodType: z.enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]).openapi({
-    example: "A+",
-  }),
-  quantity: z.number().min(1).openapi({ example: 500 }),
-  barcode: z.string().openapi({ example: "1234567890" }),
-  donationDate: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-  expirationDate: z.date().openapi({ example: "2023-08-15T10:00:00.000Z" }),
-  storageStatus: z
-    .enum(["AVAILABLE", "RESERVED", "EXPIRED", "USED"])
-    .openapi({ example: "AVAILABLE" }),
-  donorId: z.number().openapi({ example: 1 }),
-  createdAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-  updatedAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-});
-
-// Schema for updating a blood record
+// Schema for updating an existing blood inventory record
 export const UpdateBloodSchema = z.object({
-  bloodType: z
-    .enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"])
+  donorId: z.number().optional(),
+  bloodType: z.string().min(1).optional(),
+  barcode: z.string().min(1).optional(),
+  donationDate: z
+    .string()
+    .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
+      message: "Invalid date format",
+    })
+    .optional(),
+  expirationDate: z
+    .string()
+    .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
+      message: "Invalid date format",
+    })
+    .optional(),
+  storageStatus: z.enum(["AVAILABLE", "RESERVED", "EXPIRED"]).optional(),
+  quantity: z
+    .number()
+    .min(1, "Quantity must be at least 1")
     .optional()
-    .openapi({ example: "A+" }),
-  quantity: z.number().min(1).optional().openapi({ example: 500 }),
-  barcode: z.string().openapi({ example: "1234567890" }),
-  donationDate: dateSchema.optional(),
-  expirationDate: dateSchema.optional(),
-  storageStatus: z
-    .enum(["AVAILABLE", "RESERVED", "EXPIRED", "USED"])
-    .optional()
-    .openapi({ example: "AVAILABLE" }),
+    .openapi({ example: 5 }),
 });
+
+// TypeScript types for services or controllers
+export type NewBloodType = z.infer<typeof NewBloodSchema>;
+export type UpdateBloodType = z.infer<typeof UpdateBloodSchema>;

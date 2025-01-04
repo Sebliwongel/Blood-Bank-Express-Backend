@@ -1,12 +1,12 @@
 import { validateAndParse } from "../../utils/validateAndParseRequest";
-import { NewAppointmentSchema, UpdateAppointmentSchema } from "./AppointmentSchema";  // Assuming Zod schemas for Appointment
+import { NewAppointmentSchema, UpdateAppointmentSchema } from "./AppointmentSchema"; // Assuming Zod schemas for Appointment
 import { Request, Response } from "express";
 import {
   createAppointment,
-  deleteAppointment,
   getAllAppointments,
   getAppointmentById,
   updateAppointment,
+ 
 } from "./AppointmentService";
 
 // Create a new appointment
@@ -16,11 +16,13 @@ export const createAppointmentController = async (req: Request, res: Response) =
     const parsed = await validateAndParse(NewAppointmentSchema, req);
 
     // Create the new appointment in the database
-    const newAppointment = await createAppointment(
-      parsed.appointmentDate,  // parsed appointment date from request
-      parsed.status,            // parsed status from request
-      parsed.donorId            // parsed donorId from request
-    );
+    const newAppointment = await createAppointment({
+      appointmentDate: parsed.appointmentDate,  // parsed appointment date from request
+      status: parsed.status,                    // parsed status from request
+      donorId: parsed.donorId,                  // parsed donorId from request
+      location: parsed.location,                // parsed location from request
+      appointmentTime: parsed.appointmentTime,  // parsed appointment time from request
+    });
 
     // Return the newly created appointment
     res.status(201).json(newAppointment);
@@ -60,7 +62,7 @@ export const getAppointmentByIdController = async (req: Request, res: Response) 
 
 // Update an appointment
 export const updateAppointmentController = async (req: Request, res: Response) => {
-  const appointmentId = req.params.id;  // Extract the appointment ID from request params
+  const appointmentId = req.params.id; // Extract the appointment ID from request params
   try {
     // Validate and parse the update data
     const parsed = await validateAndParse(UpdateAppointmentSchema, req);
@@ -82,21 +84,21 @@ export const updateAppointmentController = async (req: Request, res: Response) =
 };
 
 // Delete an appointment
-export const deleteAppointmentController = async (req: Request, res: Response) => {
-  const appointmentId = req.params.id;  // Extract the appointment ID from request params
-  try {
-    // Delete the appointment by ID
-    const deleted = await deleteAppointment(parseInt(appointmentId));
+// export const deleteAppointmentController = async (req: Request, res: Response) => {
+//   const appointmentId = req.params.id; // Extract the appointment ID from request params
+//   try {
+//     // Delete the appointment by ID
+//     const deleted = await deleteAppointment(parseInt(appointmentId));
 
-    // If no appointment was deleted (not found), return 404
-    if (!deleted) {
-      return res.status(404).json({ error: "Appointment not found" });
-    }
+//     // If no appointment was deleted (not found), return 404
+//     if (!deleted) {
+//       return res.status(404).json({ error: "Appointment not found" });
+//     }
 
-    // Return a no-content response (204)
-    res.status(204).send();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete appointment" });
-  }
-};
+//     // Return a no-content response (204)
+//     res.status(204).send();
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Failed to delete appointment" });
+//   }
+// };

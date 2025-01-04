@@ -3,7 +3,7 @@ import { z } from "zod";
 // Schema for creating a new qualification record
 export const NewQualificationSchema = z
   .object({
-    donorId: z.number().int().openapi({ example: 123 }), // ID of the donor
+    donorId: z.number().int().openapi({ example: 1 }), // ID of the donor
     weight: z.number().positive().openapi({ example: 70.5 }), // Weight in kilograms
     pulse: z.number().positive().openapi({ example: 72 }), // Pulse rate in bpm
     hb: z.number().positive().openapi({ example: 13.5 }), // Hemoglobin level
@@ -53,7 +53,7 @@ export const NewQualificationSchema = z
 export const QualificationSchema = z
   .object({
     id: z.number().int().openapi({ example: 1 }), // Unique identifier for the qualification record
-    donorId: z.number().int().openapi({ example: 123 }), // ID of the donor
+    donorId: z.number().int().openapi({ example: 1 }), // ID of the donor
     weight: z.number().positive().openapi({ example: 70.5 }),
     pulse: z.number().positive().openapi({ example: 72 }),
     hb: z.number().positive().openapi({ example: 13.5 }),

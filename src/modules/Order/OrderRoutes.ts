@@ -6,6 +6,7 @@ const router = express.Router();
 // Route to create a new order
 router.post("/orders", (req, res) => OrderController.createOrder(req, res));
 
+
 // Route to get all orders
 router.get("/orders", (req, res) => OrderController.getAllOrders(req, res));
 

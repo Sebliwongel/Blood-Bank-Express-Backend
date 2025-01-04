@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createAppointmentController,
-  deleteAppointmentController,
+  //deleteAppointmentController,
   getAllAppointmentsController,
   getAppointmentByIdController,
   updateAppointmentController,
@@ -22,6 +22,6 @@ router.post("/appointments", createAppointmentController);
 router.patch("/appointments/:id", updateAppointmentController);
 
 // Route to delete an appointment by ID
-router.delete("/appointments/:id", deleteAppointmentController);
+//router.delete("/appointments/:id", deleteAppointmentController);
 
 export default router;

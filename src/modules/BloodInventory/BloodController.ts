@@ -1,86 +1,73 @@
-import { Request, Response } from "express";
-import { validateAndParse } from "../../utils/validateAndParseRequest"; // Assuming you have this utility
-import { NewBloodSchema, UpdateBloodSchema } from "./BloodSchema"; // Assuming these are your Zod schemas for validation
-import { BloodInventoryService } from "./BloodService"; // Import from correct file
+import { Request, Response, NextFunction } from 'express';
+import { createBlood, getAllBloods, getBloodById, updateBlood, deleteBlood, patchBlood } from './BloodService'; // Assuming service functions are available
 
-const bloodInventoryService = new BloodInventoryService();
-
-// Create a new blood entry
-export const createBloodController = async (req: Request, res: Response) => {
+// Controller for creating a new blood inventory
+export const createBloodInventoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const parsed = await validateAndParse(NewBloodSchema, req);
-    const newBlood = await bloodInventoryService.createBlood(parsed);
-
-    res.status(201).json(newBlood);
+    const bloodData = req.body;  // Ensure to validate with schema before calling service
+    const newBloodInventory = await createBlood(bloodData);
+    res.status(201).json(newBloodInventory);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create blood record" });
+    next(error);  // Pass error to global error handler
   }
 };
 
-// Get all blood entries
-export const getAllBloodController = async (req: Request, res: Response) => {
+// Controller for getting all blood inventories
+export const getAllBloodsHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const bloodRecords = await bloodInventoryService.getAllBloodInventory();
-
-    res.status(200).json(bloodRecords);
+    const bloodInventories = await getAllBloods();
+    res.status(200).json(bloodInventories);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve blood records" });
+    next(error);
   }
 };
 
-// Get a blood entry by ID
-export const getBloodByIdController = async (req: Request, res: Response) => {
-  const bloodId = parseInt(req.params.id);
-
+// Controller for getting a blood inventory by ID
+export const getBloodByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const blood = await bloodInventoryService.getBloodById(bloodId);
-
-    if (!blood) {
-      return res.status(404).json({ error: "Blood record not found" });
+    const bloodId = parseInt(req.params.id, 10);
+    const bloodInventory = await getBloodById(bloodId);
+    if (bloodInventory) {
+      res.status(200).json(bloodInventory);
+    } else {
+      res.status(404).json({ message: 'Blood inventory not found' });
     }
-
-    res.status(200).json(blood);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve blood record" });
+    next(error);
   }
 };
 
-// Update a blood entry by ID
-export const updateBloodController = async (req: Request, res: Response) => {
-  const bloodId = parseInt(req.params.id);
-
+// Controller for updating a blood inventory
+export const updateBloodInventoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const parsed = await validateAndParse(UpdateBloodSchema, req);
-    const updatedBlood = await bloodInventoryService.updateBlood(bloodId, parsed);
-
-    if (!updatedBlood) {
-      return res.status(404).json({ error: "Blood record not found" });
-    }
-
-    res.status(200).json(updatedBlood);
+    const bloodId = parseInt(req.params.id, 10);
+    const updatedData = req.body;  // Ensure you validate the body with schema
+    const updatedBloodInventory = await updateBlood(bloodId, updatedData);
+    res.status(200).json(updatedBloodInventory);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to update blood record" });
+    next(error);
   }
 };
 
-// Delete a blood entry by ID
-export const deleteBloodController = async (req: Request, res: Response) => {
-  const bloodId = parseInt(req.params.id);
-
+// Controller for deleting a blood inventory
+export const deleteBloodInventoryHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const deleted = await bloodInventoryService.deleteBlood(bloodId);
-
-    if (!deleted) {
-      return res.status(404).json({ error: "Blood record not found" });
-    }
-
+    const bloodId = parseInt(req.params.id, 10);
+    await deleteBlood(bloodId);
     res.status(204).send();
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete blood record" });
+    next(error);
+  }
+};
+
+// Controller for patching (partial update) a blood inventory
+export const patchBloodInventoryHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const bloodId = parseInt(req.params.id, 10);
+    const patchData = req.body;  // Ensure you validate the body
+    const patchedBloodInventory = await patchBlood(bloodId, patchData);
+    res.status(200).json(patchedBloodInventory);
+  } catch (error) {
+    next(error);
   }
 };

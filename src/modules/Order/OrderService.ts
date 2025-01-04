@@ -2,7 +2,7 @@ import { prisma } from './../../../prisma/prisma'; // Adjust path as needed
 import { OrderStatus, BloodType } from '@prisma/client';
 
 interface CreateOrderDTO {
-  orderDate: Date;
+  orderDate: string; // Changed to string
   bloodType: BloodType;
   quantity: number;
   storageStatus: keyof typeof OrderStatus; // Map string keys to enum
@@ -32,10 +32,15 @@ class OrderService {
       throw new Error('Invalid blood type provided');
     }
 
+    // Validate orderDate format
+    if (isNaN(Date.parse(data.orderDate))) {
+      throw new Error('Invalid date format for orderDate');
+    }
+
     // Create order
     return await prisma.order.create({
       data: {
-        orderDate: data.orderDate,
+        orderDate: data.orderDate, // Save as string
         bloodType: data.bloodType,
         quantity: data.quantity,
         status,

@@ -1,27 +1,21 @@
-import { Router } from "express";
-import {
-  createBloodController,
-  deleteBloodController,
-  getAllBloodController,
-  getBloodByIdController,
-  updateBloodController,
-} from "./BloodController"; // Import controller methods
+import express from 'express';
+import { 
+  createBloodInventoryHandler, 
+  getAllBloodsHandler, 
+  getBloodByIdHandler, 
+  updateBloodInventoryHandler, 
+  deleteBloodInventoryHandler, 
+  patchBloodInventoryHandler 
+} from './BloodController'; // Ensure correct import paths
 
-const router = Router();
+const bloodRoutes = express.Router();
 
-// Route to get all blood records
-router.get("/blood", getAllBloodController);
+// Define your routes and map them to the appropriate controller functions
+bloodRoutes.post('/blood', createBloodInventoryHandler); // Creates a new blood inventory
+bloodRoutes.get('/blood', getAllBloodsHandler); // Gets all blood inventories
+bloodRoutes.get('/blood/:id', getBloodByIdHandler); // Gets a blood inventory by ID
+bloodRoutes.put('/blood/:id', updateBloodInventoryHandler); // Updates a blood inventory by ID
+bloodRoutes.delete('/blood/:id', deleteBloodInventoryHandler); // Deletes a blood inventory by ID
+bloodRoutes.patch('/blood/:id', patchBloodInventoryHandler); // Partially updates a blood inventory by ID
 
-// Route to get a specific blood record by ID
-router.get("/blood/:id", getBloodByIdController);
-
-// Route to create a new blood entry
-router.post("/blood", createBloodController);
-
-// Route to update a blood entry by ID
-router.patch("/blood/:id", updateBloodController);
-
-// Route to delete a blood entry by ID
-router.delete("/blood/:id", deleteBloodController);
-
-export default router;
+export default bloodRoutes; // Export the router to be used in the main app

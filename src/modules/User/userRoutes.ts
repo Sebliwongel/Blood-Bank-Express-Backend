@@ -8,7 +8,6 @@ const router = Router();
 router.post("/users", register);
 
 // User profile route (protected)
-router.get("/api/user/profile", authMiddleware, getProfile);
+router.get("/user/profile", authMiddleware, getProfile);
 
 export default router;
-

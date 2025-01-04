@@ -25,13 +25,25 @@
             "type": "number",
             "example": 1
           },
-          "name": {
+          "FirstName": {
             "type": "string",
-            "example": "JohnDoe"
+            "example": "John"
+          },
+          "MiddleName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "Gender": {
+            "type": "string",
+            "example": "Male"
           },
           "email": {
             "type": "string",
-            "example": "gogemekuse@gmail.com"
+            "example": "johndoe@example.com"
           },
           "role": {
             "type": "string",
@@ -46,11 +58,15 @@
           },
           "password": {
             "type": "string",
-            "example": "password123"
+            "example": "securepassword123"
           },
           "username": {
             "type": "string",
-            "example": "seblewengel"
+            "example": "johndoe"
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
           },
           "createdAt": {
             "type": "string",
@@ -58,16 +74,19 @@
           },
           "updatedAt": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-07-16T10:00:00.000Z"
           }
         },
         "required": [
           "id",
-          "name",
+          "FirstName",
+          "LastName",
+          "Gender",
           "email",
           "role",
           "password",
           "username",
+          "refreshToken",
           "createdAt",
           "updatedAt"
         ]
@@ -75,13 +94,25 @@
       "NewUser": {
         "type": "object",
         "properties": {
-          "name": {
+          "FirstName": {
             "type": "string",
-            "example": "Seblewengel Mamo"
+            "example": "John"
+          },
+          "MiddleName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "Gender": {
+            "type": "string",
+            "example": "Male"
           },
           "email": {
             "type": "string",
-            "example": "gogemekuse@gmail.com"
+            "example": "johndoe@example.com"
           },
           "role": {
             "type": "string",
@@ -92,19 +123,21 @@
               "STORE_MANAGER",
               "LABORATORY"
             ],
-            "example": "SYSTEM_ADMIN"
+            "example": "COLLECTOR"
           },
           "password": {
             "type": "string",
-            "example": "password123"
+            "example": "securepassword123"
           },
           "username": {
             "type": "string",
-            "example": "seblewengel"
+            "example": "johndoe"
           }
         },
         "required": [
-          "name",
+          "FirstName",
+          "LastName",
+          "Gender",
           "email",
           "role",
           "password",
@@ -366,7 +399,7 @@
           },
           "donorId": {
             "type": "integer",
-            "example": 123
+            "example": 1
           },
           "weight": {
             "type": "number",
@@ -562,7 +595,7 @@
         "properties": {
           "donorId": {
             "type": "integer",
-            "example": 123
+            "example": 1
           },
           "weight": {
             "type": "number",
@@ -1204,131 +1237,135 @@
             "type": "number",
             "example": 1
           },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
           "bloodType": {
             "type": "string",
-            "enum": [
-              "A+",
-              "A-",
-              "B+",
-              "B-",
-              "O+",
-              "O-",
-              "AB+",
-              "AB-"
-            ],
-            "example": "A+"
+            "example": "O+"
           },
           "quantity": {
-            "type": "number",
-            "minimum": 1,
-            "example": 500
+            "type": "string",
+            "example": "5"
           },
           "barcode": {
             "type": "string",
-            "example": "1234567890"
+            "example": "123456789"
           },
           "donationDate": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-12-15T10:00:00.000Z"
           },
           "expirationDate": {
             "type": "string",
-            "example": "2023-08-15T10:00:00.000Z"
+            "example": "2024-01-15T10:00:00.000Z"
           },
           "storageStatus": {
             "type": "string",
             "enum": [
               "AVAILABLE",
               "RESERVED",
-              "EXPIRED",
-              "USED"
+              "EXPIRED"
             ],
             "example": "AVAILABLE"
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
           }
         },
         "required": [
           "id",
+          "donorId",
           "bloodType",
           "quantity",
           "barcode",
           "donationDate",
           "expirationDate",
-          "storageStatus",
-          "donorId",
-          "createdAt",
-          "updatedAt"
+          "storageStatus"
         ]
       },
       "NewBlood": {
         "type": "object",
         "properties": {
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
           "bloodType": {
             "type": "string",
-            "enum": [
-              "A+",
-              "A-",
-              "B+",
-              "B-",
-              "O+",
-              "O-",
-              "AB+",
-              "AB-"
-            ],
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 1,
-            "example": 500
+            "minLength": 1,
+            "example": "O_POS"
           },
           "barcode": {
             "type": "string",
-            "example": "1234567890"
+            "minLength": 1,
+            "example": "123456789"
           },
           "donationDate": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-12-15T10:00:00.000Z"
           },
           "expirationDate": {
             "type": "string",
-            "example": "2023-08-15T10:00:00.000Z"
+            "example": "2024-01-15T10:00:00.000Z"
           },
           "storageStatus": {
             "type": "string",
             "enum": [
               "AVAILABLE",
               "RESERVED",
-              "EXPIRED",
-              "USED"
+              "EXPIRED"
             ],
             "example": "AVAILABLE"
           },
-          "donorId": {
+          "quantity": {
             "type": "number",
-            "example": 1
+            "minimum": 1,
+            "example": 5
           }
         },
         "required": [
+          "donorId",
           "bloodType",
-          "quantity",
           "barcode",
           "donationDate",
           "expirationDate",
           "storageStatus",
-          "donorId"
+          "quantity"
         ]
+      },
+      "UpdateBlood": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "number"
+          },
+          "bloodType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "barcode": {
+            "type": "string",
+            "minLength": 1
+          },
+          "donationDate": {
+            "type": "string"
+          },
+          "expirationDate": {
+            "type": "string"
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "RESERVED",
+              "EXPIRED"
+            ]
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1,
+            "example": 5
+          }
+        }
       },
       "Appointment": {
         "type": "object",
@@ -1339,7 +1376,7 @@
           },
           "appointmentDate": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "2024-11-07"
           },
           "status": {
             "type": "string",
@@ -1348,6 +1385,14 @@
           "donorId": {
             "type": "number",
             "example": 1
+          },
+          "location": {
+            "type": "string",
+            "example": "Blood Donation Center, Room 101"
+          },
+          "appointmentTime": {
+            "type": "string",
+            "example": "10:00"
           },
           "createdAt": {
             "type": "string",
@@ -1363,6 +1408,8 @@
           "appointmentDate",
           "status",
           "donorId",
+          "location",
+          "appointmentTime",
           "createdAt",
           "updatedAt"
         ]
@@ -1372,7 +1419,7 @@
         "properties": {
           "appointmentDate": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-07-15"
           },
           "status": {
             "type": "string",
@@ -1381,12 +1428,22 @@
           "donorId": {
             "type": "number",
             "example": 1
+          },
+          "location": {
+            "type": "string",
+            "example": "Blood Donation Center, Room 101"
+          },
+          "appointmentTime": {
+            "type": "string",
+            "example": "10:00"
           }
         },
         "required": [
           "appointmentDate",
           "status",
-          "donorId"
+          "donorId",
+          "location",
+          "appointmentTime"
         ]
       },
       "Notification": {
@@ -1814,7 +1871,7 @@
         "properties": {
           "donorId": {
             "type": "integer",
-            "example": 123
+            "example": 1
           },
           "weight": {
             "type": "number",
@@ -2290,7 +2347,7 @@
         "properties": {
           "appointmentDate": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-07-15"
           },
           "status": {
             "type": "string",
@@ -2299,6 +2356,14 @@
           "donorId": {
             "type": "number",
             "example": 2
+          },
+          "location": {
+            "type": "string",
+            "example": "Blood Donation Center, Room 102"
+          },
+          "appointmentTime": {
+            "type": "string",
+            "example": "10:00"
           }
         }
       },
@@ -4027,7 +4092,7 @@
     },
     "/api/blood": {
       "post": {
-        "summary": "Create a new blood record",
+        "summary": "Create a new blood inventory record",
         "tags": [
           "Blood"
         ],
@@ -4037,60 +4102,51 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "donorId": {
+                    "type": "number",
+                    "example": 1
+                  },
                   "bloodType": {
                     "type": "string",
-                    "enum": [
-                      "A+",
-                      "A-",
-                      "B+",
-                      "B-",
-                      "O+",
-                      "O-",
-                      "AB+",
-                      "AB-"
-                    ],
-                    "example": "A+"
-                  },
-                  "quantity": {
-                    "type": "number",
-                    "minimum": 1,
-                    "example": 500
+                    "minLength": 1,
+                    "example": "O_POS"
                   },
                   "barcode": {
                     "type": "string",
-                    "example": "1234567890"
+                    "minLength": 1,
+                    "example": "123456789"
                   },
                   "donationDate": {
                     "type": "string",
-                    "example": "2023-07-15T10:00:00.000Z"
+                    "example": "2023-12-15T10:00:00.000Z"
                   },
                   "expirationDate": {
                     "type": "string",
-                    "example": "2023-08-15T10:00:00.000Z"
+                    "example": "2024-01-15T10:00:00.000Z"
                   },
                   "storageStatus": {
                     "type": "string",
                     "enum": [
                       "AVAILABLE",
                       "RESERVED",
-                      "EXPIRED",
-                      "USED"
+                      "EXPIRED"
                     ],
                     "example": "AVAILABLE"
                   },
-                  "donorId": {
+                  "quantity": {
                     "type": "number",
-                    "example": 1
+                    "minimum": 1,
+                    "example": 5
                   }
                 },
                 "required": [
+                  "donorId",
                   "bloodType",
-                  "quantity",
                   "barcode",
                   "donationDate",
                   "expirationDate",
                   "storageStatus",
-                  "donorId"
+                  "quantity"
                 ]
               }
             }
@@ -4098,7 +4154,7 @@
         },
         "responses": {
           "201": {
-            "description": "The created blood record",
+            "description": "The created blood inventory record",
             "content": {
               "application/json": {
                 "schema": {
@@ -4108,71 +4164,49 @@
                       "type": "number",
                       "example": 1
                     },
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
                     "bloodType": {
                       "type": "string",
-                      "enum": [
-                        "A+",
-                        "A-",
-                        "B+",
-                        "B-",
-                        "O+",
-                        "O-",
-                        "AB+",
-                        "AB-"
-                      ],
-                      "example": "A+"
+                      "example": "O+"
                     },
                     "quantity": {
-                      "type": "number",
-                      "minimum": 1,
-                      "example": 500
+                      "type": "string",
+                      "example": "5"
                     },
                     "barcode": {
                       "type": "string",
-                      "example": "1234567890"
+                      "example": "123456789"
                     },
                     "donationDate": {
                       "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
+                      "example": "2023-12-15T10:00:00.000Z"
                     },
                     "expirationDate": {
                       "type": "string",
-                      "example": "2023-08-15T10:00:00.000Z"
+                      "example": "2024-01-15T10:00:00.000Z"
                     },
                     "storageStatus": {
                       "type": "string",
                       "enum": [
                         "AVAILABLE",
                         "RESERVED",
-                        "EXPIRED",
-                        "USED"
+                        "EXPIRED"
                       ],
                       "example": "AVAILABLE"
-                    },
-                    "donorId": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
                     }
                   },
                   "required": [
                     "id",
+                    "donorId",
                     "bloodType",
                     "quantity",
                     "barcode",
                     "donationDate",
                     "expirationDate",
-                    "storageStatus",
-                    "donorId",
-                    "createdAt",
-                    "updatedAt"
+                    "storageStatus"
                   ]
                 }
               }
@@ -4181,13 +4215,13 @@
         }
       },
       "get": {
-        "summary": "Get all blood records",
+        "summary": "Get all blood inventory records",
         "tags": [
           "Blood"
         ],
         "responses": {
           "200": {
-            "description": "A list of blood records",
+            "description": "A list of blood inventory records",
             "content": {
               "application/json": {
                 "schema": {
@@ -4199,71 +4233,49 @@
                         "type": "number",
                         "example": 1
                       },
+                      "donorId": {
+                        "type": "number",
+                        "example": 1
+                      },
                       "bloodType": {
                         "type": "string",
-                        "enum": [
-                          "A+",
-                          "A-",
-                          "B+",
-                          "B-",
-                          "O+",
-                          "O-",
-                          "AB+",
-                          "AB-"
-                        ],
-                        "example": "A+"
+                        "example": "O+"
                       },
                       "quantity": {
-                        "type": "number",
-                        "minimum": 1,
-                        "example": 500
+                        "type": "string",
+                        "example": "5"
                       },
                       "barcode": {
                         "type": "string",
-                        "example": "1234567890"
+                        "example": "123456789"
                       },
                       "donationDate": {
                         "type": "string",
-                        "example": "2023-07-15T10:00:00.000Z"
+                        "example": "2023-12-15T10:00:00.000Z"
                       },
                       "expirationDate": {
                         "type": "string",
-                        "example": "2023-08-15T10:00:00.000Z"
+                        "example": "2024-01-15T10:00:00.000Z"
                       },
                       "storageStatus": {
                         "type": "string",
                         "enum": [
                           "AVAILABLE",
                           "RESERVED",
-                          "EXPIRED",
-                          "USED"
+                          "EXPIRED"
                         ],
                         "example": "AVAILABLE"
-                      },
-                      "donorId": {
-                        "type": "number",
-                        "example": 1
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2023-07-15T10:00:00.000Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2023-07-15T10:00:00.000Z"
                       }
                     },
                     "required": [
                       "id",
+                      "donorId",
                       "bloodType",
                       "quantity",
                       "barcode",
                       "donationDate",
                       "expirationDate",
-                      "storageStatus",
-                      "donorId",
-                      "createdAt",
-                      "updatedAt"
+                      "storageStatus"
                     ]
                   }
                 }
@@ -4275,7 +4287,7 @@
     },
     "/api/blood/{id}": {
       "get": {
-        "summary": "Get a blood record by ID",
+        "summary": "Get a blood inventory record by ID",
         "tags": [
           "Blood"
         ],
@@ -4285,13 +4297,13 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "The blood record with the specified ID",
+            "description": "The blood inventory record with the specified ID",
             "content": {
               "application/json": {
                 "schema": {
@@ -4301,83 +4313,61 @@
                       "type": "number",
                       "example": 1
                     },
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
                     "bloodType": {
                       "type": "string",
-                      "enum": [
-                        "A+",
-                        "A-",
-                        "B+",
-                        "B-",
-                        "O+",
-                        "O-",
-                        "AB+",
-                        "AB-"
-                      ],
-                      "example": "A+"
+                      "example": "O+"
                     },
                     "quantity": {
-                      "type": "number",
-                      "minimum": 1,
-                      "example": 500
+                      "type": "string",
+                      "example": "5"
                     },
                     "barcode": {
                       "type": "string",
-                      "example": "1234567890"
+                      "example": "123456789"
                     },
                     "donationDate": {
                       "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
+                      "example": "2023-12-15T10:00:00.000Z"
                     },
                     "expirationDate": {
                       "type": "string",
-                      "example": "2023-08-15T10:00:00.000Z"
+                      "example": "2024-01-15T10:00:00.000Z"
                     },
                     "storageStatus": {
                       "type": "string",
                       "enum": [
                         "AVAILABLE",
                         "RESERVED",
-                        "EXPIRED",
-                        "USED"
+                        "EXPIRED"
                       ],
                       "example": "AVAILABLE"
-                    },
-                    "donorId": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
                     }
                   },
                   "required": [
                     "id",
+                    "donorId",
                     "bloodType",
                     "quantity",
                     "barcode",
                     "donationDate",
                     "expirationDate",
-                    "storageStatus",
-                    "donorId",
-                    "createdAt",
-                    "updatedAt"
+                    "storageStatus"
                   ]
                 }
               }
             }
           },
           "404": {
-            "description": "Blood record not found"
+            "description": "Blood inventory record not found"
           }
         }
       },
       "patch": {
-        "summary": "Update a blood record",
+        "summary": "Update a blood inventory record",
         "tags": [
           "Blood"
         ],
@@ -4387,7 +4377,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
@@ -4397,58 +4387,44 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "donorId": {
+                    "type": "number"
+                  },
                   "bloodType": {
                     "type": "string",
-                    "enum": [
-                      "A+",
-                      "A-",
-                      "B+",
-                      "B-",
-                      "O+",
-                      "O-",
-                      "AB+",
-                      "AB-"
-                    ],
-                    "example": "A+"
-                  },
-                  "quantity": {
-                    "type": "number",
-                    "minimum": 1,
-                    "example": 500
+                    "minLength": 1
                   },
                   "barcode": {
                     "type": "string",
-                    "example": "1234567890"
+                    "minLength": 1
                   },
                   "donationDate": {
-                    "type": "string",
-                    "example": "2023-07-15T10:00:00.000Z"
+                    "type": "string"
                   },
                   "expirationDate": {
-                    "type": "string",
-                    "example": "2023-07-15T10:00:00.000Z"
+                    "type": "string"
                   },
                   "storageStatus": {
                     "type": "string",
                     "enum": [
                       "AVAILABLE",
                       "RESERVED",
-                      "EXPIRED",
-                      "USED"
-                    ],
-                    "example": "AVAILABLE"
+                      "EXPIRED"
+                    ]
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "minimum": 1,
+                    "example": 5
                   }
-                },
-                "required": [
-                  "barcode"
-                ]
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "The updated blood record",
+            "description": "The updated blood inventory record",
             "content": {
               "application/json": {
                 "schema": {
@@ -4458,83 +4434,61 @@
                       "type": "number",
                       "example": 1
                     },
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
                     "bloodType": {
                       "type": "string",
-                      "enum": [
-                        "A+",
-                        "A-",
-                        "B+",
-                        "B-",
-                        "O+",
-                        "O-",
-                        "AB+",
-                        "AB-"
-                      ],
-                      "example": "A+"
+                      "example": "O+"
                     },
                     "quantity": {
-                      "type": "number",
-                      "minimum": 1,
-                      "example": 500
+                      "type": "string",
+                      "example": "5"
                     },
                     "barcode": {
                       "type": "string",
-                      "example": "1234567890"
+                      "example": "123456789"
                     },
                     "donationDate": {
                       "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
+                      "example": "2023-12-15T10:00:00.000Z"
                     },
                     "expirationDate": {
                       "type": "string",
-                      "example": "2023-08-15T10:00:00.000Z"
+                      "example": "2024-01-15T10:00:00.000Z"
                     },
                     "storageStatus": {
                       "type": "string",
                       "enum": [
                         "AVAILABLE",
                         "RESERVED",
-                        "EXPIRED",
-                        "USED"
+                        "EXPIRED"
                       ],
                       "example": "AVAILABLE"
-                    },
-                    "donorId": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2023-07-15T10:00:00.000Z"
                     }
                   },
                   "required": [
                     "id",
+                    "donorId",
                     "bloodType",
                     "quantity",
                     "barcode",
                     "donationDate",
                     "expirationDate",
-                    "storageStatus",
-                    "donorId",
-                    "createdAt",
-                    "updatedAt"
+                    "storageStatus"
                   ]
                 }
               }
             }
           },
           "404": {
-            "description": "Blood record not found"
+            "description": "Blood inventory record not found"
           }
         }
       },
       "delete": {
-        "summary": "Delete a blood record",
+        "summary": "Delete a blood inventory record",
         "tags": [
           "Blood"
         ],
@@ -4544,16 +4498,16 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Blood record deleted successfully"
+            "description": "Blood inventory record deleted successfully"
           },
           "404": {
-            "description": "Blood record not found"
+            "description": "Blood inventory record not found"
           }
         }
       }

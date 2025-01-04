@@ -6,11 +6,33 @@ class OrderController {
   // Create a new order
   async createOrder(req: Request, res: Response) {
     try {
-      const order = await orderService.createOrder(req.body);
-      res.status(201).json(order);
+      const { orderDate, bloodType, quantity, hospitalName } = req.body;
+
+      // Validation example
+      if (!orderDate || !bloodType || !quantity || !hospitalName) {
+        return res.status(400).json({
+          error: "Missing required fields. Required: orderDate, bloodType, quantity, hospitalName.",
+        });
+      }
+
+      // Example: Add logic to save the order (e.g., via Prisma or another ORM)
+      const newOrder = {
+        orderDate,
+        bloodType,
+        quantity,
+        hospitalName,
+      };
+
+      // Simulated database save
+      // const savedOrder = await prisma.order.create({ data: newOrder });
+
+      res.status(201).json({
+        message: "Order created successfully",
+        order: newOrder, // Replace with `savedOrder` if using a database
+      });
     } catch (error) {
-      const err = error as Error; // Typecast 'error' to Error
-      res.status(400).json({ message: err.message });
+      console.error("Error creating order:", error);
+      res.status(500).json({ error: "Failed to create order" });
     }
   }
 

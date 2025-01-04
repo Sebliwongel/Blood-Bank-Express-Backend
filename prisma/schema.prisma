@@ -147,8 +147,8 @@ model BloodInventory {
   bloodType       BloodType
   quantity        Int
   barcode         String        @unique
-  donationDate    DateTime
-  expirationDate  DateTime
+  donationDate     String        
+  expirationDate   String        
   storageStatus   StorageStatus @default(AVAILABLE)
   donorId         Int
   donor           Donor         @relation(fields: [donorId], references: [id])
@@ -164,11 +164,14 @@ model BloodInventory {
 
 model Appointment {
   id              Int       @id @default(autoincrement())
-  appointmentDate DateTime
+  appointmentDate  String
   status          String
+  location        String    // New field for location
+  appointmentTime String  // New field for appointment time
   donorId         Int
   donor           Donor     @relation(fields: [donorId], references: [id])
 }
+
 
 model Qualification {
   id                    Int       @id @default(autoincrement())
@@ -179,7 +182,7 @@ model Qualification {
   hb                    Float
   bp                    String
   temperature           Float
-  lastDonationDate      DateTime?
+  lastDonationDate      String?
   hasDonatedBefore      Boolean
   hasTattooing          Boolean
   hasEarPiercing        Boolean
@@ -229,7 +232,7 @@ model Notification {
 
 model Order {
   id          Int          @id @default(autoincrement())
-  orderDate   DateTime
+  orderDate    String
   bloodType   BloodType
   quantity    Int
   status      OrderStatus

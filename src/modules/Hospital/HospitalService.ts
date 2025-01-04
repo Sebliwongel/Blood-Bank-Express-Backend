@@ -104,3 +104,33 @@ export const deleteHospital = async (hospitalId: number) => {
     where: { id: hospitalId },
   });
 };
+// services/hospitalService.ts
+// import {createNotification} from "./../Notification/NotificationService";
+
+// export const approveHospital = async (hospitalId: number, reviewerId: number) => {
+//   const updatedHospital = await prisma.hospital.update({
+//     where: { id: hospitalId },
+//     data: { approved: true, reviewedBy: reviewerId, reviewedAt: new Date() },
+//   });
+
+//   // Notify the hospital
+//   await createNotification("Your hospital registration has been approved.", {
+//     hospitalId,
+//   });
+
+//   return updatedHospital;
+// };
+
+// export const rejectHospital = async (hospitalId: number, reviewerId: number) => {
+//   const updatedHospital = await prisma.hospital.update({
+//     where: { id: hospitalId },
+//     data: { approved: false, reviewedBy: reviewerId, reviewedAt: new Date() },
+//   });
+
+//   // Notify the hospital
+//   await createNotification("Your hospital registration has been rejected.", {
+//     hospitalId,
+//   });
+
+//   return updatedHospital;
+// };

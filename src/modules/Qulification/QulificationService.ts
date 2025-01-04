@@ -22,7 +22,7 @@ export const createQualification = async (
   hb: number,
   bp: string,
   temperature: number,
-  lastDonationDate?: Date,
+  lastDonationDate?: string, // Changed to string
   hasDonatedBefore?: boolean,
   hasTattooing?: boolean,
   hasEarPiercing?: boolean,
@@ -51,6 +51,11 @@ export const createQualification = async (
   hadSurgeryLastSixMonths?: boolean,
   hadBloodTransfusionLastSixMonths?: boolean
 ) => {
+  // Validate lastDonationDate
+  if (lastDonationDate && isNaN(Date.parse(lastDonationDate))) {
+    throw new Error("Invalid date format for lastDonationDate");
+  }
+
   return await prisma.qualification.create({
     data: {
       donorId,
@@ -101,7 +106,7 @@ export const updateQualification = async (
     hb?: number;
     bp?: string;
     temperature?: number;
-    lastDonationDate?: Date;
+    lastDonationDate?: string; // Changed to string
     hasDonatedBefore?: boolean;
     hasTattooing?: boolean;
     hasEarPiercing?: boolean;
@@ -131,6 +136,11 @@ export const updateQualification = async (
     hadBloodTransfusionLastSixMonths?: boolean;
   }
 ) => {
+  // Validate lastDonationDate
+  if (updates.lastDonationDate && isNaN(Date.parse(updates.lastDonationDate))) {
+    throw new Error("Invalid date format for lastDonationDate");
+  }
+
   const qualification = await prisma.qualification.findUnique({
     where: { id: qualificationId },
   });
@@ -169,5 +179,3 @@ export const checkQualificationStatus = (qualification: Qualification): boolean 
   }
   return false;
 };
-
-
