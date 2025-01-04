@@ -1,100 +1,10 @@
-// import { Request, Response } from "express";
-// import { authenticateUser, refreshAccessToken } from "./authService";
-
-// export const login = async (req: Request, res: Response) => {
-//   const { email, password } = req.body;
-//   const tokens = await authenticateUser(email, password);
-//   if (tokens) {
-//     res.json(tokens);
-//   } else {
-//     res.status(401).json({ error: "Invalid email or password" });
-//   }
-// };
-
-// export const refreshToken = (req: Request, res: Response) => {
-//   const { refreshToken } = req.body;
-//   const newAccessToken = refreshAccessToken(refreshToken);
-//   if (newAccessToken) {
-//     res.json({ accessToken: newAccessToken });
-//   } else {
-//     res.status(401).json({ error: "Invalid refresh token" });
-//   }
-// };
-
-// import bcrypt from "bcrypt";
-// import { Request, Response } from "express";
-// import { generateToken, refreshAccessToken } from "../../modules/auth/authService";
-// import { prisma } from "../../../prisma/prisma";
-
-// /**
-//  * Handle user login.
-//  */
-// export const login = async (req: Request, res: Response) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await prisma.user.findUnique({ where: { email } });
-
-//     if (!user || !(await bcrypt.compare(password, user.password))) {
-//       return res.status(401).json({ error: "Invalid credentials" });
-//     }
-
-//     // Generate access and refresh tokens
-//     const accessToken = generateToken(
-//       { id: user.id, email: user.email, role: user.role },
-//       process.env.JWT_SECRET ?? "your_secret_key",
-//       process.env.JWT_EXPIRES_IN ?? "1h"
-//     );
-
-//     const refreshToken = generateToken(
-//       { id: user.id },
-//       process.env.REFRESH_SECRET ?? "your_refresh_secret",
-//       process.env.REFRESH_EXPIRES_IN ?? "7d"
-//     );
-
-//     res.json({ accessToken, refreshToken });
-//   } catch (error) {
-//     console.error("Login Error:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
-// /**
-//  * Refresh access token using refresh token.
-//  */
-// export const refreshToken = (req: Request, res: Response) => {
-//   const { refreshToken } = req.body;
-
-//   try {
-//     const newAccessToken = refreshAccessToken(refreshToken);
-//     if (!newAccessToken) {
-//       return res.status(401).json({ error: "Invalid refresh token" });
-//     }
-
-//     res.json({ accessToken: newAccessToken });
-//   } catch (error) {
-//     console.error("Token Refresh Error:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
-
-// export const logout = (req: Request, res: Response) => {
-//   // Clear the refresh token cookie with same options as when it was set
-//   res.clearCookie('refreshToken', {
-//     httpOnly: true,
-//     secure: process.env.NODE_ENV === 'production',
-//     sameSite: 'strict'
-//   });
-
-//   return res.status(200).json({ message: "Successfully logged out" });
-// };
-
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import {
   authenticateDonor,
+  authenticateUser,
   generateToken,
   refreshAccessToken,
 } from "../../modules/auth/authService";
@@ -117,6 +27,33 @@ export const donorLogin = async (req: Request, res: Response) => {
 
     // Authenticate the user and retrieve details including role
     const user = await authenticateDonor({
+      email: email,
+      password: password,
+    });
+
+    if (!user || "statusCode" in user) {
+      return res.status(user?.statusCode || 401).json({
+        error: user?.message || "Invalid credentials",
+      });
+    }
+
+    return res.status(200).json({user });
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+/**
+ * Handle user login with role specification.s
+ */
+export const userLogin = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    console.log(req.body);
+
+    // Authenticate the user and retrieve details including role
+    const user = await authenticateUser({
       email: email,
       password: password,
     });

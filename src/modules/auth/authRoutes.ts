@@ -5,12 +5,14 @@ import {
   logout,
   forgotPassword,
   resetPassword,
+  userLogin,
 } from "./authController";
 
 const router = Router();
 
 // Login endpoint
 router.post("/donor/login", donorLogin);
+router.post("/user/login", userLogin);
 
 // Refresh token endpoint
 router.post("/refresh-token", refreshToken);

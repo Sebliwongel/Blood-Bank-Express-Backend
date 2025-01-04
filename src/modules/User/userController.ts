@@ -9,7 +9,7 @@ export const register = async (req: Request, res: Response) => {
   const { email, password, role, FirstName, MiddleName, LastName, Gender, username } = req.body;
 
   try {
-    // Check if the user already exists
+    // Check if the user already existss
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
@@ -58,3 +58,15 @@ export const getProfile = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+export const getAllUsers = async(req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany();
+
+    res.json({ users });
+  } catch (error) {
+    console.error("Profile Retrieval Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

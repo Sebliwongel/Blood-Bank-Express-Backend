@@ -1567,25 +1567,39 @@
           "orderDate": {
             "type": "string"
           },
-          "bloodType": {
-            "type": "string",
-            "enum": [
-              "A_POS",
-              "A_NEG",
-              "B_POS",
-              "B_NEG",
-              "AB_POS",
-              "AB_NEG",
-              "O_POS",
-              "O_NEG"
-            ]
-          },
-          "quantity": {
+          "aPosAmount": {
             "type": "integer",
-            "minimum": 0,
-            "exclusiveMinimum": true
+            "minimum": 0
           },
-          "OrderStatus": {
+          "aNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bPosAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "abPosAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "abNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oPosAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
             "type": "string",
             "enum": [
               "PENDING",
@@ -1601,9 +1615,15 @@
         },
         "required": [
           "orderDate",
-          "bloodType",
-          "quantity",
-          "OrderStatus",
+          "aPosAmount",
+          "aNegAmount",
+          "bPosAmount",
+          "bNegAmount",
+          "abPosAmount",
+          "abNegAmount",
+          "oPosAmount",
+          "oNegAmount",
+          "status",
           "hospitalId"
         ]
       },
@@ -2559,6 +2579,52 @@
       }
     },
     "/auth/donor/login": {
+      "post": {
+        "summary": "Login a user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The access and refresh tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "your_access_token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "your_refresh_token"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    },
+    "/auth/user/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -4938,25 +5004,39 @@
                   "orderDate": {
                     "type": "string"
                   },
-                  "bloodType": {
-                    "type": "string",
-                    "enum": [
-                      "A_POS",
-                      "A_NEG",
-                      "B_POS",
-                      "B_NEG",
-                      "AB_POS",
-                      "AB_NEG",
-                      "O_POS",
-                      "O_NEG"
-                    ]
-                  },
-                  "quantity": {
+                  "aPosAmount": {
                     "type": "integer",
-                    "minimum": 0,
-                    "exclusiveMinimum": true
+                    "minimum": 0
                   },
-                  "OrderStatus": {
+                  "aNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "bPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "bNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "abPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "abNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "oPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "oNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "status": {
                     "type": "string",
                     "enum": [
                       "PENDING",
@@ -4972,9 +5052,15 @@
                 },
                 "required": [
                   "orderDate",
-                  "bloodType",
-                  "quantity",
-                  "OrderStatus",
+                  "aPosAmount",
+                  "aNegAmount",
+                  "bPosAmount",
+                  "bNegAmount",
+                  "abPosAmount",
+                  "abNegAmount",
+                  "oPosAmount",
+                  "oNegAmount",
+                  "status",
                   "hospitalId"
                 ]
               }

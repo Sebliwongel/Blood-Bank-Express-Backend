@@ -129,6 +129,7 @@ export const authenticateDonor = async ({
 
   const isValidPassword = await bcrypt.compare(password, donor.password);
   console.log("is the password valid", isValidPassword)
+  console.log("The TWO PASWORDS : \n", password , "\n", donor.password )
   if (!isValidPassword)
     return {
       statusCode: 403,
@@ -136,7 +137,7 @@ export const authenticateDonor = async ({
     };
 
   // Include user ID and role in the JWT payload
-  const payload = { donorId: donor.id ,};
+  const payload = donor;
   console.log("tokens", payload, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_EXPIRES_IN!,
   });
@@ -151,6 +152,57 @@ export const authenticateDonor = async ({
 
   return { accessToken, refreshToken };
 };
+
+
+
+/**
+ * Authenticate a user using email and password, and generate access and refresh tokens.
+ * @param email - The user's username or email.
+ * @param password - The user's password.
+ * @returns An object with access and refresh tokens or null if authentication fails.
+ */
+export const authenticateUser = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const user = await getUserByEmail(email);
+  console.log(user);
+
+  if (!user)
+    return {
+      statusCode: 401,
+      message: "User not found",
+    };
+
+  const isValidPassword = await bcrypt.compare(password, user.password);
+  console.log("is the password valid", isValidPassword)
+  console.log("The TWO PASWORDS : \n", password , "\n", user.password )
+  if (!isValidPassword)
+    return {
+      statusCode: 403,
+      message: "Invalid Credentials",
+    };
+
+  // Include user ID and role in the JWT payload
+  const payload = user;
+  console.log("tokens", payload, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN!,
+  });
+  const accessToken = generateToken(payload, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN!,
+  });
+  console.log(accessToken)
+  const refreshToken = generateToken(payload, process.env.REFRESH_SECRET!, {
+    expiresIn: process.env.REFRESH_EXPIRES_IN!,
+  });
+  console.log(refreshToken)
+
+  return { accessToken, refreshToken };
+};
+
 
 /**
  * Refresh the access token using a valid refresh token.

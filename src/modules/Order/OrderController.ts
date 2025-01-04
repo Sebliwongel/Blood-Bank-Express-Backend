@@ -1,38 +1,28 @@
 import { Request, Response } from 'express';
-import orderService from '../Order/OrderService';
-import { OrderStatus } from '@prisma/client';
+import orderService from './OrderService'; // Adjust the import path as needed
+import { createOrderSchema, updateOrderStatusSchema } from './OrderSchema';
 
 class OrderController {
   // Create a new order
   async createOrder(req: Request, res: Response) {
     try {
-      const { orderDate, bloodType, quantity, hospitalName } = req.body;
+      // Validate input data with Zod schema
+      const validatedData = createOrderSchema.parse(req.body);
 
-      // Validation example
-      if (!orderDate || !bloodType || !quantity || !hospitalName) {
-        return res.status(400).json({
-          error: "Missing required fields. Required: orderDate, bloodType, quantity, hospitalName.",
-        });
-      }
-
-      // Example: Add logic to save the order (e.g., via Prisma or another ORM)
-      const newOrder = {
-        orderDate,
-        bloodType,
-        quantity,
-        hospitalName,
-      };
-
-      // Simulated database save
-      // const savedOrder = await prisma.order.create({ data: newOrder });
+      // Call the service to create the order
+      const newOrder = await orderService.createOrder(validatedData);
 
       res.status(201).json({
         message: "Order created successfully",
-        order: newOrder, // Replace with `savedOrder` if using a database
+        order: newOrder,
       });
     } catch (error) {
-      console.error("Error creating order:", error);
-      res.status(500).json({ error: "Failed to create order" });
+      if (error instanceof Error) {
+        console.error("Error creating order:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to create order" });
+      }
     }
   }
 
@@ -42,8 +32,12 @@ class OrderController {
       const orders = await orderService.getAllOrders();
       res.status(200).json(orders);
     } catch (error) {
-      const err = error as Error; // Typecast 'error' to Error
-      res.status(500).json({ message: err.message });
+      if (error instanceof Error) {
+        console.error("Error fetching orders:", error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to fetch orders" });
+      }
     }
   }
 
@@ -51,14 +45,25 @@ class OrderController {
   async getOrderById(req: Request, res: Response) {
     try {
       const { id } = req.params;
+
+      // Validate the ID parameter
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: "Invalid order ID" });
+      }
+
       const order = await orderService.getOrderById(Number(id));
       if (!order) {
         return res.status(404).json({ message: 'Order not found' });
       }
+
       res.status(200).json(order);
     } catch (error) {
-      const err = error as Error; // Typecast 'error' to Error
-      res.status(400).json({ message: err.message });
+      if (error instanceof Error) {
+        console.error("Error fetching order by ID:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to fetch order" });
+      }
     }
   }
 
@@ -67,11 +72,29 @@ class OrderController {
     try {
       const { id } = req.params;
       const { status } = req.body;
-      const updatedOrder = await orderService.updateOrderStatus(Number(id), status as OrderStatus);
-      res.status(200).json(updatedOrder);
+
+      // Validate the ID parameter
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: "Invalid order ID" });
+      }
+
+      // Validate input data with Zod schema
+      const validatedData = updateOrderStatusSchema.parse({ status });
+
+      // Call the service to update the order status
+      const updatedOrder = await orderService.updateOrderStatus(Number(id), validatedData);
+
+      res.status(200).json({
+        message: "Order status updated successfully",
+        order: updatedOrder,
+      });
     } catch (error) {
-      const err = error as Error; // Typecast 'error' to Error
-      res.status(400).json({ message: err.message });
+      if (error instanceof Error) {
+        console.error("Error updating order status:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to update order status" });
+      }
     }
   }
 
@@ -79,11 +102,21 @@ class OrderController {
   async deleteOrder(req: Request, res: Response) {
     try {
       const { id } = req.params;
+
+      // Validate the ID parameter
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: "Invalid order ID" });
+      }
+
       await orderService.deleteOrder(Number(id));
       res.status(204).send();
     } catch (error) {
-      const err = error as Error; // Typecast 'error' to Error
-      res.status(400).json({ message: err.message });
+      if (error instanceof Error) {
+        console.error("Error deleting order:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to delete order" });
+      }
     }
   }
 }
