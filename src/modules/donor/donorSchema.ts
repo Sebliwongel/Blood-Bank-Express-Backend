@@ -109,6 +109,8 @@ export const DonorSchema = z.object({
     })
     .transform((dateStr) => new Date(dateStr))
     .openapi({ example: "2023-07-15T10:00:00.000Z" }),
+    isActive: z.boolean().default(true).openapi({ example: true }),
+    resetToken: z.string().nullable().optional().openapi({ example: "randomresettoken123" }),
 });
 
 // Schema for updating an existing donor
@@ -134,6 +136,8 @@ export const UpdateDonorSchema = z.object({
   email: z.string().email().optional(),
   password: z.string().min(8).optional(),
   username: z.string().optional(),
+  isActive: z.boolean().default(true).openapi({ example: true }),
+  resetToken: z.string().nullable().optional().openapi({ example: "randomresettoken123" }),
 });
 
 // TypeScript types for services or controllers

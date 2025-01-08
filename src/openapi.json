@@ -64,9 +64,19 @@
             "type": "string",
             "example": "johndoe"
           },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
           "refreshToken": {
             "type": "string",
             "nullable": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           },
           "createdAt": {
             "type": "string",
@@ -132,6 +142,11 @@
           "username": {
             "type": "string",
             "example": "johndoe"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
           }
         },
         "required": [
@@ -222,6 +237,16 @@
           "updatedAt": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           }
         },
         "required": [
@@ -387,6 +412,16 @@
           },
           "username": {
             "type": "string"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           }
         }
       },
@@ -1115,6 +1150,11 @@
             "type": "boolean",
             "example": true
           },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
+          },
           "deactivatedAt": {
             "type": "string",
             "nullable": true
@@ -1168,6 +1208,16 @@
             "type": "string",
             "minLength": 6,
             "example": "securePassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           }
         },
         "required": [
@@ -1210,6 +1260,11 @@
           "isActive": {
             "type": "boolean",
             "example": false
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           },
           "deactivatedAt": {
             "type": "string",
@@ -1886,6 +1941,18 @@
           "password"
         ]
       },
+      "Forgot Password": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "abelshibabaw291@gmail.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
       "New Qualification": {
         "type": "object",
         "properties": {
@@ -2312,6 +2379,16 @@
             "type": "string",
             "minLength": 6,
             "example": "securePassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           }
         },
         "required": [
@@ -2354,6 +2431,11 @@
           "isActive": {
             "type": "boolean",
             "example": false
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           },
           "deactivatedAt": {
             "type": "string",
@@ -2624,7 +2706,7 @@
         }
       }
     },
-    "/auth/user/login": {
+    "/api/auth/user/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -2670,7 +2752,53 @@
         }
       }
     },
-    "/auth/refresh-token": {
+    "/auth/Hospital/login": {
+      "post": {
+        "summary": "Login a user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The access and refresh tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "your_access_token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "your_refresh_token"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    },
+    "/api/auth/refresh-token": {
       "post": {
         "summary": "Refresh access token",
         "tags": [
@@ -2716,6 +2844,52 @@
           },
           "401": {
             "description": "Invalid refresh token"
+          }
+        }
+      }
+    },
+    "/api/auth/forgot-password": {
+      "post": {
+        "summary": "Forgot password",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Forgot Password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The access and refresh tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "your_access_token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "your_refresh_token"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
           }
         }
       }
@@ -2967,6 +3141,16 @@
                     "updatedAt": {
                       "type": "string",
                       "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "default": true,
+                      "example": true
+                    },
+                    "resetToken": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "randomresettoken123"
                     }
                   },
                   "required": [
@@ -3084,6 +3268,16 @@
                       "updatedAt": {
                         "type": "string",
                         "example": "2023-07-15T10:00:00.000Z"
+                      },
+                      "isActive": {
+                        "type": "boolean",
+                        "default": true,
+                        "example": true
+                      },
+                      "resetToken": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "randomresettoken123"
                       }
                     },
                     "required": [
@@ -3212,6 +3406,16 @@
                     "updatedAt": {
                       "type": "string",
                       "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "default": true,
+                      "example": true
+                    },
+                    "resetToken": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "randomresettoken123"
                     }
                   },
                   "required": [
@@ -3315,6 +3519,16 @@
                   },
                   "username": {
                     "type": "string"
+                  },
+                  "isActive": {
+                    "type": "boolean",
+                    "default": true,
+                    "example": true
+                  },
+                  "resetToken": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "randomresettoken123"
                   }
                 }
               }
@@ -3404,6 +3618,16 @@
                     "updatedAt": {
                       "type": "string",
                       "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "default": true,
+                      "example": true
+                    },
+                    "resetToken": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "randomresettoken123"
                     }
                   },
                   "required": [

@@ -63,6 +63,7 @@ import * as bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getUserByEmail } from "../User/userService";
 import { getDonorByEmail } from "../donor/donorService";
+import { gethospitalByEmail } from "./../Hospital/HospitalService";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -203,6 +204,53 @@ export const authenticateUser = async ({
   return { accessToken, refreshToken };
 };
 
+/**
+ * Authenticate a user using email and password, and generate access and refresh tokens.
+ * @param email - The user's username or email.
+ * @param password - The user's password.
+ * @returns An object with access and refresh tokens or null if authentication fails.
+ */
+export const authenticateHospital = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const Hospital = await gethospitalByEmail(email);
+  console.log(Hospital);
+
+  if (!Hospital)
+    return {
+      statusCode: 401,
+      message: "User not found",
+    };
+
+  const isValidPassword = password === Hospital.password;
+  console.log("is the password valid", isValidPassword)
+  console.log("The TWO PASWORDS : \n", password , "\n", Hospital.password )
+  if (!isValidPassword)
+    return {
+      statusCode: 403,
+      message: "Invalid Credentials",
+    };
+
+  // Include user ID and role in the JWT payload
+  const payload = Hospital;
+  console.log("tokens", payload, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN!,
+  });
+  const accessToken = generateToken(payload, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN!,
+  });
+  console.log(accessToken)
+  const refreshToken = generateToken(payload, process.env.REFRESH_SECRET!, {
+    expiresIn: process.env.REFRESH_EXPIRES_IN!,
+  });
+  console.log(refreshToken)
+
+  return { accessToken, refreshToken };
+};
 
 /**
  * Refresh the access token using a valid refresh token.

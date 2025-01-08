@@ -1,27 +1,31 @@
 import { validateAndParse } from "../../utils/validateAndParseRequest";
-import { NewAppointmentSchema, UpdateAppointmentSchema } from "./AppointmentSchema"; // Assuming Zod schemas for Appointment
+import {
+  NewAppointmentSchema,
+  UpdateAppointmentSchema,
+} from "./AppointmentSchema"; // Assuming Zod schemas for Appointment
 import { Request, Response } from "express";
 import {
-  createAppointment,
+  createAppointment as createAppointmentService, // Import the updated service
   getAllAppointments,
   getAppointmentById,
   updateAppointment,
- 
 } from "./AppointmentService";
 
 // Create a new appointment
-export const createAppointmentController = async (req: Request, res: Response) => {
+export const createAppointmentController = async (
+  req: Request,
+  res: Response
+) => {
   try {
     // Validate and parse request data using NewAppointmentSchema
-    const parsed = await validateAndParse(NewAppointmentSchema, req);
-
-    // Create the new appointment in the database
-    const newAppointment = await createAppointment({
-      appointmentDate: parsed.appointmentDate,  // parsed appointment date from request
-      status: parsed.status,                    // parsed status from request
-      donorId: parsed.donorId,                  // parsed donorId from request
-      location: parsed.location,                // parsed location from request
-      appointmentTime: parsed.appointmentTime,  // parsed appointment time from request
+    console.log(req.body);
+    const parsed = req.body;
+    const newAppointment = await createAppointmentService({
+      appointmentDate: parsed.appointmentDate,
+      status: parsed.status,
+      donorId: 1, //TODO: implement the donorId to be passed in the body
+      location: parsed.location,
+      appointmentTime: parsed.appointmentTime,
     });
 
     // Return the newly created appointment
@@ -33,7 +37,10 @@ export const createAppointmentController = async (req: Request, res: Response) =
 };
 
 // Get all appointments
-export const getAllAppointmentsController = async (req: Request, res: Response) => {
+export const getAllAppointmentsController = async (
+  req: Request,
+  res: Response
+) => {
   try {
     // Retrieve all appointments from the database
     const appointments = await getAllAppointments();
@@ -45,7 +52,10 @@ export const getAllAppointmentsController = async (req: Request, res: Response) 
 };
 
 // Get an appointment by ID
-export const getAppointmentByIdController = async (req: Request, res: Response) => {
+export const getAppointmentByIdController = async (
+  req: Request,
+  res: Response
+) => {
   const appointmentId = req.params.id; // Assuming the ID is passed as a route parameter
   try {
     // Retrieve the appointment by ID
@@ -61,14 +71,20 @@ export const getAppointmentByIdController = async (req: Request, res: Response) 
 };
 
 // Update an appointment
-export const updateAppointmentController = async (req: Request, res: Response) => {
+export const updateAppointmentController = async (
+  req: Request,
+  res: Response
+) => {
   const appointmentId = req.params.id; // Extract the appointment ID from request params
   try {
     // Validate and parse the update data
     const parsed = await validateAndParse(UpdateAppointmentSchema, req);
 
     // Update the appointment in the database
-    const updatedAppointment = await updateAppointment(parseInt(appointmentId), parsed);
+    const updatedAppointment = await updateAppointment(
+      parseInt(appointmentId),
+      parsed
+    );
 
     // If the appointment was not found, return 404
     if (!updatedAppointment) {

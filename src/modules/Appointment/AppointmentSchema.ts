@@ -5,9 +5,9 @@ export const NewAppointmentSchema = z
   .object({
     appointmentDate: z
       .string()
-      .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
-        message: "Invalid date format",
-      })
+      // .refine((dateStr) => !isNaN(Date.parse(dateStr)), {
+      //   message: "Invalid date format",
+      // })
       .openapi({ example: "2023-07-15" }), // Date of appointment as string
 
     status: z.string().openapi({ example: "Scheduled" }), // Status of the appointment
@@ -18,13 +18,13 @@ export const NewAppointmentSchema = z
 
     appointmentTime: z
       .string()
-      .refine((timeStr) => {
-        // Validate time format (e.g., HH:mm)
-        const timePattern = /^([0-1]?\d|2[0-3]):[0-5]\d$/;
-        return timePattern.test(timeStr);
-      }, {
-        message: "Invalid time format",
-      })
+      // .refine((timeStr) => {
+      //   // Validate time format (e.g., HH:mm)
+      //   const timePattern = /^([0-1]?\d|2[0-3]):[0-5]\d$/;
+      //   return timePattern.test(timeStr);
+      // }, {
+      //   message: "Invalid time format",
+      // })
       .openapi({ example: "10:00" }), // Appointment time as string
   })
   .openapi("NewAppointment");

@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api", userRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api", protectedRoutes);
 app.use("/api", AccountRoutes);
 app.use("/api", HospitalRoutes);

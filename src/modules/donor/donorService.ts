@@ -44,7 +44,7 @@ export const createDonor = async (donorData: NewDonorType) => {
   }
 };
 
-// Service for fetching all donors
+
 export const getAllDonors = async () => {
   try {
     const donors = await prisma.donor.findMany();
@@ -54,7 +54,7 @@ export const getAllDonors = async () => {
   }
 };
 
-// Service for fetching a donor by ID
+
 export const getDonorById = async (id: number) => {
   try {
     const donor = await prisma.donor.findUnique({
@@ -86,24 +86,27 @@ export const getDonorByPhoneNumber = async (phoneNumber: string) => {
 // Service for updating a donor
 export const updateDonor = async (id: number, updatedData: UpdateDonorType) => {
   try {
-    // Map the zod schema data to match Prisma's DonorUpdateInput
-    const donorUpdateInput: any = {
+    // Map the incoming updatedData to match Prisma's DonorUpdateInput
+    const donorUpdateInput: Record<string, any> = {
       ...updatedData,
-      birthDate: updatedData.birthDate
-        ? new Date(updatedData.birthDate)
-        : undefined, // Ensure birthDate is a Date object
     };
 
+    // Ensure birthDate is properly formatted
+    if (updatedData.birthDate) {
+      donorUpdateInput.birthDate = new Date(updatedData.birthDate);
+    }
+
+    // Perform the update using Prisma
     const updatedDonor = await prisma.donor.update({
       where: { id },
       data: donorUpdateInput,
     });
+
     return updatedDonor;
   } catch (error) {
+    // Error handling, provide a clear message if something goes wrong
     throw new Error(
-      `Failed to update donor: ${
-        error instanceof Error ? error.message : String(error)
-      }`
+      `Failed to update donor: ${error instanceof Error ? error.message : String(error)}`
     );
   }
 };

@@ -12,7 +12,7 @@ enum UserRole {
   SYSTEM_ADMIN
   COLLECTOR
   MANAGER
-  HOSPITAL_REPRESENTATIVE
+  HOSPITAL_REPRESENTATIVE //Todo: Remove this
   STORE_MANAGER
   LABORATORY
 }
@@ -35,7 +35,7 @@ enum StorageStatus {
   EXPIRED
 }
 
-enum OrderStatus {
+enum OrderStatus { //Todo: Order approval status 
   PENDING
   COMPLETED
   CANCELED
@@ -52,8 +52,10 @@ model Hospital {
   name            String
   address         String
   username        String
-  email           String
+  email           String           @unique
   password        String
+  isActive  Boolean  @default(false) 
+  resetToken  String?
   integrations    Integration[]
   notifications   Notification[]
   orders          Order[]
@@ -80,6 +82,9 @@ model Donor {
   PhoneNumber     String
   username        String
   password        String
+  isActive  Boolean  @default(false)
+  resetToken  String? 
+  donations   Donation[]
   qualifications  Qualification[] @relation("DonorQualification")
   notifications   Notification[]
   appointments    Appointment[]
@@ -101,6 +106,8 @@ model User {
  password      String
  username      String
  refreshToken  String?
+ isActive  Boolean  @default(false)
+ resetToken  String? 
  reports       Report[]
  collections   BloodInventory[]
  notifications Notification[]
@@ -122,7 +129,7 @@ model Integration {
   updatedAt     DateTime         @updatedAt
 }
 
-model Account {
+model Account {// Todo Remove this model and move activation attributes to donor, user and hospital
   id            Int      @id @default(autoincrement())
   userId        Int
   accountType   String
@@ -144,13 +151,14 @@ model Account {
 
 model BloodInventory {
   id              Int           @id @default(autoincrement())
-  bloodType       BloodType
+  bloodType       BloodType?
   quantity        Int
+  StockLevel       Int?
   barcode         String        @unique
   donationDate     String        
-  expirationDate   String        
-  storageStatus   StorageStatus @default(AVAILABLE)
-  donorId         Int
+  expirationDate   String?        
+  storageStatus   StorageStatus? @default(AVAILABLE)
+ donorId         Int
   donor           Donor         @relation(fields: [donorId], references: [id])
   hospitalId      Int?
   hospital        Hospital?     @relation(fields: [hospitalId], references: [id])
@@ -160,6 +168,17 @@ model BloodInventory {
   integration     Integration?     @relation("IntegrationBloodInventory", fields: [integrationId], references: [id])
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+}
+model Donation {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  location    String
+  bloodType   String
+  units       Int
+  status      String
+  certificate String?  // Optional, since not every donation might have a certificate
+  donorId     Int
+  donor       Donor    @relation(fields: [donorId], references: [id])  // Relating it to the Donor model
 }
 
 model Appointment {

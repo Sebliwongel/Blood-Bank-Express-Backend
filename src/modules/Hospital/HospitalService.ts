@@ -7,21 +7,21 @@ const prisma = new PrismaClient();
 type CreateHospitalInput = z.infer<typeof CreateHospitalSchema>;
 type UpdateHospitalInput = z.infer<typeof UpdateHospitalSchema>;
 
-// Get all hospitals
+
 export const getAllHospitals = async () => {
   return await prisma.hospital.findMany({
     orderBy: { name: 'asc' }
   });
 };
 
-// Get a single hospital by ID
+
 export const getHospital = async (hospitalId: number) => {
   const hospital = await prisma.hospital.findUnique({
     where: { id: hospitalId },
   });
 
   if (!hospital) {
-    return null; // Let controller handle 404
+    return null; 
   }
 
   return hospital;
@@ -102,6 +102,12 @@ export const deleteHospital = async (hospitalId: number) => {
 
   return await prisma.hospital.delete({
     where: { id: hospitalId },
+  });
+};
+
+export const gethospitalByEmail = async (email: string) => {
+  return await prisma.hospital.findUnique({
+    where: { email},
   });
 };
 // services/hospitalService.ts

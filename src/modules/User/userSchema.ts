@@ -23,7 +23,9 @@ export const UserSchema = z
     role: z.enum(userRoles).openapi({ example: "SYSTEM_ADMIN" }),
     password: z.string().openapi({ example: "securepassword123" }),
     username: z.string().openapi({ example: "johndoe" }),
+    isActive: z.boolean().default(true).openapi({ example: true }),
     refreshToken: z.string().nullable().openapi({ example: null }),
+    resetToken: z.string().nullable().optional().openapi({ example: "randomresettoken123" }),
     createdAt: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
     updatedAt: z.date().openapi({ example: "2023-07-16T10:00:00.000Z" }),
   })
@@ -40,6 +42,7 @@ export const NewUserSchema = z
     role: z.enum(userRoles).openapi({ example: "COLLECTOR" }),
     password: z.string().openapi({ example: "securepassword123" }),
     username: z.string().openapi({ example: "johndoe" }),
+    isActive: z.boolean().default(true).openapi({ example: true })
   })
   .openapi("NewUser");
 

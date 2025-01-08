@@ -4,20 +4,16 @@ import { z } from "zod";
 
 const prisma = new PrismaClient();
 
-// Service function to create a new appointment
+
 export const createAppointment = async (data: z.infer<typeof NewAppointmentSchema>) => {
   try {
-    // Validate input data against the schema
-    const validatedData = NewAppointmentSchema.parse(data);
-
-    // Create the appointment using Prisma
     const appointment = await prisma.appointment.create({
       data: {
-        appointmentDate: validatedData.appointmentDate, // Changed to string
-        status: validatedData.status,
-        donorId: validatedData.donorId,
-        location: validatedData.location, // Add location
-        appointmentTime: validatedData.appointmentTime, // Changed to string
+        appointmentDate: data.appointmentDate, 
+        status: data.status,
+        donorId: data.donorId,
+        location: data.location, 
+        appointmentTime: data.appointmentTime,
       },
     });
 
