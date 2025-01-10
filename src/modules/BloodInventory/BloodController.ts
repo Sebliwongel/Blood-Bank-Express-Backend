@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createBlood, getAllBloods, getBloodById, updateBlood, deleteBlood, patchBlood } from './BloodService'; // Assuming service functions are available
+import { createBlood, getAllBloods, getBloodById, updateBlood, deleteBlood, patchBlood,saveBloodInventory  } from './BloodService'; // Assuming service functions are available
 
 // Controller for creating a new blood inventory
 export const createBloodInventoryHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -9,6 +9,21 @@ export const createBloodInventoryHandler = async (req: Request, res: Response, n
     res.status(201).json(newBloodInventory);
   } catch (error) {
     next(error);  // Pass error to global error handler
+  }
+};
+
+export const saveBloodInventoryController = async (req: Request, res: Response, next: NextFunction) => {
+  const { barcode, quantityml, donationDate, donorId } = req.body;
+
+  if (!barcode || !quantityml || !donationDate || !donorId) {
+    return res.status(400).json({ message: 'Missing required fields: barcode, quantityml, donationDate, donorId.' });
+  }
+
+  try {
+    const newRecord = await saveBloodInventory({ barcode, quantityml, donationDate, donorId });
+    res.status(201).json(newRecord);
+  } catch (error) {
+    next(error);
   }
 };
 

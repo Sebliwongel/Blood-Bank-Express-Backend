@@ -24,6 +24,9 @@ import NotificationRoutes from "./modules/Notification/NotificationRoutes";
 import QulificationRoutes from "./modules/Qulification/QulificationRoutes";
 import donorRoutes from "./modules/donor/donorRoutes";
 import roleRoutes from "./modules/role/roleroutes";
+import bloodCollectionRoutes from "./modules/Bloodcollection/bloodCollectionRoutes";
+
+
 
 dotenv.config();
 
@@ -54,7 +57,7 @@ app.use("/api", BloodRoutes);
 //app.use("/api", inventoryRoutes);
 //app.use("/api",HospitalRoutes);
 //app.use("/api",BloodRoutes);
-//app.use("/api",inventoryRoutes);
+app.use("/api",bloodCollectionRoutes);
 app.use("/api", AppointmentRoutes);
 app.use("/api", NotificationRoutes);
 app.use("/api", OrderRoutes);

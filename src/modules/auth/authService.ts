@@ -119,7 +119,9 @@ export const authenticateDonor = async ({
   email: string;
   password: string;
 }) => {
-  const donor = await getDonorByEmail(email);
+  const donor = await getDonorByEmail({
+    email: email,
+  });
   console.log(donor);
 
   if (!donor)
@@ -129,8 +131,8 @@ export const authenticateDonor = async ({
     };
 
   const isValidPassword = await bcrypt.compare(password, donor.password);
-  console.log("is the password valid", isValidPassword)
-  console.log("The TWO PASWORDS : \n", password , "\n", donor.password )
+  console.log("is the password valid", isValidPassword);
+  console.log("The TWO PASWORDS : \n", password, "\n", donor.password);
   if (!isValidPassword)
     return {
       statusCode: 403,
@@ -145,16 +147,14 @@ export const authenticateDonor = async ({
   const accessToken = generateToken(payload, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_EXPIRES_IN!,
   });
-  console.log(accessToken)
+  console.log(accessToken);
   const refreshToken = generateToken(payload, process.env.REFRESH_SECRET!, {
     expiresIn: process.env.REFRESH_EXPIRES_IN!,
   });
-  console.log(refreshToken)
+  console.log(refreshToken);
 
   return { accessToken, refreshToken };
 };
-
-
 
 /**
  * Authenticate a user using email and password, and generate access and refresh tokens.
@@ -179,8 +179,8 @@ export const authenticateUser = async ({
     };
 
   const isValidPassword = await bcrypt.compare(password, user.password);
-  console.log("is the password valid", isValidPassword)
-  console.log("The TWO PASWORDS : \n", password , "\n", user.password )
+  console.log("is the password valid", isValidPassword);
+  console.log("The TWO PASWORDS : \n", password, "\n", user.password);
   if (!isValidPassword)
     return {
       statusCode: 403,
@@ -195,11 +195,11 @@ export const authenticateUser = async ({
   const accessToken = generateToken(payload, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_EXPIRES_IN!,
   });
-  console.log(accessToken)
+  console.log(accessToken);
   const refreshToken = generateToken(payload, process.env.REFRESH_SECRET!, {
     expiresIn: process.env.REFRESH_EXPIRES_IN!,
   });
-  console.log(refreshToken)
+  console.log(refreshToken);
 
   return { accessToken, refreshToken };
 };
@@ -227,8 +227,8 @@ export const authenticateHospital = async ({
     };
 
   const isValidPassword = password === Hospital.password;
-  console.log("is the password valid", isValidPassword)
-  console.log("The TWO PASWORDS : \n", password , "\n", Hospital.password )
+  console.log("is the password valid", isValidPassword);
+  console.log("The TWO PASWORDS : \n", password, "\n", Hospital.password);
   if (!isValidPassword)
     return {
       statusCode: 403,
@@ -243,11 +243,11 @@ export const authenticateHospital = async ({
   const accessToken = generateToken(payload, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_EXPIRES_IN!,
   });
-  console.log(accessToken)
+  console.log(accessToken);
   const refreshToken = generateToken(payload, process.env.REFRESH_SECRET!, {
     expiresIn: process.env.REFRESH_EXPIRES_IN!,
   });
-  console.log(refreshToken)
+  console.log(refreshToken);
 
   return { accessToken, refreshToken };
 };

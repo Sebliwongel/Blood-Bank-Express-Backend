@@ -44,7 +44,6 @@ export const createDonor = async (donorData: NewDonorType) => {
   }
 };
 
-
 export const getAllDonors = async () => {
   try {
     const donors = await prisma.donor.findMany();
@@ -53,7 +52,6 @@ export const getAllDonors = async () => {
     throw new Error(`Failed to fetch donors: ${getErrorMessage(error)}`);
   }
 };
-
 
 export const getDonorById = async (id: number) => {
   try {
@@ -106,7 +104,9 @@ export const updateDonor = async (id: number, updatedData: UpdateDonorType) => {
   } catch (error) {
     // Error handling, provide a clear message if something goes wrong
     throw new Error(
-      `Failed to update donor: ${error instanceof Error ? error.message : String(error)}`
+      `Failed to update donor: ${
+        error instanceof Error ? error.message : String(error)
+      }`
     );
   }
 };
@@ -159,7 +159,7 @@ export const patchDonor = async (id: number, patchData: UpdateDonorType) => {
   }
 };
 
-export const getDonorByEmail = async (email: string) => {
+export const getDonorByEmail = async ({ email }: { email: string }) => {
   return await prisma.donor.findUnique({
     where: { email: email },
   });

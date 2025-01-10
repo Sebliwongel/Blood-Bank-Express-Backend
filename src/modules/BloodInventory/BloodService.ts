@@ -16,7 +16,7 @@ const getErrorMessage = (error: unknown): string => {
 const mapToBloodCreateInput = (data: z.infer<typeof NewBloodSchema>): Prisma.BloodInventoryCreateInput => {
   return {
     bloodType: data.bloodType as BloodType,
-    quantity: data.quantity,
+    quantityml: data.quantityml,
     barcode: data.barcode,
     donationDate: data.donationDate, // No transformation needed as it is now a string
     expirationDate: data.expirationDate, // No transformation needed as it is now a string
@@ -27,11 +27,30 @@ const mapToBloodCreateInput = (data: z.infer<typeof NewBloodSchema>): Prisma.Blo
   };
 };
 
+
+
+export const saveBloodInventory = async (data: { barcode: string; quantityml: number; donationDate: string; donorId: number }) => {
+  const { barcode, quantityml, donationDate, donorId } = data;
+
+  // Save to the database
+  const newRecord = await prisma.bloodInventory.create({
+    data: {
+      barcode,
+      quantityml,
+      donationDate,
+      donorId, // Ensure the donor is linked
+    },
+  });
+
+  return newRecord;
+};
+
+
 // Helper function to map input for updating BloodInventory
 const mapToBloodUpdateInput = (data: z.infer<typeof UpdateBloodSchema>): Prisma.BloodInventoryUpdateInput => {
   return {
     bloodType: data.bloodType as BloodType,
-    quantity: data.quantity,
+    quantityml: data.quantityml,
     barcode: data.barcode,
     donationDate: data.donationDate || undefined, // Keep as string or undefined
     expirationDate: data.expirationDate || undefined, // Keep as string or undefined

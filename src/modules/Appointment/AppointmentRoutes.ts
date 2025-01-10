@@ -1,13 +1,16 @@
 import { Router } from "express";
 import {
   createAppointmentController,
-  //deleteAppointmentController,
   getAllAppointmentsController,
   getAppointmentByIdController,
   updateAppointmentController,
-} from "./AppointmentController";
+  getScheduledAppointments,
+} from "./AppointmentController"; // Assuming the controllers are in the AppointmentController file
 
 const router = Router();
+
+// Route to get scheduled appointments
+router.get('/scheduled', getScheduledAppointments);
 
 // Route to get all appointments
 router.get("/appointments", getAllAppointmentsController);
@@ -20,8 +23,5 @@ router.post("/appointments", createAppointmentController);
 
 // Route to update an existing appointment by ID
 router.patch("/appointments/:id", updateAppointmentController);
-
-// Route to delete an appointment by ID
-//router.delete("/appointments/:id", deleteAppointmentController);
 
 export default router;

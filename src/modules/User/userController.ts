@@ -1,72 +1,88 @@
-import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import { prisma } from "../../../prisma/prisma";
+import { Request, Response, NextFunction } from "express";
+import {
+  createUser,
+  getAllUsers,
+  getUserById,
+  getUserByEmail,
+  updateUser,
+  deleteUser,
+  patchUser,
+} from "./userService"; // Assuming service functions are available
 
-/**
- * Register a new user.
- */
-export const register = async (req: Request, res: Response) => {
-  const { email, password, role, FirstName, MiddleName, LastName, Gender, username } = req.body;
-
+// Controller for creating a new user
+export const createUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Check if the user already existss
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ error: "User already exists" });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create the new user
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        role,
-        FirstName,
-        MiddleName,
-        LastName,
-        Gender,
-        username,
-      },
-    });
-
-    res.status(201).json({ message: "User registered successfully", user: newUser });
+    const userData = req.body; // Ensure to validate with schema before calling service
+    const newUser = await createUser(userData);
+    res.status(201).json(newUser);
   } catch (error) {
-    console.error("Registration Error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error); // Pass error to global error handler
   }
 };
 
-/**
- * Get user profile for the authenticated user.
- */
-export const getProfile = async (req: Request, res: Response) => {
-  const userId = (req as any).user?.id; // Assuming user ID is set in middleware.
-
+// Controller for getting all users
+export const getAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.json({ user });
+    const users = await getAllUsers();
+    res.status(200).json(users);
   } catch (error) {
-    console.error("Profile Retrieval Error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 };
 
-
-export const getAllUsers = async(req: Request, res: Response) => {
+// Controller for getting a user by ID
+export const getUserByIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await prisma.user.findMany();
-
-    res.json({ users });
+    const userId = parseInt(req.params.id, 10);
+    const user = await getUserById(userId);
+    res.status(200).json(user);
   } catch (error) {
-    console.error("Profile Retrieval Error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
-}
+};
+
+// Controller for getting a user by email
+export const getUserByEmailHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const email = req.params.email;
+    const user = await getUserByEmail(email);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Controller for updating a user
+export const updateUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    const updatedData = req.body; // Ensure you validate the body with schema
+    const updatedUser = await updateUser(userId, updatedData);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Controller for deleting a user
+export const deleteUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    await deleteUser(userId);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Controller for patching (partial update) a user
+export const patchUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    const patchData = req.body; // Ensure you validate the body
+    const patchedUser = await patchUser(userId, patchData);
+    res.status(200).json(patchedUser);
+  } catch (error) {
+    next(error);
+  }
+};

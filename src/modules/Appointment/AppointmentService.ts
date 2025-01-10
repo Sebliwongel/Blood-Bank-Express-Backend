@@ -1,18 +1,34 @@
 import { PrismaClient } from "@prisma/client";
-import { NewAppointmentSchema, UpdateAppointmentSchema } from "./AppointmentSchema"; // Update path if necessary
-import { z } from "zod";
 
 const prisma = new PrismaClient();
 
-
-export const createAppointment = async (data: z.infer<typeof NewAppointmentSchema>) => {
+// Service function to create an appointment
+export const createAppointment = async (data: {
+  appointmentDate: string;
+  status: string;
+  location: string;
+  appointmentTime: string;
+}) => {
   try {
+    // Retrieve the latest donor ID from the database
+    const latestDonor = await prisma.donor.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    if (!latestDonor) {
+      throw new Error("No donors found in the system.");
+    }
+
+    const donorId = latestDonor.id;
+
     const appointment = await prisma.appointment.create({
       data: {
-        appointmentDate: data.appointmentDate, 
+        appointmentDate: data.appointmentDate,
         status: data.status,
-        donorId: data.donorId,
-        location: data.location, 
+        donorId: donorId, // Assign the donor ID automatically
+        location: data.location,
         appointmentTime: data.appointmentTime,
       },
     });
@@ -23,24 +39,41 @@ export const createAppointment = async (data: z.infer<typeof NewAppointmentSchem
   }
 };
 
+// Service function to get scheduled appointments
+export const getScheduledAppointments = async (req: any, res: any) => {
+  try {
+    const appointments = await prisma.appointment.findMany({
+      where: { status: "Scheduled" },
+      include: {
+        donor: {
+          include: { qualifications: true },
+        },
+      },
+    });
+    res.status(200).json(appointments);
+  } catch (error: unknown) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+};
+
 // Service function to update an existing appointment
 export const updateAppointment = async (
   id: number,
-  data: z.infer<typeof UpdateAppointmentSchema>
+  data: {
+    appointmentDate?: string;
+    status?: string;
+    location?: string;
+    appointmentTime?: string;
+  }
 ) => {
   try {
-    // Validate input data against the update schema
-    const validatedData = UpdateAppointmentSchema.parse(data);
-
-    // Update the appointment using Prisma
     const appointment = await prisma.appointment.update({
       where: { id },
       data: {
-        appointmentDate: validatedData.appointmentDate ?? undefined, // Changed to string
-        status: validatedData.status ?? undefined,
-        donorId: validatedData.donorId ?? undefined,
-        location: validatedData.location ?? undefined, // Update location if provided
-        appointmentTime: validatedData.appointmentTime ?? undefined, // Changed to string
+        appointmentDate: data.appointmentDate,
+        status: data.status,
+        location: data.location,
+        appointmentTime: data.appointmentTime,
       },
     });
 

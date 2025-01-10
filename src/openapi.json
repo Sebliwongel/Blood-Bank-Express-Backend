@@ -90,6 +90,7 @@
         "required": [
           "id",
           "FirstName",
+          "MiddleName",
           "LastName",
           "Gender",
           "email",
@@ -151,6 +152,7 @@
         },
         "required": [
           "FirstName",
+          "MiddleName",
           "LastName",
           "Gender",
           "email",
@@ -1346,7 +1348,7 @@
           },
           "bloodType": {
             "type": "string",
-            "minLength": 1,
+            "default": "UNKNOWN",
             "example": "O_POS"
           },
           "barcode": {
@@ -1360,6 +1362,7 @@
           },
           "expirationDate": {
             "type": "string",
+            "default": "",
             "example": "2024-01-15T10:00:00.000Z"
           },
           "storageStatus": {
@@ -1369,22 +1372,35 @@
               "RESERVED",
               "EXPIRED"
             ],
+            "default": "AVAILABLE",
             "example": "AVAILABLE"
           },
-          "quantity": {
+          "quantityml": {
             "type": "number",
             "minimum": 1,
-            "example": 5
+            "example": 500
+          },
+          "stockLevel": {
+            "type": "number",
+            "default": 0,
+            "example": 10
+          },
+          "hospitalId": {
+            "type": "number",
+            "default": 0,
+            "example": 1
+          },
+          "collectorId": {
+            "type": "number",
+            "default": 0,
+            "example": 2
           }
         },
         "required": [
           "donorId",
-          "bloodType",
           "barcode",
           "donationDate",
-          "expirationDate",
-          "storageStatus",
-          "quantity"
+          "quantityml"
         ]
       },
       "UpdateBlood": {
@@ -1394,8 +1410,7 @@
             "type": "number"
           },
           "bloodType": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "barcode": {
             "type": "string",
@@ -1415,10 +1430,19 @@
               "EXPIRED"
             ]
           },
-          "quantity": {
+          "quantityml": {
             "type": "number",
             "minimum": 1,
-            "example": 5
+            "example": 500
+          },
+          "stockLevel": {
+            "type": "number"
+          },
+          "hospitalId": {
+            "type": "number"
+          },
+          "collectorId": {
+            "type": "number"
           }
         }
       },
@@ -2635,6 +2659,46 @@
           }
         }
       },
+      "put": {
+        "summary": "Update a user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
       "delete": {
         "summary": "Delete a user",
         "tags": [
@@ -2653,6 +2717,39 @@
         "responses": {
           "204": {
             "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/users/email/{email}": {
+      "get": {
+        "summary": "Get a user by email",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user with the specified email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           },
           "404": {
             "description": "User not found"
@@ -4398,7 +4495,7 @@
                   },
                   "bloodType": {
                     "type": "string",
-                    "minLength": 1,
+                    "default": "UNKNOWN",
                     "example": "O_POS"
                   },
                   "barcode": {
@@ -4412,6 +4509,7 @@
                   },
                   "expirationDate": {
                     "type": "string",
+                    "default": "",
                     "example": "2024-01-15T10:00:00.000Z"
                   },
                   "storageStatus": {
@@ -4421,22 +4519,35 @@
                       "RESERVED",
                       "EXPIRED"
                     ],
+                    "default": "AVAILABLE",
                     "example": "AVAILABLE"
                   },
-                  "quantity": {
+                  "quantityml": {
                     "type": "number",
                     "minimum": 1,
-                    "example": 5
+                    "example": 500
+                  },
+                  "stockLevel": {
+                    "type": "number",
+                    "default": 0,
+                    "example": 10
+                  },
+                  "hospitalId": {
+                    "type": "number",
+                    "default": 0,
+                    "example": 1
+                  },
+                  "collectorId": {
+                    "type": "number",
+                    "default": 0,
+                    "example": 2
                   }
                 },
                 "required": [
                   "donorId",
-                  "bloodType",
                   "barcode",
                   "donationDate",
-                  "expirationDate",
-                  "storageStatus",
-                  "quantity"
+                  "quantityml"
                 ]
               }
             }
@@ -4681,8 +4792,7 @@
                     "type": "number"
                   },
                   "bloodType": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "barcode": {
                     "type": "string",
@@ -4702,10 +4812,19 @@
                       "EXPIRED"
                     ]
                   },
-                  "quantity": {
+                  "quantityml": {
                     "type": "number",
                     "minimum": 1,
-                    "example": 5
+                    "example": 500
+                  },
+                  "stockLevel": {
+                    "type": "number"
+                  },
+                  "hospitalId": {
+                    "type": "number"
+                  },
+                  "collectorId": {
+                    "type": "number"
                   }
                 }
               }

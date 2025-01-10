@@ -85,6 +85,7 @@ model Donor {
   isActive  Boolean  @default(false)
   resetToken  String? 
   donations   Donation[]
+  bloodCollections BloodCollection[] 
   qualifications  Qualification[] @relation("DonorQualification")
   notifications   Notification[]
   appointments    Appointment[]
@@ -152,23 +153,36 @@ model Account {// Todo Remove this model and move activation attributes to donor
 model BloodInventory {
   id              Int           @id @default(autoincrement())
   bloodType       BloodType?
-  quantity        Int
-  StockLevel       Int?
+  quantityml      Int
+  stockLevel      Int?
   barcode         String        @unique
-  donationDate     String        
-  expirationDate   String?        
+  donationDate    String
+  expirationDate  String?
   storageStatus   StorageStatus? @default(AVAILABLE)
- donorId         Int
+  donorId         Int
   donor           Donor         @relation(fields: [donorId], references: [id])
   hospitalId      Int?
   hospital        Hospital?     @relation(fields: [hospitalId], references: [id])
   collectorId     Int?
   collector       User?         @relation(fields: [collectorId], references: [id])
   integrationId   Int?
-  integration     Integration?     @relation("IntegrationBloodInventory", fields: [integrationId], references: [id])
+  integration     Integration?  @relation("IntegrationBloodInventory", fields: [integrationId], references: [id])
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
+model BloodCollection {
+  id            Int      @id @default(autoincrement())
+  
+  bloodVolume   Int
+  vitals        String
+  donationTime  DateTime
+  barcode       String
+  createdAt     DateTime @default(now())
+  donorId       Int      // Foreign key to Donor table
+  donor         Donor    @relation(fields: [donorId], references: [id])
+}
+
+
 model Donation {
   id          Int      @id @default(autoincrement())
   date        DateTime

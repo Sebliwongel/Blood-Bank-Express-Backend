@@ -1,120 +1,92 @@
-import { validateAndParse } from "../../utils/validateAndParseRequest";
-import {
-  NewAppointmentSchema,
-  UpdateAppointmentSchema,
-} from "./AppointmentSchema"; // Assuming Zod schemas for Appointment
 import { Request, Response } from "express";
 import {
-  createAppointment as createAppointmentService, // Import the updated service
+  createAppointment as createAppointmentService,
   getAllAppointments,
   getAppointmentById,
   updateAppointment,
+  getScheduledAppointments as getScheduledAppointmentsService,
 } from "./AppointmentService";
 
-// Create a new appointment
-export const createAppointmentController = async (
-  req: Request,
-  res: Response
-) => {
+// Get Scheduled Appointments
+export const getScheduledAppointments = async (req: Request, res: Response) => {
   try {
-    // Validate and parse request data using NewAppointmentSchema
-    console.log(req.body);
-    const parsed = req.body;
+    // Call the service function with req and res
+    await getScheduledAppointmentsService(req, res);
+  } catch (error) {
+    // Handle unexpected errors
+    const errorMessage = (error as Error).message || "An unexpected error occurred.";
+    res.status(500).json({ message: errorMessage });
+  }
+};
+
+
+// Create a new appointment
+export const createAppointmentController = async (req: Request, res: Response) => {
+  try {
+    const { appointmentDate, status, location, appointmentTime } = req.body;
+
     const newAppointment = await createAppointmentService({
-      appointmentDate: parsed.appointmentDate,
-      status: parsed.status,
-      donorId: 1, //TODO: implement the donorId to be passed in the body
-      location: parsed.location,
-      appointmentTime: parsed.appointmentTime,
+      appointmentDate,
+      status,
+      location,
+      appointmentTime,
     });
 
-    // Return the newly created appointment
     res.status(201).json(newAppointment);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create appointment" });
+    const err = error as Error;
+    res.status(500).json({ message: "Failed to create appointment", error: err.message });
   }
 };
 
 // Get all appointments
-export const getAllAppointmentsController = async (
-  req: Request,
-  res: Response
-) => {
+export const getAllAppointmentsController = async (req: Request, res: Response) => {
   try {
-    // Retrieve all appointments from the database
     const appointments = await getAllAppointments();
     res.status(200).json(appointments);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve appointments" });
+    const err = error as Error;
+    res.status(500).json({ message: "Failed to retrieve appointments", error: err.message });
   }
 };
 
 // Get an appointment by ID
-export const getAppointmentByIdController = async (
-  req: Request,
-  res: Response
-) => {
+export const getAppointmentByIdController = async (req: Request, res: Response) => {
   const appointmentId = req.params.id; // Assuming the ID is passed as a route parameter
   try {
-    // Retrieve the appointment by ID
     const appointment = await getAppointmentById(parseInt(appointmentId));
+
     if (!appointment) {
-      return res.status(404).json({ error: "Appointment not found" });
+      return res.status(404).json({ message: "Appointment not found" });
     }
+
     res.status(200).json(appointment);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve appointment" });
+    const err = error as Error;
+    res.status(500).json({ message: "Failed to retrieve appointment", error: err.message });
   }
 };
 
 // Update an appointment
-export const updateAppointmentController = async (
-  req: Request,
-  res: Response
-) => {
+export const updateAppointmentController = async (req: Request, res: Response) => {
   const appointmentId = req.params.id; // Extract the appointment ID from request params
   try {
-    // Validate and parse the update data
-    const parsed = await validateAndParse(UpdateAppointmentSchema, req);
+    const { appointmentDate, status, location, appointmentTime } = req.body;
 
-    // Update the appointment in the database
-    const updatedAppointment = await updateAppointment(
-      parseInt(appointmentId),
-      parsed
-    );
+    const updatedAppointment = await updateAppointment(parseInt(appointmentId), {
+      appointmentDate,
+      status,
+      location,
+      appointmentTime,
+    });
 
-    // If the appointment was not found, return 404
     if (!updatedAppointment) {
-      return res.status(404).json({ error: "Appointment not found" });
+      return res.status(404).json({ message: "Appointment not found" });
     }
 
-    // Return the updated appointment
     res.status(200).json(updatedAppointment);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to update appointment" });
+    const err = error as Error;
+    res.status(500).json({ message: "Failed to update appointment", error: err.message });
   }
 };
-
-// Delete an appointment
-// export const deleteAppointmentController = async (req: Request, res: Response) => {
-//   const appointmentId = req.params.id; // Extract the appointment ID from request params
-//   try {
-//     // Delete the appointment by ID
-//     const deleted = await deleteAppointment(parseInt(appointmentId));
-
-//     // If no appointment was deleted (not found), return 404
-//     if (!deleted) {
-//       return res.status(404).json({ error: "Appointment not found" });
-//     }
-
-//     // Return a no-content response (204)
-//     res.status(204).send();
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Failed to delete appointment" });
-//   }
-// };

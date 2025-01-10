@@ -16,7 +16,7 @@ export const UserSchema = z
   .object({
     id: z.number().openapi({ example: 1 }),
     FirstName: z.string().openapi({ example: "John" }),
-    MiddleName: z.string().optional().openapi({ example: "Doe" }),
+    MiddleName: z.string().openapi({ example: "Doe" }), // MiddleName is now required
     LastName: z.string().openapi({ example: "Smith" }),
     Gender: z.string().openapi({ example: "Male" }),
     email: z.string().openapi({ example: "johndoe@example.com" }),
@@ -35,7 +35,7 @@ export const UserSchema = z
 export const NewUserSchema = z
   .object({
     FirstName: z.string().openapi({ example: "John" }),
-    MiddleName: z.string().optional().openapi({ example: "Doe" }),
+    MiddleName: z.string().openapi({ example: "Doe" }), // MiddleName is now required
     LastName: z.string().openapi({ example: "Smith" }),
     Gender: z.string().openapi({ example: "Male" }),
     email: z.string().openapi({ example: "johndoe@example.com" }),
