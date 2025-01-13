@@ -6,7 +6,7 @@ import {
   forgotPassword,
   resetPassword,
   userLogin,
-  HospitalLogin ,
+  hospitalLogin,
 } from "./authController";
 
 const router = Router();
@@ -14,7 +14,7 @@ const router = Router();
 // Login endpoint
 router.post("/donor/login", donorLogin);
 router.post("/user/login", userLogin);
-router.post("/Hospital/login", HospitalLogin );
+router.post("/hospital/login", hospitalLogin );
 
 // Refresh token endpoint
 router.post("/refresh-token", refreshToken);

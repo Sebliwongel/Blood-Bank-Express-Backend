@@ -2757,7 +2757,7 @@
         }
       }
     },
-    "/auth/donor/login": {
+    "/api/auth/donor/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -2849,7 +2849,7 @@
         }
       }
     },
-    "/auth/Hospital/login": {
+    "/api/auth/Hospital/login": {
       "post": {
         "summary": "Login a user",
         "tags": [

@@ -26,6 +26,9 @@ export const createUser = async (userData: NewUser) => {
   try {
     const userCreateInput = mapToUserCreateInput(userData);
 
+    console.log(userCreateInput);
+    
+
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(userCreateInput.password, 10);
 
@@ -37,7 +40,7 @@ export const createUser = async (userData: NewUser) => {
     });
     return newUser;
   } catch (error) {
-    throw new Error(`Failed to create user: ${getErrorMessage(error)}`);
+    throw new Error(`Failed to create user}`);
   }
 };
 

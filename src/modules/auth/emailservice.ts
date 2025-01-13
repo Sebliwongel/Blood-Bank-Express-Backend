@@ -11,7 +11,15 @@ const prisma = new PrismaClient();
  * @param token - The unique reset token for password reset.
  */
 export const sendResetEmail = async (email: string, token: string) => {
-    const transporter = nodemailer.createTransport(emailConfig);
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com', // Example: 'smtp.gmail.com'
+        port: 587,
+        secure: false, // true for 465, false for other ports
+        auth: {
+          user: 'eyoelfikadu801@gmail.com', // your email
+          pass: 'yxklxttektuvtylg', // your email password or application-specific password
+        },
+      });
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`;
     const message = `

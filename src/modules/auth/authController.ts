@@ -49,7 +49,7 @@ export const donorLogin = async (req: Request, res: Response) => {
 /**
  * Handle user login with role specification.s
  */
-export const HospitalLogin = async (req: Request, res: Response) => {
+export const hospitalLogin = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     console.log(req.body);

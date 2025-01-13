@@ -8,7 +8,7 @@ router.post("/orders", (req, res) => OrderController.createOrder(req, res));
 
 
 // Route to get all orders
-//router.get("/orders", (req, res) => OrderController.getAllOrders(req, res));
+router.get("/orders", (req, res) => OrderController.getAllOrders(req, res));
 
 // Route to get an order by ID
 //router.get("/orders/:id", (req, res) => OrderController.getOrderById(req, res));
