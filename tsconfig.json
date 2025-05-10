@@ -5,8 +5,18 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./", // Root directory set to the entire project folder
+    "baseUrl": "./",
+    "paths": {
+      "@prisma/*": ["prisma/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*", 
+    "prisma/**/*", 
+    "src/types.d.ts" // Combine all paths into a single "include" array
+  ],
+
+
   "exclude": ["node_modules"]
 }

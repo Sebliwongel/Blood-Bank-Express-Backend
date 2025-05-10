@@ -1,35 +1,33 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-// Order Schema
-export const OrderSchema = z
-  .object({
-    id: z.number().openapi({ example: 1 }),
-    orderDate: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-    bloodType: z.string().openapi({ example: "A+" }),
-    quantity: z.number().openapi({ example: 3 }),
-    status: z.string().openapi({ example: "Pending" }),
-    hospitalId: z.number().openapi({ example: 1 }),
-  })
-  .openapi("Order");
+// Define enums
+const OrderStatusEnum = z.enum(['PENDING', 'COMPLETED', 'CANCELED']);
 
-// New Order Schema (for creating a new order)
-export const NewOrderSchema = z
-  .object({
-    orderDate: z.date().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-    bloodType: z.string().openapi({ example: "A+" }),
-    quantity: z.number().openapi({ example: 3 }),
-    status: z.string().openapi({ example: "Pending" }),
-    hospitalId: z.number().openapi({ example: 1 }),
-  })
-  .openapi("New Order");
+// Schema for creating a new order
+export const createOrderSchema = z.object({
+  orderDate: z.string().refine((date) => {
+    const parsedDate = Date.parse(date);
+    return !isNaN(parsedDate);
+  }, {
+    message: 'Invalid date format. Expected format: YYYY-MM-DD or ISO 8601 string.',
+  }),
+  aPosAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  aNegAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  bPosAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  bNegAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  abPosAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  abNegAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  oPosAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  oNegAmount: z.number().int().nonnegative({ message: 'Must be a non-negative integer' }),
+  status: OrderStatusEnum,
+  hospitalId: z.number().int().positive({ message: 'Invalid hospital ID' }),
+});
 
-// Update Order Schema (for updating order information)
-export const UpdateOrderSchema = z
-  .object({
-    orderDate: z.date().optional().openapi({ example: "2023-07-15T10:00:00.000Z" }),
-    bloodType: z.string().optional().openapi({ example: "A+" }),
-    quantity: z.number().optional().openapi({ example: 3 }),
-    status: z.string().optional().openapi({ example: "Pending" }),
-    hospitalId: z.number().optional().openapi({ example: 1 }),
-  })
-  .openapi("Update Order");
+// Schema for updating order status
+export const updateOrderStatusSchema = z.object({
+  status: OrderStatusEnum,
+});
+
+// Type definitions
+export type CreateOrderDTO = z.infer<typeof createOrderSchema>;
+export type UpdateOrderStatusDTO = z.infer<typeof updateOrderStatusSchema>;

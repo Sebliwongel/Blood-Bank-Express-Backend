@@ -1,27 +1,57 @@
 import { Router } from "express";
 import {
-  createHospitalController,
-  deleteHospitalController,
   getAllHospitalsController,
+  createHospitalController,
   getHospitalByIdController,
   updateHospitalController,
+  patchHospitalController,
+  deleteHospitalController,
 } from "./HospitalController";
+import { validateSchema } from "../../middlewares/validateSchema";
+import {
+  CreateHospitalSchema,
+  UpdateHospitalSchema,
+  HospitalIdSchema,
+} from "./HospitalSchema";
 
 const router = Router();
 
 // Get all hospitals
 router.get("/hospitals", getAllHospitalsController);
 
-// Get a hospital by ID
-router.get("/hospitals/:id", getHospitalByIdController);
+// Get a hospital by ID with schema validation
+router.get(
+  "/hospitals/:id",
+  validateSchema({ params: HospitalIdSchema }),
+  getHospitalByIdController
+);
 
-// Create a new hospital
-router.post("/hospitals", createHospitalController);
+// Create a new hospital with schema validation
+router.post(
+  "/hospitals",
+  validateSchema({ body: CreateHospitalSchema }),
+  createHospitalController
+);
 
-// Update a hospital by ID
-router.patch("/hospitals/:id", updateHospitalController); // Updated to include the ID
+// Update a hospital by ID with schema validation
+router.put(
+  "/hospitals/:id",
+  validateSchema({ params: HospitalIdSchema, body: UpdateHospitalSchema }),
+  updateHospitalController
+);
 
-// Delete a hospital by ID
-router.delete("/hospitals/:id", deleteHospitalController); // Updated to include the ID
+// Patch a hospital by ID with schema validation
+router.patch(
+  "/hospitals/:id",
+  validateSchema({ params: HospitalIdSchema, body: UpdateHospitalSchema.partial() }),
+  patchHospitalController
+);
+
+// Delete a hospital by ID with schema validation
+router.delete(
+  "/hospitals/:id",
+  validateSchema({ params: HospitalIdSchema }),
+  deleteHospitalController
+);
 
 export default router;

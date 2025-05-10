@@ -1,12 +1,29 @@
-import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+
+
 import { z } from "zod";
+//import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
-import { OrderSchema, NewOrderSchema, UpdateOrderSchema } from "./OrderSchema";
+import { createOrderSchema, updateOrderStatusSchema } from "./OrderSchema";
 
 export const orderRegistry = new AccessibleOpenAPIRegistry();
 
+// Register Order schema
+const OrderSchema = z.object({
+  id: z.number().int().positive(),
+  orderDate: z.string(),
+  bloodType: z.enum(['A_POS', 'A_NEG', 'B_POS', 'B_NEG', 'AB_POS', 'AB_NEG', 'O_POS', 'O_NEG']),
+  quantity: z.number().int().positive(),
+  status: z.enum(['PENDING', 'COMPLETED', 'CANCELED']),
+  hospitalId: z.number().int().positive(),
+});
+
 orderRegistry.register("Order", OrderSchema);
-orderRegistry.register("NewOrder", NewOrderSchema);
+
+// Register CreateOrder schema
+orderRegistry.register("CreateOrder", createOrderSchema);
+
+// Register UpdateOrderStatus schema
+orderRegistry.register("UpdateOrderStatus", updateOrderStatusSchema);
 
 // Register the POST path for creating an order
 orderRegistry.registerPath({
@@ -18,14 +35,14 @@ orderRegistry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: NewOrderSchema,
+          schema: createOrderSchema,
         },
       },
     },
   },
   responses: {
     201: {
-      description: "The created order",
+      description: "Order successfully created",
       content: {
         "application/json": {
           schema: OrderSchema,
@@ -39,11 +56,11 @@ orderRegistry.registerPath({
 orderRegistry.registerPath({
   method: "get",
   path: "/api/orders",
-  summary: "Get all orders",
+  summary: "Retrieve all orders",
   tags: ["Order"],
   responses: {
     200: {
-      description: "A list of orders",
+      description: "A list of all orders",
       content: {
         "application/json": {
           schema: z.array(OrderSchema),
@@ -57,14 +74,14 @@ orderRegistry.registerPath({
 orderRegistry.registerPath({
   method: "get",
   path: "/api/orders/{id}",
-  summary: "Get an order by ID",
+  summary: "Retrieve a specific order by ID",
   tags: ["Order"],
   parameters: [
     {
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "integer" },
     },
   ],
   responses: {
@@ -82,25 +99,25 @@ orderRegistry.registerPath({
   },
 });
 
-// Register the PATCH path for updating an order
+// Register the PATCH path for updating order status
 orderRegistry.registerPath({
   method: "patch",
   path: "/api/orders/{id}",
-  summary: "Update an order",
+  summary: "Update an order's status",
   tags: ["Order"],
   parameters: [
     {
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "integer" },
     },
   ],
   request: {
     body: {
       content: {
         "application/json": {
-          schema: UpdateOrderSchema,
+          schema: updateOrderStatusSchema,
         },
       },
     },
@@ -124,19 +141,19 @@ orderRegistry.registerPath({
 orderRegistry.registerPath({
   method: "delete",
   path: "/api/orders/{id}",
-  summary: "Delete an order",
+  summary: "Delete a specific order",
   tags: ["Order"],
   parameters: [
     {
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "integer" },
     },
   ],
   responses: {
     204: {
-      description: "Order deleted successfully",
+      description: "Order successfully deleted",
     },
     404: {
       description: "Order not found",

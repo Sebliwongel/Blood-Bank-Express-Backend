@@ -1,7 +1,7 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
 import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
-import { AccountSchema, NewAccountSchema, UpdateAccountSchema } from "./AccountSchema"; // Assume you have the new schemas
+import { AccountSchema, NewAccountSchema, UpdateAccountSchema } from "./AccountSchema";
 
 // Initialize the AccountRegistry
 export const accountRegistry = new AccessibleOpenAPIRegistry();
@@ -9,6 +9,7 @@ export const accountRegistry = new AccessibleOpenAPIRegistry();
 // Register the Account schemas
 accountRegistry.register("Account", AccountSchema);
 accountRegistry.register("NewAccount", NewAccountSchema);
+accountRegistry.register("UpdateAccount", UpdateAccountSchema);
 
 // Register the POST path for creating an account record
 accountRegistry.registerPath({
@@ -40,7 +41,7 @@ accountRegistry.registerPath({
 // Register the GET path for retrieving all account records
 accountRegistry.registerPath({
   method: "get",
-  path: "/api/account",
+  path: "/api/accounts",
   summary: "Get all account records",
   tags: ["Account"],
   responses: {
@@ -58,7 +59,7 @@ accountRegistry.registerPath({
 // Register the GET path for retrieving an account record by ID
 accountRegistry.registerPath({
   method: "get",
-  path: "/api/account/{id}",
+  path: "/api/accounts/{id}",
   summary: "Get an account record by ID",
   tags: ["Account"],
   parameters: [
@@ -87,7 +88,7 @@ accountRegistry.registerPath({
 // Register the PATCH path for updating an account record
 accountRegistry.registerPath({
   method: "patch",
-  path: "/api/account/{id}",
+  path: "/api/accounts/{id}",
   summary: "Update an account record",
   tags: ["Account"],
   parameters: [
@@ -125,7 +126,7 @@ accountRegistry.registerPath({
 // Register the DELETE path for deleting an account record
 accountRegistry.registerPath({
   method: "delete",
-  path: "/api/account/{id}",
+  path: "/api/accounts/{id}",
   summary: "Delete an account record",
   tags: ["Account"],
   parameters: [
@@ -139,6 +140,64 @@ accountRegistry.registerPath({
   responses: {
     204: {
       description: "Account record deleted successfully",
+    },
+    404: {
+      description: "Account record not found",
+    },
+  },
+});
+
+// Register the PATCH path for activating an account
+accountRegistry.registerPath({
+  method: "patch",
+  path: "/api/accounts/{id}/activate",
+  summary: "Activate an account",
+  tags: ["Account"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string or number
+    },
+  ],
+  responses: {
+    200: {
+      description: "The activated account record",
+      content: {
+        "application/json": {
+          schema: AccountSchema,
+        },
+      },
+    },
+    404: {
+      description: "Account record not found",
+    },
+  },
+});
+
+// Register the PATCH path for deactivating an account
+accountRegistry.registerPath({
+  method: "patch",
+  path: "/api/accounts/{id}/deactivate",
+  summary: "Deactivate an account",
+  tags: ["Account"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string or number
+    },
+  ],
+  responses: {
+    200: {
+      description: "The deactivated account record",
+      content: {
+        "application/json": {
+          schema: AccountSchema,
+        },
+      },
     },
     404: {
       description: "Account record not found",

@@ -1,4 +1,3 @@
-// Define the database connection
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -8,183 +7,288 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Enum for user roles
+// Enums
 enum UserRole {
   SYSTEM_ADMIN
   COLLECTOR
   MANAGER
+  HOSPITAL_REPRESENTATIVE //Todo: Remove this
   STORE_MANAGER
   LABORATORY
 }
 
-// The main Donor model
+enum BloodType {
+  A_POS
+  A_NEG
+  B_POS
+  B_NEG
+  AB_POS
+  AB_NEG
+  O_POS
+  O_NEG
+}
+
+enum StorageStatus {
+  AVAILABLE
+  RESERVED
+  USED
+  EXPIRED
+}
+
+enum OrderStatus { //Todo: Order approval status 
+  PENDING
+  COMPLETED
+  CANCELED
+}
+enum IntegrationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// Models
+model Hospital {
+  id              Int              @id @default(autoincrement())
+  name            String
+  address         String
+  username        String
+  email           String           @unique
+  password        String
+  isActive  Boolean  @default(false) 
+  resetToken  String?
+  integrations    Integration[]
+  notifications   Notification[]
+  orders          Order[]
+  bloodInventory  BloodInventory[]
+  accounts Account[] 
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
 model Donor {
-  id             Int            @id @default(autoincrement())
-  firstName      String
-  middleName     String?
-  lastName       String
-  title          String?
-  birthDate      DateTime
-  age            Int
-  gender         String
-  occupation     String?
-  city           String
-  subCity        String
-  zone           String
-  woreda         String
-  kebele         String
-  telephone      String?
-  cellPhone      String?
-  organization   String?
-  email          String         @unique
-  password       String
-  username       String         @unique
-  poBox          String?
-  bloodType      String
-  medicalHistory String?
-
-  collectorId    Int?
-  collector      SystemUser?    @relation("CollectorDonors", fields: [collectorId], references: [id])
-
-  systemAdminId  Int?
-  systemAdmin    SystemUser?    @relation("AdminDonors", fields: [systemAdminId], references: [id])
-
-  notifications  Notification[]
-  appointments   Appointment[]
-  donations      Donation[]
-
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  id              Int             @id @default(autoincrement())
+  firstName       String
+  middleName      String?
+  lastName        String
+  title           String?
+  birthDate       DateTime
+  gender          String
+  occupation      String?
+  city            String
+  subCity         String
+  woreda          String
+  kebele          String
+  email           String          @unique
+  PhoneNumber     String
+  username        String
+  password        String
+  isActive  Boolean  @default(false)
+  resetToken  String? 
+  donations   Donation[]
+  bloodCollections BloodCollection[] 
+  qualifications  Qualification[] @relation("DonorQualification")
+  notifications   Notification[]
+  appointments    Appointment[]
+  bloodInventory  BloodInventory[]
+  accounts        Account[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
-// The SystemUser model
-model SystemUser {
-  id             Int           @id @default(autoincrement())
-  name           String
-  email          String        @unique
-  role           UserRole
-  password       String
 
-  collectedDonors Donor[]      @relation("CollectorDonors")
-  adminDonors    Donor[]       @relation("AdminDonors")
-  accounts       Account[]
-  notifications  Notification[]
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+model User {
+  id            Int             @id @default(autoincrement())
+ FirstName       String
+ MiddleName      String
+ LastName        String
+ Gender         String 
+ email         String          @unique
+ role          UserRole
+ password      String
+ username      String
+ refreshToken  String?
+ isActive  Boolean  @default(false)
+ resetToken  String? 
+ reports       Report[]
+ collections   BloodInventory[]
+ notifications Notification[]
+ integrationsHandled Integration[] @relation("UserHandledIntegrations") // Links to integrations
+ createdAt     DateTime        @default(now())
+ updatedAt     DateTime        @updatedAt
 }
 
-// The Account model
-model Account {
-  id            Int         @id @default(autoincrement())
+model Integration {
+  id            Int              @id @default(autoincrement())
+  hospitalId    Int
+  hospital      Hospital         @relation(fields: [hospitalId], references: [id])
+  status        IntegrationStatus @default(PENDING)
+  managerId     Int?             // References the User ID of the manager
+  manager       User?            @relation("UserHandledIntegrations", fields: [managerId], references: [id]) // Opposite side of the relation
+  managerComment String?         // Optional comment from the manager
+  bloodInventories BloodInventory[] @relation("IntegrationBloodInventory")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+model Account {// Todo Remove this model and move activation attributes to donor, user and hospital
+  id            Int      @id @default(autoincrement())
+  userId        Int
   accountType   String
-  accountStatus String
-  userId        Int         @unique
-  user          SystemUser  @relation(fields: [userId], references: [id])
+  accountStatus String   @default("active") // Default to 'active'
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+   donorId    Int?     
+  donor         Donor?   @relation(fields: [userId], references: [id]) // Relation with Donor
+  hospitalId    Int?     // Add hospitalId to define the relationship
+  hospital      Hospital?@relation(fields: [hospitalId], references: [id]) // Relation with Hospital
 
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  // Activation and Deactivation Logic:
+  isActive      Boolean  @default(true) // Account is active by default
+  activationDate DateTime? // Optional date when the account was activated
+  deactivationDate DateTime? // Optional date when the account was deactivated
 }
 
-// The Notification model
-model Notification {
-  id          Int         @id @default(autoincrement())
-  content     String
-  sendDate    DateTime    @default(now())
-  hospitalId  Int?
-  donorId     Int?
-  adminId     Int?
-  hospital    Hospital?   @relation(fields: [hospitalId], references: [id])
-  donor       Donor?      @relation(fields: [donorId], references: [id])
-  systemAdmin SystemUser? @relation(fields: [adminId], references: [id])
+
+
+model BloodInventory {
+  id              Int           @id @default(autoincrement())
+  bloodType       BloodType?
+  quantityml      Int
+  stockLevel      Int?
+  barcode         String        @unique
+  donationDate    String
+  expirationDate  String?
+  storageStatus   StorageStatus? @default(AVAILABLE)
+  donorId         Int
+  donor           Donor         @relation(fields: [donorId], references: [id])
+  hospitalId      Int?
+  hospital        Hospital?     @relation(fields: [hospitalId], references: [id])
+  collectorId     Int?
+  collector       User?         @relation(fields: [collectorId], references: [id])
+  integrationId   Int?
+  integration     Integration?  @relation("IntegrationBloodInventory", fields: [integrationId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+model BloodCollection {
+  id            Int      @id @default(autoincrement())
+  
+  bloodVolume   Int
+  vitals        String
+  donationTime  DateTime
+  barcode       String
+  createdAt     DateTime @default(now())
+  donorId       Int      // Foreign key to Donor table
+  donor         Donor    @relation(fields: [donorId], references: [id])
 }
 
-// The Appointment model
+
+model Donation {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  location    String
+  bloodType   String
+  units       Int
+  status      String
+  certificate String?  // Optional, since not every donation might have a certificate
+  donorId     Int
+  donor       Donor    @relation(fields: [donorId], references: [id])  // Relating it to the Donor model
+}
+
 model Appointment {
   id              Int       @id @default(autoincrement())
-  appointmentDate DateTime
+  appointmentDate  String
   status          String
+  location        String    // New field for location
+  appointmentTime String  // New field for appointment time
   donorId         Int
   donor           Donor     @relation(fields: [donorId], references: [id])
 }
 
-// The Order model
+
+model Qualification {
+  id                    Int       @id @default(autoincrement())
+  donorId               Int       // Foreign key to Donor
+  donor                 Donor     @relation("DonorQualification", fields: [donorId], references: [id])
+  weight                Float
+  pulse                 Int
+  hb                    Float
+  bp                    String
+  temperature           Float
+  lastDonationDate      String?
+  hasDonatedBefore      Boolean
+  hasTattooing          Boolean
+  hasEarPiercing        Boolean
+  hadDentalExtraction   Boolean
+  hasHeartDisease       Boolean
+  hasCancer             Boolean
+  hasDiabetes           Boolean
+  hasHepatitis          Boolean
+  hasSTD                Boolean
+  hadTyphoidLastYear    Boolean
+  hasLungDisease        Boolean
+  hasTuberculosis       Boolean
+  hasAllergies          Boolean
+  hasKidneyDisease      Boolean
+  hasEpilepsy           Boolean
+  hasAbnormalBleeding   Boolean
+  hadJaundiceLastYear   Boolean
+  hadMalariaSixMonths   Boolean
+  hasFaintingSpells     Boolean
+  takenAntibiotics      Boolean
+  takenSteroids         Boolean
+  takenAspirin          Boolean
+  hadVaccinations       Boolean
+  consumedAlcohol       Boolean
+  hadDogBiteVaccine     Boolean
+  hadSurgeryLastSixMonths Boolean
+  hadBloodTransfusionLastSixMonths Boolean
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+
+
+model Notification {
+  id          Int         @id @default(autoincrement())
+  content     String
+  sendDate    DateTime     @default(now())
+  donorId     Int?
+  donor       Donor?       @relation(fields: [donorId], references: [id])
+  hospitalId  Int?
+  hospital    Hospital?    @relation(fields: [hospitalId], references: [id])
+  userId      Int?
+  user        User?        @relation(fields: [userId], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
 model Order {
-  id          Int       @id @default(autoincrement())
-  orderDate   DateTime
-  bloodType   String
-  quantity    Int
-  status      String
+  id               Int          @id @default(autoincrement())
+  orderDate        String
+  aPosAmount       Int
+  aNegAmount       Int
+  bPosAmount       Int
+  bNegAmount       Int
+  abPosAmount      Int
+  abNegAmount      Int
+  oPosAmount       Int
+  oNegAmount       Int
+  status      OrderStatus
   hospitalId  Int
-  hospital    Hospital   @relation(fields: [hospitalId], references: [id])
-}
+  hospital    Hospital     @relation(fields: [hospitalId], references: [id])
 
-// The Hospital model
-model Hospital {
-  id            Int           @id @default(autoincrement())
-  name          String
-  address       String
-  contactInfo   String
-  email         String        @unique
-  username      String
-  password      String
-  integrations  Integration[]
-  notifications Notification[]
-  orders        Order[]
-}
-
-// Inventory model with a relation to Integration
-model Inventory {
-  id              Int          @id @default(autoincrement())
-  name            String
-  bloodType       String
-  expirationDate  DateTime
-  totalQuantity   Int          // Total quantity of this blood type
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-
-  integrationId   Int?
-  integration     Integration? @relation(fields: [integrationId], references: [id]) // Add the inverse relation field here
-
-  bloodId         Int          // Foreign key to Blood
-  blood           Blood        @relation(fields: [bloodId], references: [id]) // Relation to Blood
-}
-
-// Integration model with a relation to Inventory
-model Integration {
-  id            Int         @id @default(autoincrement())
-  hospitalId    Int
-  hospital      Hospital    @relation(fields: [hospitalId], references: [id])
-  inventories   Inventory[] // One-to-many relation to Inventory
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 
-// Blood model
-model Blood {
-  id            Int           @id @default(autoincrement())
-  bloodType     String
-  quantity      Int
-  donationDate  DateTime
-  inventory     Inventory[]
-  collections   Collection[]
-  donations     Donation[]
-}
-
-// Donation model
-model Donation {
-  id            Int       @id @default(autoincrement())
-  donorId       Int
-  bloodId       Int
-  donationDate  DateTime
-  donor         Donor     @relation(fields: [donorId], references: [id])
-  blood         Blood     @relation(fields: [bloodId], references: [id])
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-}
-
-// Collection model
-model Collection {
-  id              Int       @id @default(autoincrement())
-  collectedDate   DateTime
-  bloodId         Int
-  blood           Blood     @relation(fields: [bloodId], references: [id])
+model Report {
+  id          Int       @id @default(autoincrement())
+  title       String
+  content     String
+  generatedBy Int
+  user        User      @relation(fields: [generatedBy], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

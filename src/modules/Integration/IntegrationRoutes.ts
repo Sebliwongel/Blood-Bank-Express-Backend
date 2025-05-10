@@ -5,6 +5,8 @@ import {
   getAllIntegrationsController,
   getIntegrationByIdController,
   updateIntegrationController,
+  approveIntegrationController,
+  declineIntegrationController,
 } from "./IntegrationController";
 
 const router = express.Router();
@@ -23,5 +25,11 @@ router.patch("/api/integration/:id", updateIntegrationController);
 
 // Route to delete an integration by ID
 router.delete("/api/integration/:id", deleteIntegrationController);
+
+// Route to approve an integration request by ID
+router.post("/api/integration/:id/approve", approveIntegrationController);
+
+// Route to decline an integration request by ID
+router.post("/api/integration/:id/decline", declineIntegrationController);
 
 export default router;

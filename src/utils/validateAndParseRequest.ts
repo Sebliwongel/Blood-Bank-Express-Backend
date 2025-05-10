@@ -17,6 +17,7 @@ export class ValidationError extends Error {
   }
 }
 
+
 export async function validateAndParse<T extends AnyZodObject>(
   schema: T,
   req: Request

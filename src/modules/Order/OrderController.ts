@@ -1,85 +1,124 @@
-import { validateAndParse } from "../../utils/validateAndParseRequest";
-import { OrderSchema, UpdateOrderSchema } from "./OrderSchema";
-import { Request, Response } from "express";
-import {
-  createOrder,
-  deleteOrder,
-  getAllOrders,
-  getOrderById,
-  updateOrder,
-} from "./OrderService";
+import { Request, Response } from 'express';
+import orderService from './OrderService'; // Adjust the import path as needed
+import { createOrderSchema, updateOrderStatusSchema } from './OrderSchema';
 
-// Create a new order
-export const createOrderController = async (req: Request, res: Response) => {
-  try {
-    const parsed = await validateAndParse(OrderSchema, req);
-    const newOrder = await createOrder(
-      parsed.orderDate,
-      parsed.bloodType,
-      parsed.quantity,
-      parsed.status,
-      parsed.hospitalId
-    );
-    res.status(201).json(newOrder);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create order" });
-  }
-};
+class OrderController {
+  // Create a new order
+  async createOrder(req: Request, res: Response) {
+    try {
+      // Validate input data with Zod schema
+      const validatedData = createOrderSchema.parse(req.body);
 
-// Get all orders
-export const getAllOrderController = async (req: Request, res: Response) => {
-  try {
-    const orders = await getAllOrders();
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve orders" });
-  }
-};
+      // Call the service to create the order
+      const newOrder = await orderService.createOrder(validatedData);
 
-// Get an order by ID
-export const getOrderByIdController = async (req: Request, res: Response) => {
-  const orderId = req.params.id; // Assuming the ID is passed as a route parameter
-  try {
-    const order = await getOrderById(parseInt(orderId));
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+      res.status(201).json({
+        message: "Order created successfully",
+        order: newOrder,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error creating order:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to create order" });
+      }
     }
-    res.status(200).json(order);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to retrieve order" });
   }
-};
 
-// Update an order
-export const updateOrderController = async (req: Request, res: Response) => {
-  const orderId = req.params.id;
-  try {
-    const parsed = await validateAndParse(UpdateOrderSchema, req);
-    const updatedOrder = await updateOrder(parseInt(orderId), parsed);
-    if (!updatedOrder) {
-      return res.status(404).json({ error: "Order not found" });
+  // Get all orders
+  async getAllOrders(req: Request, res: Response) {
+    try {
+      const orders = await orderService.getAllOrders();
+      res.status(200).json(orders);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching orders:", error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to fetch orders" });
+      }
     }
-    res.status(200).json(updatedOrder);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to update order" });
   }
-};
 
-// Delete an order
-export const deleteOrderController = async (req: Request, res: Response) => {
-  const orderId = req.params.id;
-  try {
-    const deleted = await deleteOrder(parseInt(orderId));
-    if (!deleted) {
-      return res.status(404).json({ error: "Order not found" });
+  // Get an order by ID
+  async getOrderById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      // Validate the ID parameter
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: "Invalid order ID" });
+      }
+
+      const order = await orderService.getOrderById(Number(id));
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+
+      res.status(200).json(order);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching order by ID:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to fetch order" });
+      }
     }
-    res.status(204).send(); // No content response
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete order" });
   }
-};
+
+  // Update an order's status
+  async updateOrderStatus(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+
+      // Validate the ID parameter
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: "Invalid order ID" });
+      }
+
+      // Validate input data with Zod schema
+      const validatedData = updateOrderStatusSchema.parse({ status });
+
+      // Call the service to update the order status
+      const updatedOrder = await orderService.updateOrderStatus(Number(id), validatedData);
+
+      res.status(200).json({
+        message: "Order status updated successfully",
+        order: updatedOrder,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error updating order status:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to update order status" });
+      }
+    }
+  }
+
+  // Delete an order
+  async deleteOrder(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      // Validate the ID parameter
+      if (isNaN(Number(id))) {
+        return res.status(400).json({ error: "Invalid order ID" });
+      }
+
+      await orderService.deleteOrder(Number(id));
+      res.status(204).send();
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error deleting order:", error);
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Failed to delete order" });
+      }
+    }
+  }
+}
+
+export default new OrderController();

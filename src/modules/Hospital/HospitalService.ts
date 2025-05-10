@@ -1,79 +1,142 @@
 import { PrismaClient } from "@prisma/client";
+import { CreateHospitalSchema, UpdateHospitalSchema } from "./HospitalSchema";
+import { z } from "zod";
 
 const prisma = new PrismaClient();
 
-// Get all Hospitals
+type CreateHospitalInput = z.infer<typeof CreateHospitalSchema>;
+type UpdateHospitalInput = z.infer<typeof UpdateHospitalSchema>;
+
+
 export const getAllHospitals = async () => {
-  return await prisma.hospital.findMany();
+  return await prisma.hospital.findMany({
+    orderBy: { name: 'asc' }
+  });
 };
 
-// Update a Hospital
-export const updateHospital = async (
-  hospitalId: number,
-  updates: { 
-    name?: string; 
-    address?: string; 
-    contactInfo?: string; 
-    email?: string; 
-    username?: string; 
-    password?: string; 
-  }
-) => {
-  // First, find the hospital by ID
+
+export const getHospital = async (hospitalId: number) => {
   const hospital = await prisma.hospital.findUnique({
     where: { id: hospitalId },
   });
 
-  // If the hospital does not exist, return null or handle accordingly
   if (!hospital) {
-    return null;
+    return null; 
   }
 
-  // Update the hospital with the provided fields
-  return await prisma.hospital.update({
-    where: { id: hospitalId },
-    data: {
-      name: updates.name !== undefined ? updates.name : hospital.name, // Preserve existing if not provided
-      address: updates.address !== undefined ? updates.address : hospital.address, // Preserve existing if not provided
-      contactInfo: updates.contactInfo !== undefined ? updates.contactInfo : hospital.contactInfo, // Preserve existing if not provided
-      email: updates.email !== undefined ? updates.email : hospital.email, // Preserve existing if not provided
-      username: updates.username !== undefined ? updates.username : hospital.username, // Preserve existing if not provided
-      password: updates.password !== undefined ? updates.password : hospital.password, // Preserve existing if not provided
-    },
-  });
-};
-
-// Get a Hospital by ID
-export const getHospitalById = async (id: number) => {
-  return await prisma.hospital.findUnique({
-    where: { id },
-  });
+  return hospital;
 };
 
 // Create a new Hospital
-export const createHospital = async (
-  name: string,
-  address: string,
-  contactInfo: string,
-  email: string,
-  username: string,
-  password: string
-) => {
+export const createHospital = async (hospitalData: CreateHospitalInput) => {
   return await prisma.hospital.create({
     data: {
-      name,
-      address,
-      contactInfo,
-      email,
-      username,
-      password,
+      ...hospitalData
     },
   });
 };
 
-// Delete a Hospital
-export const deleteHospital = async (id: number) => {
-  return await prisma.hospital.delete({
-    where: { id },
+// Update an existing Hospital
+export const updateHospital = async (
+  hospitalId: number,
+  updates: UpdateHospitalInput
+) => {
+  const hospital = await prisma.hospital.findUnique({
+    where: { id: hospitalId },
+  });
+
+  if (!hospital) {
+    return null; // Let controller handle 404
+  }
+
+  return await prisma.hospital.update({
+    where: { id: hospitalId },
+    data: {
+      name: updates.name !== undefined ? updates.name : hospital.name,
+      address: updates.address !== undefined ? updates.address : hospital.address,
+      email: updates.email !== undefined ? updates.email : hospital.email,
+      username: updates.username !== undefined ? updates.username : hospital.username,
+      password: updates.password !== undefined ? updates.password : hospital.password,
+      //isActive: updates.isActive !== undefined ? updates.isActive : hospital.isActive,
+      //deactivatedAt: updates.deactivatedAt !== undefined ? updates.deactivatedAt : hospital.deactivatedAt,
+    },
   });
 };
+
+// Patch (Partial Update) Hospital
+export const patchHospital = async (
+  hospitalId: number,
+  updates: Partial<UpdateHospitalInput>
+) => {
+  const hospital = await prisma.hospital.findUnique({
+    where: { id: hospitalId },
+  });
+
+  if (!hospital) {
+    return null; // Let controller handle 404
+  }
+
+  return await prisma.hospital.update({
+    where: { id: hospitalId },
+    data: {
+      name: updates.name !== undefined ? updates.name : hospital.name,
+      address: updates.address !== undefined ? updates.address : hospital.address,
+      email: updates.email !== undefined ? updates.email : hospital.email,
+      username: updates.username !== undefined ? updates.username : hospital.username,
+      password: updates.password !== undefined ? updates.password : hospital.password,
+      //isActive: updates.isActive !== undefined ? updates.isActive : hospital.isActive,
+      //deactivatedAt: updates.deactivatedAt !== undefined ? updates.deactivatedAt : hospital.deactivatedAt,
+    },
+  });
+};
+
+// Delete a hospital
+export const deleteHospital = async (hospitalId: number) => {
+  const hospital = await prisma.hospital.findUnique({
+    where: { id: hospitalId },
+  });
+
+  if (!hospital) {
+    return null; // Let controller handle 404
+  }
+
+  return await prisma.hospital.delete({
+    where: { id: hospitalId },
+  });
+};
+
+export const gethospitalByEmail = async (email: string) => {
+  return await prisma.hospital.findUnique({
+    where: { email},
+  });
+};
+// services/hospitalService.ts
+// import {createNotification} from "./../Notification/NotificationService";
+
+// export const approveHospital = async (hospitalId: number, reviewerId: number) => {
+//   const updatedHospital = await prisma.hospital.update({
+//     where: { id: hospitalId },
+//     data: { approved: true, reviewedBy: reviewerId, reviewedAt: new Date() },
+//   });
+
+//   // Notify the hospital
+//   await createNotification("Your hospital registration has been approved.", {
+//     hospitalId,
+//   });
+
+//   return updatedHospital;
+// };
+
+// export const rejectHospital = async (hospitalId: number, reviewerId: number) => {
+//   const updatedHospital = await prisma.hospital.update({
+//     where: { id: hospitalId },
+//     data: { approved: false, reviewedBy: reviewerId, reviewedAt: new Date() },
+//   });
+
+//   // Notify the hospital
+//   await createNotification("Your hospital registration has been rejected.", {
+//     hospitalId,
+//   });
+
+//   return updatedHospital;
+// };

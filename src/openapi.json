@@ -25,30 +25,58 @@
             "type": "number",
             "example": 1
           },
-          "name": {
+          "FirstName": {
             "type": "string",
-            "example": "JohnDoe"
+            "example": "John"
+          },
+          "MiddleName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "Gender": {
+            "type": "string",
+            "example": "Male"
           },
           "email": {
             "type": "string",
-            "example": "gogemekuse@gmail.com"
+            "example": "johndoe@example.com"
           },
           "role": {
             "type": "string",
             "enum": [
               "SYSTEM_ADMIN",
-              "DONOR",
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
-              "LABORATORY",
-              "HOSPITAL"
+              "LABORATORY"
             ],
             "example": "SYSTEM_ADMIN"
           },
           "password": {
             "type": "string",
-            "example": "password123"
+            "example": "securepassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "johndoe"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           },
           "createdAt": {
             "type": "string",
@@ -56,15 +84,20 @@
           },
           "updatedAt": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-07-16T10:00:00.000Z"
           }
         },
         "required": [
           "id",
-          "name",
+          "FirstName",
+          "MiddleName",
+          "LastName",
+          "Gender",
           "email",
           "role",
           "password",
+          "username",
+          "refreshToken",
           "createdAt",
           "updatedAt"
         ]
@@ -72,37 +105,60 @@
       "NewUser": {
         "type": "object",
         "properties": {
-          "name": {
+          "FirstName": {
             "type": "string",
-            "example": "Seblewengel Mamo"
+            "example": "John"
+          },
+          "MiddleName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "Gender": {
+            "type": "string",
+            "example": "Male"
           },
           "email": {
             "type": "string",
-            "example": "gogemekuse@gmail.com"
+            "example": "johndoe@example.com"
           },
           "role": {
             "type": "string",
             "enum": [
               "SYSTEM_ADMIN",
-              "DONOR",
               "COLLECTOR",
               "MANAGER",
               "STORE_MANAGER",
-              "LABORATORY",
-              "HOSPITAL"
+              "LABORATORY"
             ],
-            "example": "SYSTEM_ADMIN"
+            "example": "COLLECTOR"
           },
           "password": {
             "type": "string",
-            "example": "password123"
+            "example": "securepassword123"
+          },
+          "username": {
+            "type": "string",
+            "example": "johndoe"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
           }
         },
         "required": [
-          "name",
+          "FirstName",
+          "MiddleName",
+          "LastName",
+          "Gender",
           "email",
           "role",
-          "password"
+          "password",
+          "username"
         ]
       },
       "Donor": {
@@ -118,7 +174,7 @@
           },
           "middleName": {
             "type": "string",
-            "example": "A."
+            "nullable": true
           },
           "lastName": {
             "type": "string",
@@ -126,15 +182,12 @@
           },
           "title": {
             "type": "string",
+            "nullable": true,
             "example": "Mr."
           },
           "birthDate": {
             "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
-            "type": "number",
-            "example": 33
+            "example": "1990-05-22T00:00:00.000Z"
           },
           "gender": {
             "type": "string",
@@ -142,6 +195,7 @@
           },
           "occupation": {
             "type": "string",
+            "nullable": true,
             "example": "Engineer"
           },
           "city": {
@@ -152,10 +206,6 @@
             "type": "string",
             "example": "Manhattan"
           },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
           "woreda": {
             "type": "string",
             "example": "5"
@@ -164,17 +214,10 @@
             "type": "string",
             "example": "12"
           },
-          "telephone": {
+          "PhoneNumber": {
             "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
+            "nullable": true,
+            "example": "0912345678"
           },
           "email": {
             "type": "string",
@@ -189,25 +232,352 @@
             "type": "string",
             "example": "john_doe"
           },
-          "poBox": {
+          "createdAt": {
             "type": "string",
-            "example": "P.O. Box 456"
+            "example": "2023-07-15T10:00:00.000Z"
           },
-          "bloodType": {
+          "updatedAt": {
             "type": "string",
-            "example": "A+"
+            "example": "2023-07-15T10:00:00.000Z"
           },
-          "medicalHistory": {
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
             "type": "string",
-            "example": "None"
+            "nullable": true,
+            "example": "randomresettoken123"
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "birthDate",
+          "gender",
+          "city",
+          "subCity",
+          "woreda",
+          "kebele",
+          "email",
+          "password",
+          "username",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NewDonor": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "minLength": 1,
+            "example": "John"
           },
-          "collectorId": {
-            "type": "number",
-            "example": 2
+          "middleName": {
+            "type": "string",
+            "nullable": true
           },
-          "systemAdminId": {
-            "type": "number",
+          "lastName": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Doe"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "example": "Mr."
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1990-05-22T00:00:00.000Z"
+          },
+          "gender": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Male"
+          },
+          "occupation": {
+            "type": "string",
+            "nullable": true,
+            "example": "Software Engineer"
+          },
+          "city": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Addis Ababa"
+          },
+          "subCity": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Bole"
+          },
+          "woreda": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Woreda 11"
+          },
+          "kebele": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Kebele 04"
+          },
+          "PhoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "example": "0912345678"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "example": "strongPassword123"
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "example": "john_doe"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "birthDate",
+          "gender",
+          "city",
+          "subCity",
+          "woreda",
+          "kebele",
+          "email",
+          "password",
+          "username"
+        ]
+      },
+      "UpdateDonor": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "occupation": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string"
+          },
+          "subCity": {
+            "type": "string"
+          },
+          "woreda": {
+            "type": "string"
+          },
+          "kebele": {
+            "type": "string"
+          },
+          "PhoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "username": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
+          }
+        }
+      },
+      "Qualification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
             "example": 1
+          },
+          "donorId": {
+            "type": "integer",
+            "example": 1
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 70.5
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 72
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 13.5
+          },
+          "bp": {
+            "type": "string",
+            "example": "120/80"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 36.5
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-15T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": false
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
           },
           "createdAt": {
             "type": "string",
@@ -220,241 +590,371 @@
         },
         "required": [
           "id",
-          "firstName",
-          "lastName",
-          "birthDate",
-          "age",
-          "gender",
-          "city",
-          "subCity",
-          "zone",
-          "woreda",
-          "kebele",
-          "email",
-          "password",
-          "username",
-          "bloodType",
+          "donorId",
+          "weight",
+          "pulse",
+          "hb",
+          "bp",
+          "temperature",
+          "hasDonatedBefore",
+          "hasTattooing",
+          "hasEarPiercing",
+          "hadDentalExtraction",
+          "hasHeartDisease",
+          "hasCancer",
+          "hasDiabetes",
+          "hasHepatitis",
+          "hasSTD",
+          "hadTyphoidLastYear",
+          "hasLungDisease",
+          "hasTuberculosis",
+          "hasAllergies",
+          "hasKidneyDisease",
+          "hasEpilepsy",
+          "hasAbnormalBleeding",
+          "hadJaundiceLastYear",
+          "hadMalariaSixMonths",
+          "hasFaintingSpells",
+          "takenAntibiotics",
+          "takenSteroids",
+          "takenAspirin",
+          "hadVaccinations",
+          "consumedAlcohol",
+          "hadDogBiteVaccine",
+          "hadSurgeryLastSixMonths",
+          "hadBloodTransfusionLastSixMonths",
           "createdAt",
           "updatedAt"
         ]
       },
-      "NewDonor": {
+      "NewQualification": {
         "type": "object",
         "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "middleName": {
-            "type": "string",
-            "example": "A."
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr."
-          },
-          "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
-            "type": "number",
-            "example": 33
-          },
-          "gender": {
-            "type": "string",
-            "example": "Male"
-          },
-          "occupation": {
-            "type": "string",
-            "example": "Engineer"
-          },
-          "city": {
-            "type": "string",
-            "example": "New York"
-          },
-          "subCity": {
-            "type": "string",
-            "example": "Manhattan"
-          },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
-          "woreda": {
-            "type": "string",
-            "example": "5"
-          },
-          "kebele": {
-            "type": "string",
-            "example": "12"
-          },
-          "telephone": {
-            "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "securePassword123"
-          },
-          "username": {
-            "type": "string",
-            "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
+          "donorId": {
+            "type": "integer",
             "example": 1
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 70.5
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 72
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 13.5
+          },
+          "bp": {
+            "type": "string",
+            "example": "120/80"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 36.5
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-15T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": false
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
           }
         },
         "required": [
-          "firstName",
-          "lastName",
-          "birthDate",
-          "age",
-          "gender",
-          "city",
-          "subCity",
-          "zone",
-          "woreda",
-          "kebele",
-          "email",
-          "password",
-          "username",
-          "bloodType"
+          "donorId",
+          "weight",
+          "pulse",
+          "hb",
+          "bp",
+          "temperature",
+          "hasDonatedBefore",
+          "hasTattooing",
+          "hasEarPiercing",
+          "hadDentalExtraction",
+          "hasHeartDisease",
+          "hasCancer",
+          "hasDiabetes",
+          "hasHepatitis",
+          "hasSTD",
+          "hadTyphoidLastYear",
+          "hasLungDisease",
+          "hasTuberculosis",
+          "hasAllergies",
+          "hasKidneyDisease",
+          "hasEpilepsy",
+          "hasAbnormalBleeding",
+          "hadJaundiceLastYear",
+          "hadMalariaSixMonths",
+          "hasFaintingSpells",
+          "takenAntibiotics",
+          "takenSteroids",
+          "takenAspirin",
+          "hadVaccinations",
+          "consumedAlcohol",
+          "hadDogBiteVaccine",
+          "hadSurgeryLastSixMonths",
+          "hadBloodTransfusionLastSixMonths"
         ]
       },
-      "UpdateDonor": {
+      "UpdateQualification": {
         "type": "object",
         "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "middleName": {
-            "type": "string",
-            "example": "A."
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr."
-          },
-          "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
+          "weight": {
             "type": "number",
-            "example": 33
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 71
           },
-          "gender": {
-            "type": "string",
-            "example": "Male"
-          },
-          "occupation": {
-            "type": "string",
-            "example": "Engineer"
-          },
-          "city": {
-            "type": "string",
-            "example": "New York"
-          },
-          "subCity": {
-            "type": "string",
-            "example": "Manhattan"
-          },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
-          "woreda": {
-            "type": "string",
-            "example": "5"
-          },
-          "kebele": {
-            "type": "string",
-            "example": "12"
-          },
-          "telephone": {
-            "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "securePassword123"
-          },
-          "username": {
-            "type": "string",
-            "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
+          "pulse": {
             "type": "number",
-            "example": 2
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 74
           },
-          "systemAdminId": {
+          "hb": {
             "type": "number",
-            "example": 1
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 14
+          },
+          "bp": {
+            "type": "string",
+            "example": "130/85"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 37
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-20T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": true
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": true
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": true
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
           }
         }
       },
@@ -484,6 +984,68 @@
           "updatedAt": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "activationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "deactivationDate": {
+            "type": "string",
+            "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "hospital": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "donor": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "firstName",
+              "lastName",
+              "email"
+            ]
           }
         },
         "required": [
@@ -492,7 +1054,8 @@
           "accountType",
           "accountStatus",
           "createdAt",
-          "updatedAt"
+          "updatedAt",
+          "isActive"
         ]
       },
       "NewAccount": {
@@ -509,6 +1072,14 @@
           "accountStatus": {
             "type": "string",
             "example": "active"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
@@ -517,228 +1088,42 @@
           "accountStatus"
         ]
       },
-      "Blood": {
+      "UpdateAccount": {
         "type": "object",
         "properties": {
-          "id": {
+          "userId": {
             "type": "number",
             "example": 1
           },
-          "bloodType": {
+          "accountType": {
             "type": "string",
-            "example": "A+"
+            "example": "premium"
           },
-          "quantity": {
-            "type": "number",
-            "example": 500
-          },
-          "donationDate": {
+          "accountStatus": {
             "type": "string",
-            "example": "2024-10-10T00:00:00Z"
-          }
-        },
-        "required": [
-          "id",
-          "bloodType",
-          "quantity",
-          "donationDate"
-        ]
-      },
-      "Inventory": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
+            "example": "inactive"
           },
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
+          "isActive": {
+            "type": "boolean",
+            "example": true
           },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2024-11-05T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2024-11-05T10:00:00.000Z"
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "blood": {
-            "$ref": "#/components/schemas/Blood"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "bloodType",
-          "expirationDate",
-          "totalQuantity",
-          "createdAt",
-          "updatedAt",
-          "bloodId",
-          "blood"
-        ]
-      },
-      "NewInventory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "name",
-          "bloodType",
-          "expirationDate",
-          "totalQuantity",
-          "bloodId"
-        ]
-      },
-      "SystemAdmin Accounts": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "example": 1
-            },
-            "userId": {
-              "type": "number",
-              "example": 1
-            },
-            "accountType": {
-              "type": "string",
-              "example": "basic"
-            },
-            "accountStatus": {
-              "type": "string",
-              "example": "active"
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            }
-          },
-          "required": [
-            "id",
-            "userId",
-            "accountType",
-            "accountStatus",
-            "createdAt",
-            "updatedAt"
-          ]
-        }
-      },
-      "SystemAdmin Notifications": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "example": 1
-            },
-            "message": {
-              "type": "string",
-              "example": "New account created."
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2023-07-15T10:00:00.000Z"
-            }
-          },
-          "required": [
-            "id",
-            "message",
-            "createdAt"
-          ]
-        }
-      },
-      "SystemAdmin": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "username": {
-            "type": "string",
-            "example": "admin_user"
-          },
-          "accounts": {
-            "$ref": "#/components/schemas/SystemAdmin Accounts"
-          },
-          "notifications": {
-            "$ref": "#/components/schemas/SystemAdmin Notifications"
-          },
-          "createdAt": {
+          "activationDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
           },
-          "updatedAt": {
+          "deactivationDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
-        },
-        "required": [
-          "id",
-          "username",
-          "accounts",
-          "notifications",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewSystemAdmin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "minLength": 1,
-            "example": "admin_user"
-          }
-        },
-        "required": [
-          "username"
-        ]
+        }
       },
       "Hospital": {
         "type": "object",
@@ -753,106 +1138,313 @@
           },
           "address": {
             "type": "string",
-            "example": "123 Main St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "contact@cityhospital.com"
+            "example": "123 Main St, Cityville, State, 12345"
           },
           "username": {
             "type": "string",
             "example": "city_hospital_admin"
           },
-          "password": {
+          "email": {
             "type": "string",
-            "example": "securePassword123"
+            "example": "city_hospital@example.com"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
+          },
+          "deactivatedAt": {
+            "type": "string",
+            "nullable": true
           },
           "createdAt": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2024-01-01T00:00:00Z"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2024-01-01T00:00:00Z"
           }
         },
         "required": [
           "id",
           "name",
           "address",
-          "contactInfo",
-          "email",
           "username",
-          "password",
+          "email",
+          "isActive",
+          "deactivatedAt",
           "createdAt",
           "updatedAt"
         ]
       },
-      "NewHospital": {
+      "CreateHospital": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "minLength": 1,
             "example": "City Hospital"
           },
           "address": {
             "type": "string",
-            "example": "123 Main St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "contact@cityhospital.com"
+            "minLength": 1,
+            "example": "123 Main St, Cityville, State, 12345"
           },
           "username": {
             "type": "string",
+            "minLength": 1,
             "example": "city_hospital_admin"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email",
+            "example": "city_hospital@example.com"
           },
           "password": {
             "type": "string",
+            "minLength": 6,
             "example": "securePassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           }
         },
         "required": [
           "name",
           "address",
-          "contactInfo",
-          "email",
           "username",
+          "email",
           "password"
+        ]
+      },
+      "UpdateHospital": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Updated City Hospital"
+          },
+          "address": {
+            "type": "string",
+            "minLength": 1,
+            "example": "456 Main St, New City, New State, 67890"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email",
+            "example": "city_hospital@example.com"
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "example": "updated_hospital_admin"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "example": "newPassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": false
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
+          },
+          "deactivatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T15:30:00Z"
+          }
+        }
+      },
+      "HospitalId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "Blood": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
+          "bloodType": {
+            "type": "string",
+            "example": "O+"
+          },
+          "quantity": {
+            "type": "string",
+            "example": "5"
+          },
+          "barcode": {
+            "type": "string",
+            "example": "123456789"
+          },
+          "donationDate": {
+            "type": "string",
+            "example": "2023-12-15T10:00:00.000Z"
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "2024-01-15T10:00:00.000Z"
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "RESERVED",
+              "EXPIRED"
+            ],
+            "example": "AVAILABLE"
+          }
+        },
+        "required": [
+          "id",
+          "donorId",
+          "bloodType",
+          "quantity",
+          "barcode",
+          "donationDate",
+          "expirationDate",
+          "storageStatus"
         ]
       },
       "NewBlood": {
         "type": "object",
         "properties": {
+          "donorId": {
+            "type": "number",
+            "example": 1
+          },
           "bloodType": {
             "type": "string",
-            "example": "A+"
+            "default": "UNKNOWN",
+            "example": "O_POS"
           },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "example": 500
+          "barcode": {
+            "type": "string",
+            "minLength": 1,
+            "example": "123456789"
           },
           "donationDate": {
             "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "example": "2023-12-15T10:00:00.000Z"
+          },
+          "expirationDate": {
+            "type": "string",
+            "default": "",
+            "example": "2024-01-15T10:00:00.000Z"
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "RESERVED",
+              "EXPIRED"
+            ],
+            "default": "AVAILABLE",
+            "example": "AVAILABLE"
+          },
+          "quantityml": {
+            "type": "number",
+            "minimum": 1,
+            "example": 500
+          },
+          "stockLevel": {
+            "type": "number",
+            "default": 0,
+            "example": 10
+          },
+          "hospitalId": {
+            "type": "number",
+            "default": 0,
+            "example": 1
+          },
+          "collectorId": {
+            "type": "number",
+            "default": 0,
+            "example": 2
           }
         },
         "required": [
-          "bloodType",
-          "quantity",
-          "donationDate"
+          "donorId",
+          "barcode",
+          "donationDate",
+          "quantityml"
         ]
+      },
+      "UpdateBlood": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "number"
+          },
+          "bloodType": {
+            "type": "string"
+          },
+          "barcode": {
+            "type": "string",
+            "minLength": 1
+          },
+          "donationDate": {
+            "type": "string"
+          },
+          "expirationDate": {
+            "type": "string"
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "RESERVED",
+              "EXPIRED"
+            ]
+          },
+          "quantityml": {
+            "type": "number",
+            "minimum": 1,
+            "example": 500
+          },
+          "stockLevel": {
+            "type": "number"
+          },
+          "hospitalId": {
+            "type": "number"
+          },
+          "collectorId": {
+            "type": "number"
+          }
+        }
       },
       "Appointment": {
         "type": "object",
@@ -863,7 +1455,7 @@
           },
           "appointmentDate": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "2024-11-07"
           },
           "status": {
             "type": "string",
@@ -873,8 +1465,13 @@
             "type": "number",
             "example": 1
           },
-          "donor": {
-            "$ref": "#/components/schemas/Donor"
+          "location": {
+            "type": "string",
+            "example": "Blood Donation Center, Room 101"
+          },
+          "appointmentTime": {
+            "type": "string",
+            "example": "10:00"
           },
           "createdAt": {
             "type": "string",
@@ -890,7 +1487,8 @@
           "appointmentDate",
           "status",
           "donorId",
-          "donor",
+          "location",
+          "appointmentTime",
           "createdAt",
           "updatedAt"
         ]
@@ -900,7 +1498,7 @@
         "properties": {
           "appointmentDate": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "2023-07-15"
           },
           "status": {
             "type": "string",
@@ -909,91 +1507,46 @@
           "donorId": {
             "type": "number",
             "example": 1
+          },
+          "location": {
+            "type": "string",
+            "example": "Blood Donation Center, Room 101"
+          },
+          "appointmentTime": {
+            "type": "string",
+            "example": "10:00"
           }
         },
         "required": [
           "appointmentDate",
           "status",
-          "donorId"
+          "donorId",
+          "location",
+          "appointmentTime"
         ]
       },
       "Notification": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
           "content": {
-            "type": "string",
-            "example": "Blood donation request"
-          },
-          "sendDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
+            "type": "string"
           },
           "donorId": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
-          "adminId": {
-            "type": "number",
-            "example": 1
+          "hospitalId": {
+            "type": "number"
           },
-          "hospital": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "name": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "name"
-            ]
-          },
-          "donor": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "bloodType": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "bloodType"
-            ]
-          },
-          "systemAdmin": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "username": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "username"
-            ]
+          "userId": {
+            "type": "number"
           }
         },
         "required": [
           "id",
-          "content",
-          "sendDate"
+          "content"
         ]
       },
       "NewNotification": {
@@ -1001,51 +1554,81 @@
         "properties": {
           "content": {
             "type": "string",
-            "example": "Blood donation request"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
+            "minLength": 1
           },
           "donorId": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
-          "adminId": {
-            "type": "number",
-            "example": 1
+          "hospitalId": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
           }
         },
         "required": [
           "content"
         ]
       },
+      "UpdateNotification": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "minLength": 1
+          },
+          "donorId": {
+            "type": "number"
+          },
+          "hospitalId": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "number"
+          }
+        }
+      },
       "Order": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "example": 1
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
           "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "type": "string"
           },
           "bloodType": {
             "type": "string",
-            "example": "A+"
+            "enum": [
+              "A_POS",
+              "A_NEG",
+              "B_POS",
+              "B_NEG",
+              "AB_POS",
+              "AB_NEG",
+              "O_POS",
+              "O_NEG"
+            ]
           },
           "quantity": {
-            "type": "number",
-            "example": 3
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
           "status": {
             "type": "string",
-            "example": "Pending"
+            "enum": [
+              "PENDING",
+              "COMPLETED",
+              "CANCELED"
+            ]
           },
           "hospitalId": {
-            "type": "number",
-            "example": 1
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           }
         },
         "required": [
@@ -1057,36 +1640,86 @@
           "hospitalId"
         ]
       },
-      "NewOrder": {
+      "CreateOrder": {
         "type": "object",
         "properties": {
           "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
+            "type": "string"
           },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
+          "aPosAmount": {
+            "type": "integer",
+            "minimum": 0
           },
-          "quantity": {
-            "type": "number",
-            "example": 3
+          "aNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bPosAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "bNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "abPosAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "abNegAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oPosAmount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oNegAmount": {
+            "type": "integer",
+            "minimum": 0
           },
           "status": {
             "type": "string",
-            "example": "Pending"
+            "enum": [
+              "PENDING",
+              "COMPLETED",
+              "CANCELED"
+            ]
           },
           "hospitalId": {
-            "type": "number",
-            "example": 1
+            "type": "integer",
+            "minimum": 0,
+            "exclusiveMinimum": true
           }
         },
         "required": [
           "orderDate",
-          "bloodType",
-          "quantity",
+          "aPosAmount",
+          "aNegAmount",
+          "bPosAmount",
+          "bNegAmount",
+          "abPosAmount",
+          "abNegAmount",
+          "oPosAmount",
+          "oNegAmount",
           "status",
           "hospitalId"
+        ]
+      },
+      "UpdateOrderStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "COMPLETED",
+              "CANCELED"
+            ]
+          }
+        },
+        "required": [
+          "status"
         ]
       },
       "Integration": {
@@ -1100,7 +1733,34 @@
             "type": "number",
             "example": 1
           },
-          "inventories": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ],
+            "example": "PENDING"
+          },
+          "managerId": {
+            "type": "number",
+            "example": 1
+          },
+          "managerComment": {
+            "type": "string",
+            "example": "Request approved"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T12:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T12:00:00Z"
+          },
+          "bloodInventories": {
             "type": "array",
             "items": {
               "type": "object",
@@ -1108,22 +1768,67 @@
                 "id": {
                   "type": "number",
                   "example": 1
+                },
+                "bloodType": {
+                  "type": "string",
+                  "enum": [
+                    "A+",
+                    "A-",
+                    "B+",
+                    "B-",
+                    "AB+",
+                    "AB-",
+                    "O+",
+                    "O-"
+                  ],
+                  "example": "A+"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 5
+                },
+                "barcode": {
+                  "type": "string",
+                  "example": "1234567890"
+                },
+                "donationDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-11-25T10:00:00Z"
+                },
+                "expirationDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-12-25T10:00:00Z"
                 }
               },
               "required": [
-                "id"
+                "id",
+                "bloodType",
+                "quantity",
+                "barcode",
+                "donationDate",
+                "expirationDate"
               ]
             },
             "example": [
               {
-                "id": 1
+                "id": 1,
+                "bloodType": "A+",
+                "quantity": 5,
+                "barcode": "1234567890",
+                "donationDate": "2024-11-25T10:00:00Z",
+                "expirationDate": "2024-12-25T10:00:00Z"
               }
             ]
           }
         },
         "required": [
           "id",
-          "hospitalId"
+          "hospitalId",
+          "status",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "NewIntegration": {
@@ -1137,6 +1842,28 @@
         "required": [
           "hospitalId"
         ]
+      },
+      "UpdateIntegration": {
+        "type": "object",
+        "properties": {
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ],
+            "example": "APPROVED"
+          },
+          "managerComment": {
+            "type": "string",
+            "example": "Request approved after review"
+          }
+        }
       },
       "Report": {
         "type": "object",
@@ -1221,331 +1948,363 @@
           "generatedBy"
         ]
       },
-      "Donation": {
+      "Login": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "donorId",
-          "bloodId",
-          "donationDate",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewDonation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "donorId",
-          "bloodId",
-          "donationDate"
-        ]
-      },
-      "Collection": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "bloodId",
-          "collectedDate",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "NewCollection": {
-        "type": "object",
-        "properties": {
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "bloodId",
-          "collectedDate"
-        ]
-      },
-      "New Donor": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "middleName": {
-            "type": "string",
-            "example": "A."
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr."
-          },
-          "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
-            "type": "number",
-            "example": 33
-          },
-          "gender": {
-            "type": "string",
-            "example": "Male"
-          },
-          "occupation": {
-            "type": "string",
-            "example": "Engineer"
-          },
-          "city": {
-            "type": "string",
-            "example": "New York"
-          },
-          "subCity": {
-            "type": "string",
-            "example": "Manhattan"
-          },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
-          "woreda": {
-            "type": "string",
-            "example": "5"
-          },
-          "kebele": {
-            "type": "string",
-            "example": "12"
-          },
-          "telephone": {
-            "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
-          },
           "email": {
             "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
+            "example": "abelshibabaw291@gmail.com"
           },
           "password": {
             "type": "string",
-            "example": "securePassword123"
-          },
-          "username": {
-            "type": "string",
-            "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
-            "example": 1
+            "example": "12345678"
           }
         },
         "required": [
-          "firstName",
-          "lastName",
-          "birthDate",
-          "age",
-          "gender",
-          "city",
-          "subCity",
-          "zone",
-          "woreda",
-          "kebele",
           "email",
-          "password",
-          "username",
-          "bloodType"
+          "password"
         ]
       },
-      "Update Donor": {
+      "Forgot Password": {
         "type": "object",
         "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "middleName": {
-            "type": "string",
-            "example": "A."
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Doe"
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr."
-          },
-          "birthDate": {
-            "type": "string",
-            "example": "1990-01-01"
-          },
-          "age": {
-            "type": "number",
-            "example": 33
-          },
-          "gender": {
-            "type": "string",
-            "example": "Male"
-          },
-          "occupation": {
-            "type": "string",
-            "example": "Engineer"
-          },
-          "city": {
-            "type": "string",
-            "example": "New York"
-          },
-          "subCity": {
-            "type": "string",
-            "example": "Manhattan"
-          },
-          "zone": {
-            "type": "string",
-            "example": "Central"
-          },
-          "woreda": {
-            "type": "string",
-            "example": "5"
-          },
-          "kebele": {
-            "type": "string",
-            "example": "12"
-          },
-          "telephone": {
-            "type": "string",
-            "example": "123-456-7890"
-          },
-          "cellPhone": {
-            "type": "string",
-            "example": "987-654-3210"
-          },
-          "organization": {
-            "type": "string",
-            "example": "Tech Corp"
-          },
           "email": {
             "type": "string",
-            "format": "email",
-            "example": "johndoe@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "securePassword123"
-          },
-          "username": {
-            "type": "string",
-            "example": "john_doe"
-          },
-          "poBox": {
-            "type": "string",
-            "example": "P.O. Box 456"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "medicalHistory": {
-            "type": "string",
-            "example": "None"
-          },
-          "collectorId": {
-            "type": "number",
-            "example": 2
-          },
-          "systemAdminId": {
-            "type": "number",
+            "example": "abelshibabaw291@gmail.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "New Qualification": {
+        "type": "object",
+        "properties": {
+          "donorId": {
+            "type": "integer",
             "example": 1
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 70.5
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 72
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 13.5
+          },
+          "bp": {
+            "type": "string",
+            "example": "120/80"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 36.5
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-15T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": false
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "donorId",
+          "weight",
+          "pulse",
+          "hb",
+          "bp",
+          "temperature",
+          "hasDonatedBefore",
+          "hasTattooing",
+          "hasEarPiercing",
+          "hadDentalExtraction",
+          "hasHeartDisease",
+          "hasCancer",
+          "hasDiabetes",
+          "hasHepatitis",
+          "hasSTD",
+          "hadTyphoidLastYear",
+          "hasLungDisease",
+          "hasTuberculosis",
+          "hasAllergies",
+          "hasKidneyDisease",
+          "hasEpilepsy",
+          "hasAbnormalBleeding",
+          "hadJaundiceLastYear",
+          "hadMalariaSixMonths",
+          "hasFaintingSpells",
+          "takenAntibiotics",
+          "takenSteroids",
+          "takenAspirin",
+          "hadVaccinations",
+          "consumedAlcohol",
+          "hadDogBiteVaccine",
+          "hadSurgeryLastSixMonths",
+          "hadBloodTransfusionLastSixMonths"
+        ]
+      },
+      "Update Qualification": {
+        "type": "object",
+        "properties": {
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 71
+          },
+          "pulse": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 74
+          },
+          "hb": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 14
+          },
+          "bp": {
+            "type": "string",
+            "example": "130/85"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "example": 37
+          },
+          "lastDonationDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-06-20T10:00:00.000Z"
+          },
+          "hasDonatedBefore": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTattooing": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasEarPiercing": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDentalExtraction": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHeartDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasCancer": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasDiabetes": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasHepatitis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasSTD": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadTyphoidLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasLungDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasTuberculosis": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAllergies": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasKidneyDisease": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasEpilepsy": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasAbnormalBleeding": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadJaundiceLastYear": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadMalariaSixMonths": {
+            "type": "boolean",
+            "example": false
+          },
+          "hasFaintingSpells": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAntibiotics": {
+            "type": "boolean",
+            "example": true
+          },
+          "takenSteroids": {
+            "type": "boolean",
+            "example": false
+          },
+          "takenAspirin": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadVaccinations": {
+            "type": "boolean",
+            "example": true
+          },
+          "consumedAlcohol": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadDogBiteVaccine": {
+            "type": "boolean",
+            "example": false
+          },
+          "hadSurgeryLastSixMonths": {
+            "type": "boolean",
+            "example": true
+          },
+          "hadBloodTransfusionLastSixMonths": {
+            "type": "boolean",
+            "example": false
           }
         }
       },
@@ -1563,6 +2322,14 @@
           "accountStatus": {
             "type": "string",
             "example": "active"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
         },
         "required": [
@@ -1585,154 +2352,74 @@
           "accountStatus": {
             "type": "string",
             "example": "inactive"
-          }
-        }
-      },
-      "New Inventory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
           },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
+          "isActive": {
+            "type": "boolean",
+            "example": true
           },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "name",
-          "bloodType",
-          "expirationDate",
-          "totalQuantity",
-          "bloodId"
-        ]
-      },
-      "Update Inventory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Blood Pack A+"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "expirationDate": {
-            "type": "string",
-            "example": "2025-12-31T23:59:59Z"
-          },
-          "totalQuantity": {
-            "type": "number",
-            "example": 1000
-          }
-        }
-      },
-      "System Admin": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "example": 1
-          },
-          "username": {
-            "type": "string",
-            "example": "admin_user"
-          },
-          "accounts": {
-            "$ref": "#/components/schemas/SystemAdmin Accounts"
-          },
-          "notifications": {
-            "$ref": "#/components/schemas/SystemAdmin Notifications"
-          },
-          "createdAt": {
+          "activationDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
           },
-          "updatedAt": {
+          "deactivationDate": {
             "type": "string",
             "example": "2023-07-15T10:00:00.000Z"
+          },
+          "hospitalId": {
+            "type": "number",
+            "example": 1
+          },
+          "donorId": {
+            "type": "number",
+            "example": 1
           }
-        },
-        "required": [
-          "id",
-          "username",
-          "accounts",
-          "notifications",
-          "createdAt",
-          "updatedAt"
-        ]
+        }
       },
-      "New System Admin": {
+      "Create Hospital": {
         "type": "object",
         "properties": {
-          "username": {
+          "name": {
             "type": "string",
             "minLength": 1,
-            "example": "admin_user"
-          }
-        },
-        "required": [
-          "username"
-        ]
-      },
-      "Update System Admin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "example": "new_admin_user"
-          }
-        }
-      },
-      "New Hospital": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
             "example": "City Hospital"
           },
           "address": {
             "type": "string",
-            "example": "123 Main St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+1234567890"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "contact@cityhospital.com"
+            "minLength": 1,
+            "example": "123 Main St, Cityville, State, 12345"
           },
           "username": {
             "type": "string",
+            "minLength": 1,
             "example": "city_hospital_admin"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "format": "email",
+            "example": "city_hospital@example.com"
           },
           "password": {
             "type": "string",
+            "minLength": 6,
             "example": "securePassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true,
+            "example": true
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
           }
         },
         "required": [
           "name",
           "address",
-          "contactInfo",
-          "email",
           "username",
+          "email",
           "password"
         ]
       },
@@ -1741,210 +2428,68 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Central City Hospital"
+            "minLength": 1,
+            "example": "Updated City Hospital"
           },
           "address": {
             "type": "string",
-            "example": "456 Another St, Cityville"
-          },
-          "contactInfo": {
-            "type": "string",
-            "example": "+0987654321"
+            "minLength": 1,
+            "example": "456 Main St, New City, New State, 67890"
           },
           "email": {
             "type": "string",
+            "minLength": 1,
             "format": "email",
-            "example": "support@cityhospital.com"
+            "example": "city_hospital@example.com"
           },
           "username": {
             "type": "string",
-            "example": "new_city_hospital_admin"
+            "minLength": 1,
+            "example": "updated_hospital_admin"
           },
           "password": {
             "type": "string",
-            "example": "newSecurePassword123"
+            "minLength": 6,
+            "example": "newPassword123"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": false
+          },
+          "resetToken": {
+            "type": "string",
+            "nullable": true,
+            "example": "randomresettoken123"
+          },
+          "deactivatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-01T15:30:00Z"
           }
         }
       },
-      "New Blood": {
-        "type": "object",
-        "properties": {
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "example": 500
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "bloodType",
-          "quantity",
-          "donationDate"
-        ]
-      },
-      "Update Blood": {
-        "type": "object",
-        "properties": {
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "example": 500
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
-      },
-      "New Appointment": {
+      "UpdateAppointment": {
         "type": "object",
         "properties": {
           "appointmentDate": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "2023-07-15"
           },
           "status": {
             "type": "string",
-            "example": "Scheduled"
+            "example": "Rescheduled"
           },
           "donorId": {
             "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "appointmentDate",
-          "status",
-          "donorId"
-        ]
-      },
-      "Update Appointment": {
-        "type": "object",
-        "properties": {
-          "appointmentDate": {
+            "example": 2
+          },
+          "location": {
             "type": "string",
-            "example": "2024-11-07T10:00:00.000Z"
+            "example": "Blood Donation Center, Room 102"
           },
-          "status": {
+          "appointmentTime": {
             "type": "string",
-            "example": "Completed"
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          }
-        }
-      },
-      "New Notification": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "Blood donation request"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "adminId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "content"
-        ]
-      },
-      "Update Notification": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "Updated blood donation request"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
-          },
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "adminId": {
-            "type": "number",
-            "example": 1
-          }
-        }
-      },
-      "New Order": {
-        "type": "object",
-        "properties": {
-          "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "example": 3
-          },
-          "status": {
-            "type": "string",
-            "example": "Pending"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
-          }
-        },
-        "required": [
-          "orderDate",
-          "bloodType",
-          "quantity",
-          "status",
-          "hospitalId"
-        ]
-      },
-      "Update Order": {
-        "type": "object",
-        "properties": {
-          "orderDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          },
-          "bloodType": {
-            "type": "string",
-            "example": "A+"
-          },
-          "quantity": {
-            "type": "number",
-            "example": 3
-          },
-          "status": {
-            "type": "string",
-            "example": "Pending"
-          },
-          "hospitalId": {
-            "type": "number",
-            "example": 1
+            "example": "10:00"
           }
         }
       },
@@ -1966,6 +2511,19 @@
           "hospitalId": {
             "type": "number",
             "example": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ],
+            "example": "APPROVED"
+          },
+          "managerComment": {
+            "type": "string",
+            "example": "Request approved after review"
           }
         }
       },
@@ -2007,75 +2565,6 @@
             "example": 1
           }
         }
-      },
-      "New Donation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "donorId",
-          "bloodId",
-          "donationDate"
-        ]
-      },
-      "Update Donation": {
-        "type": "object",
-        "properties": {
-          "donorId": {
-            "type": "number",
-            "example": 1
-          },
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "donationDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
-      },
-      "New Collection": {
-        "type": "object",
-        "properties": {
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        },
-        "required": [
-          "bloodId",
-          "collectedDate"
-        ]
-      },
-      "Update Collection": {
-        "type": "object",
-        "properties": {
-          "bloodId": {
-            "type": "number",
-            "example": 1
-          },
-          "collectedDate": {
-            "type": "string",
-            "example": "2023-07-15T10:00:00.000Z"
-          }
-        }
       }
     },
     "parameters": {},
@@ -2088,11 +2577,11 @@
     }
   },
   "paths": {
-    "/auth/register": {
+    "/api/users": {
       "post": {
         "summary": "Register a new user",
         "tags": [
-          "Auth"
+          "User"
         ],
         "requestBody": {
           "content": {
@@ -2115,9 +2604,160 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "Get all users",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/auth/login": {
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/users/email/{email}": {
+      "get": {
+        "summary": "Get a user by email",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user with the specified email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api/auth/donor/login": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -2127,7 +2767,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewUser"
+                "$ref": "#/components/schemas/Login"
               }
             }
           }
@@ -2163,7 +2803,99 @@
         }
       }
     },
-    "/auth/refresh-token": {
+    "/api/auth/user/login": {
+      "post": {
+        "summary": "Login a user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The access and refresh tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "your_access_token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "your_refresh_token"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    },
+    "/api/auth/Hospital/login": {
+      "post": {
+        "summary": "Login a user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The access and refresh tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "your_access_token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "your_refresh_token"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    },
+    "/api/auth/refresh-token": {
       "post": {
         "summary": "Refresh access token",
         "tags": [
@@ -2209,6 +2941,52 @@
           },
           "401": {
             "description": "Invalid refresh token"
+          }
+        }
+      }
+    },
+    "/api/auth/forgot-password": {
+      "post": {
+        "summary": "Forgot password",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Forgot Password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The access and refresh tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string",
+                      "example": "your_access_token"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "example": "your_refresh_token"
+                    }
+                  },
+                  "required": [
+                    "accessToken",
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid username or password"
           }
         }
       }
@@ -2284,7 +3062,95 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Donor"
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "John"
+                  },
+                  "middleName": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Doe"
+                  },
+                  "title": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Mr."
+                  },
+                  "birthDate": {
+                    "type": "string",
+                    "example": "1990-05-22T00:00:00.000Z"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Male"
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "Software Engineer"
+                  },
+                  "city": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Addis Ababa"
+                  },
+                  "subCity": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Bole"
+                  },
+                  "woreda": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Woreda 11"
+                  },
+                  "kebele": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "Kebele 04"
+                  },
+                  "PhoneNumber": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "0912345678"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8,
+                    "example": "strongPassword123"
+                  },
+                  "username": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "john_doe"
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "birthDate",
+                  "gender",
+                  "city",
+                  "subCity",
+                  "woreda",
+                  "kebele",
+                  "email",
+                  "password",
+                  "username"
+                ]
               }
             }
           }
@@ -2295,15 +3161,122 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Donor"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Mr."
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-05-22T00:00:00.000Z"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "Male"
+                    },
+                    "occupation": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Engineer"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York"
+                    },
+                    "subCity": {
+                      "type": "string",
+                      "example": "Manhattan"
+                    },
+                    "woreda": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "kebele": {
+                      "type": "string",
+                      "example": "12"
+                    },
+                    "PhoneNumber": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "0912345678"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "johndoe@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "securePassword123"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "john_doe"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "default": true,
+                      "example": true
+                    },
+                    "resetToken": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "randomresettoken123"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "birthDate",
+                    "gender",
+                    "city",
+                    "subCity",
+                    "woreda",
+                    "kebele",
+                    "email",
+                    "password",
+                    "username",
+                    "createdAt",
+                    "updatedAt"
+                  ]
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input data"
           }
         }
       },
       "get": {
-        "summary": "Get all donors",
+        "summary": "Get all donor",
         "tags": [
           "Donor"
         ],
@@ -2315,11 +3288,118 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Donor"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "example": "John"
+                      },
+                      "middleName": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "example": "Doe"
+                      },
+                      "title": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Mr."
+                      },
+                      "birthDate": {
+                        "type": "string",
+                        "example": "1990-05-22T00:00:00.000Z"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "Male"
+                      },
+                      "occupation": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "Engineer"
+                      },
+                      "city": {
+                        "type": "string",
+                        "example": "New York"
+                      },
+                      "subCity": {
+                        "type": "string",
+                        "example": "Manhattan"
+                      },
+                      "woreda": {
+                        "type": "string",
+                        "example": "5"
+                      },
+                      "kebele": {
+                        "type": "string",
+                        "example": "12"
+                      },
+                      "PhoneNumber": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "0912345678"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@example.com"
+                      },
+                      "password": {
+                        "type": "string",
+                        "example": "securePassword123"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "john_doe"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-07-15T10:00:00.000Z"
+                      },
+                      "isActive": {
+                        "type": "boolean",
+                        "default": true,
+                        "example": true
+                      },
+                      "resetToken": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "randomresettoken123"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "firstName",
+                      "lastName",
+                      "birthDate",
+                      "gender",
+                      "city",
+                      "subCity",
+                      "woreda",
+                      "kebele",
+                      "email",
+                      "password",
+                      "username",
+                      "createdAt",
+                      "updatedAt"
+                    ]
                   }
                 }
               }
             }
+          },
+          "404": {
+            "description": "No donors found"
           }
         }
       }
@@ -2346,10 +3426,117 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Donor"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Mr."
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-05-22T00:00:00.000Z"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "Male"
+                    },
+                    "occupation": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Engineer"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York"
+                    },
+                    "subCity": {
+                      "type": "string",
+                      "example": "Manhattan"
+                    },
+                    "woreda": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "kebele": {
+                      "type": "string",
+                      "example": "12"
+                    },
+                    "PhoneNumber": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "0912345678"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "johndoe@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "securePassword123"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "john_doe"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "default": true,
+                      "example": true
+                    },
+                    "resetToken": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "randomresettoken123"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "birthDate",
+                    "gender",
+                    "city",
+                    "subCity",
+                    "woreda",
+                    "kebele",
+                    "email",
+                    "password",
+                    "username",
+                    "createdAt",
+                    "updatedAt"
+                  ]
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid ID format"
           },
           "404": {
             "description": "Donor not found"
@@ -2375,7 +3562,72 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Donor"
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "middleName": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "birthDate": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "subCity": {
+                    "type": "string"
+                  },
+                  "woreda": {
+                    "type": "string"
+                  },
+                  "kebele": {
+                    "type": "string"
+                  },
+                  "PhoneNumber": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "isActive": {
+                    "type": "boolean",
+                    "default": true,
+                    "example": true
+                  },
+                  "resetToken": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": "randomresettoken123"
+                  }
+                }
               }
             }
           }
@@ -2386,10 +3638,117 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Donor"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "middleName": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Mr."
+                    },
+                    "birthDate": {
+                      "type": "string",
+                      "example": "1990-05-22T00:00:00.000Z"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "Male"
+                    },
+                    "occupation": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "Engineer"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "New York"
+                    },
+                    "subCity": {
+                      "type": "string",
+                      "example": "Manhattan"
+                    },
+                    "woreda": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "kebele": {
+                      "type": "string",
+                      "example": "12"
+                    },
+                    "PhoneNumber": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "0912345678"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "johndoe@example.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "securePassword123"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "john_doe"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-07-15T10:00:00.000Z"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "default": true,
+                      "example": true
+                    },
+                    "resetToken": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "randomresettoken123"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "birthDate",
+                    "gender",
+                    "city",
+                    "subCity",
+                    "woreda",
+                    "kebele",
+                    "email",
+                    "password",
+                    "username",
+                    "createdAt",
+                    "updatedAt"
+                  ]
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input data or ID"
           },
           "404": {
             "description": "Donor not found"
@@ -2415,8 +3774,158 @@
           "204": {
             "description": "Donor deleted successfully"
           },
+          "400": {
+            "description": "Invalid ID format"
+          },
           "404": {
             "description": "Donor not found"
+          }
+        }
+      }
+    },
+    "/api/qualifications": {
+      "post": {
+        "summary": "Register a new qualification",
+        "tags": [
+          "Qualification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/New Qualification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created qualification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Qualification"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all qualifications",
+        "tags": [
+          "Qualification"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of qualifications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Qualification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/qualifications/{id}": {
+      "get": {
+        "summary": "Get a qualification by ID",
+        "tags": [
+          "Qualification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The qualification with the specified ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Qualification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Qualification not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a qualification",
+        "tags": [
+          "Qualification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Qualification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated qualification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Qualification"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Qualification not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a qualification",
+        "tags": [
+          "Qualification"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Qualification deleted successfully"
+          },
+          "404": {
+            "description": "Qualification not found"
           }
         }
       }
@@ -2448,9 +3957,7 @@
             }
           }
         }
-      }
-    },
-    "/api/account": {
+      },
       "get": {
         "summary": "Get all account records",
         "tags": [
@@ -2473,7 +3980,7 @@
         }
       }
     },
-    "/api/account/{id}": {
+    "/api/accounts/{id}": {
       "get": {
         "summary": "Get an account record by ID",
         "tags": [
@@ -2570,92 +4077,11 @@
         }
       }
     },
-    "/api/inventory": {
-      "post": {
-        "summary": "Create a new inventory record",
-        "tags": [
-          "Inventory"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Inventory"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created inventory record",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inventory"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all inventory records",
-        "tags": [
-          "Inventory"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of all inventory records",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Inventory"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/inventory/{id}": {
-      "get": {
-        "summary": "Get an inventory record by ID",
-        "tags": [
-          "Inventory"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The inventory record with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Inventory"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Inventory not found"
-          }
-        }
-      },
+    "/api/accounts/{id}/activate": {
       "patch": {
-        "summary": "Update an inventory record",
+        "summary": "Activate an account",
         "tags": [
-          "Inventory"
+          "Account"
         ],
         "parameters": [
           {
@@ -2667,142 +4093,28 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Inventory"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "The updated inventory record",
+            "description": "The activated account record",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Inventory"
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
           },
           "404": {
-            "description": "Inventory not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete an inventory record",
-        "tags": [
-          "Inventory"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Inventory record deleted successfully"
-          },
-          "404": {
-            "description": "Inventory not found"
+            "description": "Account record not found"
           }
         }
       }
     },
-    "/api/system-admin": {
-      "post": {
-        "summary": "Register a new system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New System Admin"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created system admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all system admins",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of system admins",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/System Admin"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/system-admin/{id}": {
-      "get": {
-        "summary": "Get a system admin by ID",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The system admin with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/System Admin"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "System admin not found"
-          }
-        }
-      },
+    "/api/accounts/{id}/deactivate": {
       "patch": {
-        "summary": "Update a system admin",
+        "summary": "Deactivate an account",
         "tags": [
-          "SystemAdmin"
+          "Account"
         ],
         "parameters": [
           {
@@ -2814,84 +4126,24 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update System Admin"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "The updated system admin",
+            "description": "The deactivated account record",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/System Admin"
+                  "$ref": "#/components/schemas/Account"
                 }
               }
             }
           },
           "404": {
-            "description": "System admin not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a system admin",
-        "tags": [
-          "SystemAdmin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "System admin deleted successfully"
-          },
-          "404": {
-            "description": "System admin not found"
+            "description": "Account record not found"
           }
         }
       }
     },
     "/api/hospitals": {
-      "post": {
-        "summary": "Register a new hospital",
-        "tags": [
-          "Hospital"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Hospital"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created hospital",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Hospital"
-                }
-              }
-            }
-          }
-        }
-      },
       "get": {
         "summary": "Get all hospitals",
         "tags": [
@@ -2899,7 +4151,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A list of hospitals",
+            "description": "List of hospitals",
             "content": {
               "application/json": {
                 "schema": {
@@ -2912,27 +4164,77 @@
             }
           }
         }
+      },
+      "post": {
+        "summary": "Create new hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create Hospital"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Hospital created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Hospital already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "details"
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/hospitals/{id}": {
       "get": {
-        "summary": "Get a hospital by ID",
+        "summary": "Get hospital by ID",
         "tags": [
           "Hospital"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
           "200": {
-            "description": "The hospital with the specified ID",
+            "description": "Hospital details",
             "content": {
               "application/json": {
                 "schema": {
@@ -2942,23 +4244,39 @@
             }
           },
           "404": {
-            "description": "Hospital not found"
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "summary": "Update a hospital",
+        "summary": "Full update hospital",
         "tags": [
           "Hospital"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
           }
         ],
         "requestBody": {
@@ -2972,7 +4290,7 @@
         },
         "responses": {
           "200": {
-            "description": "The updated hospital",
+            "description": "Hospital updated successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -2982,38 +4300,186 @@
             }
           },
           "404": {
-            "description": "Hospital not found"
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Update failed due to conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "details"
+                  ]
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "summary": "Delete a hospital",
+        "summary": "Delete hospital",
         "tags": [
           "Hospital"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Hospital deleted successfully"
+          "200": {
+            "description": "Hospital deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Hospital not found"
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hospitals/{id}/patch": {
+      "patch": {
+        "summary": "Partial update hospital",
+        "tags": [
+          "Hospital"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update Hospital"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hospital partially updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hospital not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Update failed due to conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "details"
+                  ]
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/blood": {
       "post": {
-        "summary": "Create a new blood record",
+        "summary": "Create a new blood inventory record",
         "tags": [
           "Blood"
         ],
@@ -3021,58 +4487,127 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Blood"
+                "type": "object",
+                "properties": {
+                  "donorId": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "bloodType": {
+                    "type": "string",
+                    "default": "UNKNOWN",
+                    "example": "O_POS"
+                  },
+                  "barcode": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "123456789"
+                  },
+                  "donationDate": {
+                    "type": "string",
+                    "example": "2023-12-15T10:00:00.000Z"
+                  },
+                  "expirationDate": {
+                    "type": "string",
+                    "default": "",
+                    "example": "2024-01-15T10:00:00.000Z"
+                  },
+                  "storageStatus": {
+                    "type": "string",
+                    "enum": [
+                      "AVAILABLE",
+                      "RESERVED",
+                      "EXPIRED"
+                    ],
+                    "default": "AVAILABLE",
+                    "example": "AVAILABLE"
+                  },
+                  "quantityml": {
+                    "type": "number",
+                    "minimum": 1,
+                    "example": 500
+                  },
+                  "stockLevel": {
+                    "type": "number",
+                    "default": 0,
+                    "example": 10
+                  },
+                  "hospitalId": {
+                    "type": "number",
+                    "default": 0,
+                    "example": 1
+                  },
+                  "collectorId": {
+                    "type": "number",
+                    "default": 0,
+                    "example": 2
+                  }
+                },
+                "required": [
+                  "donorId",
+                  "barcode",
+                  "donationDate",
+                  "quantityml"
+                ]
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "The created blood record",
+            "description": "The created blood inventory record",
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Blood"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    {
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "bloodType": {
-                          "type": "string",
-                          "example": "A+"
-                        },
-                        "quantity": {
-                          "type": "number",
-                          "minimum": 0,
-                          "example": 500
-                        },
-                        "donationDate": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "bloodType",
-                        "quantity",
-                        "donationDate",
-                        "createdAt",
-                        "updatedAt"
-                      ]
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "example": "O+"
+                    },
+                    "quantity": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "barcode": {
+                      "type": "string",
+                      "example": "123456789"
+                    },
+                    "donationDate": {
+                      "type": "string",
+                      "example": "2023-12-15T10:00:00.000Z"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "example": "2024-01-15T10:00:00.000Z"
+                    },
+                    "storageStatus": {
+                      "type": "string",
+                      "enum": [
+                        "AVAILABLE",
+                        "RESERVED",
+                        "EXPIRED"
+                      ],
+                      "example": "AVAILABLE"
                     }
+                  },
+                  "required": [
+                    "id",
+                    "donorId",
+                    "bloodType",
+                    "quantity",
+                    "barcode",
+                    "donationDate",
+                    "expirationDate",
+                    "storageStatus"
                   ]
                 }
               }
@@ -3081,59 +4616,67 @@
         }
       },
       "get": {
-        "summary": "Get all blood records",
+        "summary": "Get all blood inventory records",
         "tags": [
           "Blood"
         ],
         "responses": {
           "200": {
-            "description": "A list of blood records",
+            "description": "A list of blood inventory records",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Blood"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
                       },
-                      {
-                        "properties": {
-                          "id": {
-                            "type": "number",
-                            "example": 1
-                          },
-                          "bloodType": {
-                            "type": "string",
-                            "example": "A+"
-                          },
-                          "quantity": {
-                            "type": "number",
-                            "minimum": 0,
-                            "example": 500
-                          },
-                          "donationDate": {
-                            "type": "string",
-                            "example": "2023-07-15T10:00:00.000Z"
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "example": "2023-07-15T10:00:00.000Z"
-                          },
-                          "updatedAt": {
-                            "type": "string",
-                            "example": "2023-07-15T10:00:00.000Z"
-                          }
-                        },
-                        "required": [
-                          "id",
-                          "bloodType",
-                          "quantity",
-                          "donationDate",
-                          "createdAt",
-                          "updatedAt"
-                        ]
+                      "donorId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "bloodType": {
+                        "type": "string",
+                        "example": "O+"
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "example": "5"
+                      },
+                      "barcode": {
+                        "type": "string",
+                        "example": "123456789"
+                      },
+                      "donationDate": {
+                        "type": "string",
+                        "example": "2023-12-15T10:00:00.000Z"
+                      },
+                      "expirationDate": {
+                        "type": "string",
+                        "example": "2024-01-15T10:00:00.000Z"
+                      },
+                      "storageStatus": {
+                        "type": "string",
+                        "enum": [
+                          "AVAILABLE",
+                          "RESERVED",
+                          "EXPIRED"
+                        ],
+                        "example": "AVAILABLE"
                       }
+                    },
+                    "required": [
+                      "id",
+                      "donorId",
+                      "bloodType",
+                      "quantity",
+                      "barcode",
+                      "donationDate",
+                      "expirationDate",
+                      "storageStatus"
                     ]
                   }
                 }
@@ -3145,7 +4688,7 @@
     },
     "/api/blood/{id}": {
       "get": {
-        "summary": "Get a blood record by ID",
+        "summary": "Get a blood inventory record by ID",
         "tags": [
           "Blood"
         ],
@@ -3155,69 +4698,77 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "The blood record with the specified ID",
+            "description": "The blood inventory record with the specified ID",
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Blood"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    {
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "bloodType": {
-                          "type": "string",
-                          "example": "A+"
-                        },
-                        "quantity": {
-                          "type": "number",
-                          "minimum": 0,
-                          "example": 500
-                        },
-                        "donationDate": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "bloodType",
-                        "quantity",
-                        "donationDate",
-                        "createdAt",
-                        "updatedAt"
-                      ]
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "example": "O+"
+                    },
+                    "quantity": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "barcode": {
+                      "type": "string",
+                      "example": "123456789"
+                    },
+                    "donationDate": {
+                      "type": "string",
+                      "example": "2023-12-15T10:00:00.000Z"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "example": "2024-01-15T10:00:00.000Z"
+                    },
+                    "storageStatus": {
+                      "type": "string",
+                      "enum": [
+                        "AVAILABLE",
+                        "RESERVED",
+                        "EXPIRED"
+                      ],
+                      "example": "AVAILABLE"
                     }
+                  },
+                  "required": [
+                    "id",
+                    "donorId",
+                    "bloodType",
+                    "quantity",
+                    "barcode",
+                    "donationDate",
+                    "expirationDate",
+                    "storageStatus"
                   ]
                 }
               }
             }
           },
           "404": {
-            "description": "Blood record not found"
+            "description": "Blood inventory record not found"
           }
         }
       },
       "patch": {
-        "summary": "Update a blood record",
+        "summary": "Update a blood inventory record",
         "tags": [
           "Blood"
         ],
@@ -3227,7 +4778,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
@@ -3235,70 +4786,118 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Blood"
+                "type": "object",
+                "properties": {
+                  "donorId": {
+                    "type": "number"
+                  },
+                  "bloodType": {
+                    "type": "string"
+                  },
+                  "barcode": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "donationDate": {
+                    "type": "string"
+                  },
+                  "expirationDate": {
+                    "type": "string"
+                  },
+                  "storageStatus": {
+                    "type": "string",
+                    "enum": [
+                      "AVAILABLE",
+                      "RESERVED",
+                      "EXPIRED"
+                    ]
+                  },
+                  "quantityml": {
+                    "type": "number",
+                    "minimum": 1,
+                    "example": 500
+                  },
+                  "stockLevel": {
+                    "type": "number"
+                  },
+                  "hospitalId": {
+                    "type": "number"
+                  },
+                  "collectorId": {
+                    "type": "number"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "The updated blood record",
+            "description": "The updated blood inventory record",
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Blood"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
                     },
-                    {
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "example": 1
-                        },
-                        "bloodType": {
-                          "type": "string",
-                          "example": "A+"
-                        },
-                        "quantity": {
-                          "type": "number",
-                          "minimum": 0,
-                          "example": 500
-                        },
-                        "donationDate": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "example": "2023-07-15T10:00:00.000Z"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "bloodType",
-                        "quantity",
-                        "donationDate",
-                        "createdAt",
-                        "updatedAt"
-                      ]
+                    "donorId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "example": "O+"
+                    },
+                    "quantity": {
+                      "type": "string",
+                      "example": "5"
+                    },
+                    "barcode": {
+                      "type": "string",
+                      "example": "123456789"
+                    },
+                    "donationDate": {
+                      "type": "string",
+                      "example": "2023-12-15T10:00:00.000Z"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "example": "2024-01-15T10:00:00.000Z"
+                    },
+                    "storageStatus": {
+                      "type": "string",
+                      "enum": [
+                        "AVAILABLE",
+                        "RESERVED",
+                        "EXPIRED"
+                      ],
+                      "example": "AVAILABLE"
                     }
+                  },
+                  "required": [
+                    "id",
+                    "donorId",
+                    "bloodType",
+                    "quantity",
+                    "barcode",
+                    "donationDate",
+                    "expirationDate",
+                    "storageStatus"
                   ]
                 }
               }
             }
           },
           "404": {
-            "description": "Blood record not found"
+            "description": "Blood inventory record not found"
           }
         }
       },
       "delete": {
-        "summary": "Delete a blood record",
+        "summary": "Delete a blood inventory record",
         "tags": [
           "Blood"
         ],
@@ -3308,16 +4907,16 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Blood record deleted successfully"
+            "description": "Blood inventory record deleted successfully"
           },
           "404": {
-            "description": "Blood record not found"
+            "description": "Blood inventory record not found"
           }
         }
       }
@@ -3332,7 +4931,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Appointment"
+                "$ref": "#/components/schemas/NewAppointment"
               }
             }
           }
@@ -3423,7 +5022,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Appointment"
+                "$ref": "#/components/schemas/UpdateAppointment"
               }
             }
           }
@@ -3479,7 +5078,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Notification"
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "donorId": {
+                    "type": "number"
+                  },
+                  "hospitalId": {
+                    "type": "number"
+                  },
+                  "userId": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
               }
             }
           }
@@ -3490,7 +5107,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notification"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "donorId": {
+                      "type": "number"
+                    },
+                    "hospitalId": {
+                      "type": "number"
+                    },
+                    "userId": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "content"
+                  ]
                 }
               }
             }
@@ -3510,7 +5148,28 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Notification"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "donorId": {
+                        "type": "number"
+                      },
+                      "hospitalId": {
+                        "type": "number"
+                      },
+                      "userId": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "content"
+                    ]
                   }
                 }
               }
@@ -3541,7 +5200,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notification"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "donorId": {
+                      "type": "number"
+                    },
+                    "hospitalId": {
+                      "type": "number"
+                    },
+                    "userId": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "content"
+                  ]
                 }
               }
             }
@@ -3570,7 +5250,22 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Notification"
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "donorId": {
+                    "type": "number"
+                  },
+                  "hospitalId": {
+                    "type": "number"
+                  },
+                  "userId": {
+                    "type": "number"
+                  }
+                }
               }
             }
           }
@@ -3581,7 +5276,28 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notification"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "donorId": {
+                      "type": "number"
+                    },
+                    "hospitalId": {
+                      "type": "number"
+                    },
+                    "userId": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "content"
+                  ]
                 }
               }
             }
@@ -3626,18 +5342,130 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/New Order"
+                "type": "object",
+                "properties": {
+                  "orderDate": {
+                    "type": "string"
+                  },
+                  "aPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "aNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "bPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "bNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "abPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "abNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "oPosAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "oNegAmount": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "PENDING",
+                      "COMPLETED",
+                      "CANCELED"
+                    ]
+                  },
+                  "hospitalId": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  }
+                },
+                "required": [
+                  "orderDate",
+                  "aPosAmount",
+                  "aNegAmount",
+                  "bPosAmount",
+                  "bNegAmount",
+                  "abPosAmount",
+                  "abNegAmount",
+                  "oPosAmount",
+                  "oNegAmount",
+                  "status",
+                  "hospitalId"
+                ]
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "The created order",
+            "description": "Order successfully created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "orderDate": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A_POS",
+                        "A_NEG",
+                        "B_POS",
+                        "B_NEG",
+                        "AB_POS",
+                        "AB_NEG",
+                        "O_POS",
+                        "O_NEG"
+                      ]
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "COMPLETED",
+                        "CANCELED"
+                      ]
+                    },
+                    "hospitalId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "orderDate",
+                    "bloodType",
+                    "quantity",
+                    "status",
+                    "hospitalId"
+                  ]
                 }
               }
             }
@@ -3645,19 +5473,68 @@
         }
       },
       "get": {
-        "summary": "Get all orders",
+        "summary": "Retrieve all orders",
         "tags": [
           "Order"
         ],
         "responses": {
           "200": {
-            "description": "A list of orders",
+            "description": "A list of all orders",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Order"
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMinimum": true
+                      },
+                      "orderDate": {
+                        "type": "string"
+                      },
+                      "bloodType": {
+                        "type": "string",
+                        "enum": [
+                          "A_POS",
+                          "A_NEG",
+                          "B_POS",
+                          "B_NEG",
+                          "AB_POS",
+                          "AB_NEG",
+                          "O_POS",
+                          "O_NEG"
+                        ]
+                      },
+                      "quantity": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMinimum": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "PENDING",
+                          "COMPLETED",
+                          "CANCELED"
+                        ]
+                      },
+                      "hospitalId": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "exclusiveMinimum": true
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "orderDate",
+                      "bloodType",
+                      "quantity",
+                      "status",
+                      "hospitalId"
+                    ]
                   }
                 }
               }
@@ -3668,7 +5545,7 @@
     },
     "/api/orders/{id}": {
       "get": {
-        "summary": "Get an order by ID",
+        "summary": "Retrieve a specific order by ID",
         "tags": [
           "Order"
         ],
@@ -3678,7 +5555,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -3688,7 +5565,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "orderDate": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A_POS",
+                        "A_NEG",
+                        "B_POS",
+                        "B_NEG",
+                        "AB_POS",
+                        "AB_NEG",
+                        "O_POS",
+                        "O_NEG"
+                      ]
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "COMPLETED",
+                        "CANCELED"
+                      ]
+                    },
+                    "hospitalId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "orderDate",
+                    "bloodType",
+                    "quantity",
+                    "status",
+                    "hospitalId"
+                  ]
                 }
               }
             }
@@ -3699,7 +5625,7 @@
         }
       },
       "patch": {
-        "summary": "Update an order",
+        "summary": "Update an order's status",
         "tags": [
           "Order"
         ],
@@ -3709,7 +5635,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -3717,7 +5643,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Update Order"
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "PENDING",
+                      "COMPLETED",
+                      "CANCELED"
+                    ]
+                  }
+                },
+                "required": [
+                  "status"
+                ]
               }
             }
           }
@@ -3728,7 +5667,56 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Order"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "orderDate": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string",
+                      "enum": [
+                        "A_POS",
+                        "A_NEG",
+                        "B_POS",
+                        "B_NEG",
+                        "AB_POS",
+                        "AB_NEG",
+                        "O_POS",
+                        "O_NEG"
+                      ]
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "COMPLETED",
+                        "CANCELED"
+                      ]
+                    },
+                    "hospitalId": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "exclusiveMinimum": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "orderDate",
+                    "bloodType",
+                    "quantity",
+                    "status",
+                    "hospitalId"
+                  ]
                 }
               }
             }
@@ -3739,7 +5727,7 @@
         }
       },
       "delete": {
-        "summary": "Delete an order",
+        "summary": "Delete a specific order",
         "tags": [
           "Order"
         ],
@@ -3749,13 +5737,13 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Order deleted successfully"
+            "description": "Order successfully deleted"
           },
           "404": {
             "description": "Order not found"
@@ -3910,6 +5898,112 @@
         }
       }
     },
+    "/api/integration/{id}/approve": {
+      "post": {
+        "summary": "Approve an integration request",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "managerId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "managerId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The approved integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      }
+    },
+    "/api/integration/{id}/decline": {
+      "post": {
+        "summary": "Decline an integration request",
+        "tags": [
+          "Integration"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "managerId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "managerId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The declined integration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Integration"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      }
+    },
     "/api/report": {
       "post": {
         "summary": "Create a new report",
@@ -4053,300 +6147,6 @@
           },
           "404": {
             "description": "Report not found"
-          }
-        }
-      }
-    },
-    "/api/donation": {
-      "post": {
-        "summary": "Create a new donation",
-        "tags": [
-          "Donation"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Donation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created donation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all donations",
-        "tags": [
-          "Donation"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of donations",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Donation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/donation/{id}": {
-      "get": {
-        "summary": "Get a donation by ID",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The donation with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a donation",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Donation"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated donation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Donation"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a donation",
-        "tags": [
-          "Donation"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Donation deleted successfully"
-          },
-          "404": {
-            "description": "Donation not found"
-          }
-        }
-      }
-    },
-    "/api/collection": {
-      "post": {
-        "summary": "Register a new collection",
-        "tags": [
-          "Collection"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/New Collection"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The created collection",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Collection"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all collections",
-        "tags": [
-          "Collection"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of collections",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Collection"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/collection/{id}": {
-      "get": {
-        "summary": "Get a collection by ID",
-        "tags": [
-          "Collection"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The collection with the specified ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Collection"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Collection not found"
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update a collection",
-        "tags": [
-          "Collection"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Update Collection"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated collection",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Collection"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Collection not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a collection",
-        "tags": [
-          "Collection"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Collection deleted successfully"
-          },
-          "404": {
-            "description": "Collection not found"
           }
         }
       }

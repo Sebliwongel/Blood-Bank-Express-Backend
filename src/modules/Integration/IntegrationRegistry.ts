@@ -5,8 +5,10 @@ import { IntegrationSchema, NewIntegrationSchema, UpdateIntegrationSchema } from
 
 export const integrationRegistry = new AccessibleOpenAPIRegistry();
 
+// Register schemas
 integrationRegistry.register("Integration", IntegrationSchema);
 integrationRegistry.register("NewIntegration", NewIntegrationSchema);
+integrationRegistry.register("UpdateIntegration", UpdateIntegrationSchema);
 
 // Register the POST path for creating an integration
 integrationRegistry.registerPath({
@@ -137,6 +139,88 @@ integrationRegistry.registerPath({
   responses: {
     204: {
       description: "Integration deleted successfully",
+    },
+    404: {
+      description: "Integration not found",
+    },
+  },
+});
+
+// Register the POST path for approving an integration
+integrationRegistry.registerPath({
+  method: "post",
+  path: "/api/integration/{id}/approve",
+  summary: "Approve an integration request",
+  tags: ["Integration"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string
+    },
+  ],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: z.object({
+            managerId: z.string(),
+            comment: z.string().optional(),
+          }),
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "The approved integration",
+      content: {
+        "application/json": {
+          schema: IntegrationSchema,
+        },
+      },
+    },
+    404: {
+      description: "Integration not found",
+    },
+  },
+});
+
+// Register the POST path for declining an integration
+integrationRegistry.registerPath({
+  method: "post",
+  path: "/api/integration/{id}/decline",
+  summary: "Decline an integration request",
+  tags: ["Integration"],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      schema: { type: "string" }, // Assuming ID is a string
+    },
+  ],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: z.object({
+            managerId: z.string(),
+            comment: z.string().optional(),
+          }),
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "The declined integration",
+      content: {
+        "application/json": {
+          schema: IntegrationSchema,
+        },
+      },
     },
     404: {
       description: "Integration not found",

@@ -2,69 +2,110 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// Get all appointments
-export const getAllAppointments = async () => {
-  return await prisma.appointment.findMany({
-    include: {
-      donor: true, // Optionally include the related donor information
-    },
-  });
-};
+// Service function to create an appointment
+export const createAppointment = async (data: {
+  appointmentDate: string;
+  status: string;
+  location: string;
+  appointmentTime: string;
+}) => {
+  try {
+    // Retrieve the latest donor ID from the database
+    const latestDonor = await prisma.donor.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
 
-// Get an appointment by ID
-export const getAppointmentById = async (id: number) => {
-  return await prisma.appointment.findUnique({
-    where: { id },
-    include: {
-      donor: true, // Optionally include the related donor information
-    },
-  });
-};
+    if (!latestDonor) {
+      throw new Error("No donors found in the system.");
+    }
 
-// Create a new appointment
-export const createAppointment = async (
-  appointmentDate: Date,
-  status: string,
-  donorId: number
-) => {
-  return await prisma.appointment.create({
-    data: {
-      appointmentDate,
-      status,
-      donorId,
-    },
-  });
-};
+    const donorId = latestDonor.id;
 
-// Update an existing appointment
-export const updateAppointment = async (
-  appointmentId: number,
-  updates: { appointmentDate?: Date; status?: string; donorId?: number }
-) => {
-  // First, find the appointment by ID
-  const appointment = await prisma.appointment.findUnique({
-    where: { id: appointmentId },
-  });
+    const appointment = await prisma.appointment.create({
+      data: {
+        appointmentDate: data.appointmentDate,
+        status: data.status,
+        donorId: donorId, // Assign the donor ID automatically
+        location: data.location,
+        appointmentTime: data.appointmentTime,
+      },
+    });
 
-  // If the appointment does not exist, return null or handle accordingly
-  if (!appointment) {
-    return null;
+    return appointment;
+  } catch (error) {
+    throw new Error("Failed to create appointment: " + error);
   }
-
-  // Update the appointment with the provided fields
-  return await prisma.appointment.update({
-    where: { id: appointmentId },
-    data: {
-      appointmentDate: updates.appointmentDate ?? appointment.appointmentDate, // Preserve existing if not provided
-      status: updates.status ?? appointment.status, // Preserve existing if not provided
-      donorId: updates.donorId ?? appointment.donorId, // Preserve existing if not provided
-    },
-  });
 };
 
-// Delete an appointment by ID
-export const deleteAppointment = async (id: number) => {
-  return await prisma.appointment.delete({
-    where: { id },
-  });
+// Service function to get scheduled appointments
+export const getScheduledAppointments = async (req: any, res: any) => {
+  try {
+    const appointments = await prisma.appointment.findMany({
+      where: { status: "Scheduled" },
+      include: {
+        donor: {
+          include: { qualifications: true },
+        },
+      },
+    });
+    res.status(200).json(appointments);
+  } catch (error: unknown) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+};
+
+// Service function to update an existing appointment
+export const updateAppointment = async (
+  id: number,
+  data: {
+    appointmentDate?: string;
+    status?: string;
+    location?: string;
+    appointmentTime?: string;
+  }
+) => {
+  try {
+    const appointment = await prisma.appointment.update({
+      where: { id },
+      data: {
+        appointmentDate: data.appointmentDate,
+        status: data.status,
+        location: data.location,
+        appointmentTime: data.appointmentTime,
+      },
+    });
+
+    return appointment;
+  } catch (error) {
+    throw new Error("Failed to update appointment: " + error);
+  }
+};
+
+// Service function to get an appointment by ID
+export const getAppointmentById = async (id: number) => {
+  try {
+    const appointment = await prisma.appointment.findUnique({
+      where: { id },
+    });
+
+    if (!appointment) {
+      throw new Error("Appointment not found");
+    }
+
+    return appointment;
+  } catch (error) {
+    throw new Error("Failed to fetch appointment: " + error);
+  }
+};
+
+// Service function to get all appointments
+export const getAllAppointments = async () => {
+  try {
+    const appointments = await prisma.appointment.findMany();
+    return appointments;
+  } catch (error) {
+    throw new Error("Failed to fetch appointments: " + error);
+  }
 };

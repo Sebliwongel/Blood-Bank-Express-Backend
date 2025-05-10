@@ -1,13 +1,39 @@
-import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
-import { z } from "zod";
-import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";
-import { NotificationSchema, NewNotificationSchema, UpdateNotificationSchema } from "./NotificationSchema";
+//import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { z } from "zod";  // Zod for validation schemas
+import { AccessibleOpenAPIRegistry } from "../../utils/combineRegistries";  // If this is used for combining registries
+
+// Ensure this is the correct import path for your NotificationSchemas
+//import { NotificationCreateSchema, NotificationUpdateSchema } from "./NotificationSchema";  // These are used for registering paths
 
 export const notificationRegistry = new AccessibleOpenAPIRegistry();
+
+// Define Zod schemas for Notification
+const NotificationSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  donorId: z.number().optional(),
+  hospitalId: z.number().optional(),
+  userId: z.number().optional(),
+});
+
+const NewNotificationSchema = z.object({
+  content: z.string().min(1, "Content is required"),
+  donorId: z.number().optional(),
+  hospitalId: z.number().optional(),
+  userId: z.number().optional(),
+});
+
+const UpdateNotificationSchema = z.object({
+  content: z.string().min(1, "Content must be at least 1 character").optional(),
+  donorId: z.number().optional(),
+  hospitalId: z.number().optional(),
+  userId: z.number().optional(),
+});
 
 // Register the schemas for Notification
 notificationRegistry.register("Notification", NotificationSchema);
 notificationRegistry.register("NewNotification", NewNotificationSchema);
+notificationRegistry.register("UpdateNotification", UpdateNotificationSchema);
 
 // Register the POST path for creating a new notification
 notificationRegistry.registerPath({
@@ -65,7 +91,7 @@ notificationRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "string" }, // Assuming ID is a string or number
     },
   ],
   responses: {
@@ -94,7 +120,7 @@ notificationRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "string" }, // Assuming ID is a string or number
     },
   ],
   request: {
@@ -132,7 +158,7 @@ notificationRegistry.registerPath({
       name: "id",
       in: "path",
       required: true,
-      schema: { type: "string" }, // Assuming ID is a string
+      schema: { type: "string" }, // Assuming ID is a string or number
     },
   ],
   responses: {
